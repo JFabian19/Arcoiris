@@ -1,87 +1,371 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { ShoppingBag, Plus, Minus, ChevronRight, X, Trash2, Anchor, Facebook, MapPin, Loader2, Gift, Star } from 'lucide-react';
+import { ShoppingBag, Plus, Minus, ChevronRight, X, Trash2, Utensils, Facebook, MapPin, Loader2, Gift, Star } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { fetchSheetData, submitSheetData, SheetDish, SheetCategory } from './services/googleSheets';
 
-const WHATSAPP_NUMBER = "51923494953";
+// ==========================================
+// CONFIGURACIÓN GENERAL DEL MENÚ
+// ==========================================
 
-// Mapa de imágenes locales por defecto para platos conocidos
-const LOCAL_IMAGES: Record<string, string> = {
-  "Leche de tigre de pescado": "Leche de tigre.jpg",
-  "Leche de tigre mixto": "leche de tigre mixta.png",
-  "Leche de pantera": "leche de pantera.jpeg",
-  "Causa pulpa de langostinos": "Causa pulpa de langostinos.jpeg",
-  "Causa acevichada": "Causa acevichada.jpeg",
-  "Ceviche carretillero": "Ceviche carretillero.jpeg",
-  "Ceviche de pescado del día": "Ceviche de pescado del día.jpeg",
-  "Ceviche mixto": "Ceviche mixto.jpg",
-  "Ceviche afrodisíaco": "Ceviche afrodisíaco.jpeg",
-  "Ceviche de conchas negras": "Ceviche de conchas negras.jpeg",
-  "Tiradito en salsa de ají amarillo": "Tiradito en salsa de ají amarillo.jpg",
-  "Tiradito en dos tiempos": "Tiradito en dos tiempos.jpeg",
-  "Combinado norteño": "Combinado norteño.webp",
-  "Sudado de filete": "Sudado de filete.jpg",
-  "Sudado de cabrilla": "Sudado de cabrilla.jpeg",
-  "Parihuela mixta especial": "Parihuela mixta especial.webp",
-  "Parihuela de cabrilla": "Parihuela de cabrilla.jpeg",
-  "Parihuela de filete": "Parihuela de filete.jpeg",
-  "Chilcano especial": "Chilcano especial.webp",
-  "Chupe de pescado": "Chupe de pescado.webp",
-  "Chupe de cangrejo": "Chupe de cangrejo.jpeg",
-  "Chupe de langostino": "Chupe de langostino.jpeg",
-  "Trilogía N° 3": "trilogia 3.webp",
-  "Trilogía N° 4": "trilogia 4.jpg",
-  "Trilogía N° 5": "trilogia 5.jpeg",
-  "Trilogía N° 6": "trilogia 6.jpg",
-  "Trilogía N° 7": "trilogia 7.jpg",
-  "Trilogía N° 8": "trilogia 8.jpg",
-  "Trilogía N° 9": "Trilogia 9.jpg",
-  "Duo Marino 1": "Duo Marino 1.jpeg",
-  "Duo Marino 2": "Duo Marino 2.jpeg",
-  "Duo Marino 3": "Duo Marino 3.jpeg",
-  "Duo Marino 4": "Duo Marino 4.jpeg",
-  "Duo Marino 5": "Duo Marino 5.webp",
-  "Duo Marino 6": "duo marino 6.png",
-  "Duo Marino 7": "Duo Marino 7.jpeg",
-  "Duo Marino 8": "Duo Marino 8.jpeg",
-  "Duo Marino 9": "Duo Marino 9.jpeg",
-  "Duo Marino 10": "Duo Marino 10.jpeg",
-  "Duo Marino 11": "Duo Marino 11.jpeg",
-  "Chicharrón de pota": "Chicharrón de pota.jpeg",
-  "Chicharrón de pescado": "Chicharrón de pescado.jpeg",
-  "Jalea de pescado": "Jalea de pescado.jpeg",
-  "Chicharrón de calamar": "Chicharrón de calamar.webp",
-  "Chicharrón de pescado con calamar": "Chicharrón de pescado con calamar.webp",
-  "Chicharrón mixto": "Chicharrón mixto.webp",
-  "Jalea mixta": "Jalea mixta.jpeg",
-  "Jaleón norteño": "Jaleón norteño.jpeg",
-  "Arroz con conchas negras": "Arroz con conchas negras.webp",
-  "Arroz con mariscos": "Arroz con mariscos.jpg",
-  "Chaufa de mariscos": "Chaufa de mariscos.webp",
-  "Chaufa de pescado": "Chaufa de pescado.jpeg",
-  "Chaufa amazónico": "Chaufa amazónico.jpeg",
-  "Chaufa de langostinos": "Chaufa de langostinos.jpg",
-  "Arroz verde en aroma de pato con filete de pescado": "Arroz verde en aroma de pato con filete de pescado.jpeg",
-  "Chaufa de carne": "Chaufa de carne.jpeg",
-  "Chaufa de pollo": "Chaufa de pollo.webp",
-  "Ronda marina para 4 personas": "Ronda marina para 4 personas.webp",
-  "Fetuccini a la huancaína con lomo saltado": "Fetuccini a la huancaína con lomo saltado.jpeg",
-  "Fetuccini a la huancaína con pollo a la parrilla": "Fetuccini a la huancaína con pollo a la parrilla.jpeg",
-  "Fetuccini a la huancaína con saltado de pollo": "Fetuccini a la huancaína con saltado de pollo.jpeg",
-  "Fetuccini a la huancaína con filete de pescado": "Fetuccini a la huancaína con filete de pescado.jpeg",
-  "Fetuccini a la huancaína con salsa de mariscos": "Fetuccini a la huancaína con salsa de mariscos.jpeg",
-  "Arroz con pato": "Arroz con pato.webp",
-  "Seco de pato con frijoles": "Seco de pato con frijoles.webp",
-  "Tacu-tacu con lomo saltado": "Tacu-tacu con lomo saltado.jpeg",
-  "Tacu-tacu saltado de pollo": "Tacu-tacu saltado de pollo.webp",
-  "Tacu-tacu en salsa de mariscos": "Tacu-tacu en salsa de mariscos.jpeg",
-  "Lomo saltado": "Lomo saltado.jpg",
-  "Saltado de pollo": "Saltado de pollo.webp",
-  "Tallarín saltado de carne": "Tallarín saltado de carne.jpeg",
-  "Tallarín saltado de pollo": "Tallarín saltado de pollo.jpeg",
-  "Cabrilla frita con yucas, arroz y ensalada": "Cabrilla frita con yucas, arroz y ensalada.webp",
-  "Filete de pescado frito con yucas, arroz y ensalada": "Filete de pescado frito con yucas, arroz y ensalada.jpeg",
-};
+// Reemplaza por tu número de WhatsApp con código de país (ej: 51923494953 para Perú)
+const WHATSAPP_NUMBER = "51997119246"; 
+
+// Nombre del negocio que se mostrará en cabecera y pie de página
+const BUSINESS_NAME = "Arcoiris"; 
+
+// Eslogan o frase corta del negocio
+const BUSINESS_SLOGAN = "heladería y cafetería"; 
+
+// Enlaces de redes sociales e ubicación (dejar vacío "" si no se usa)
+const FACEBOOK_URL = "";
+const MAPS_URL = "";
+
+// Texto del banner infinito (Marquee)
+const MARQUEE_TEXT = "🍦 SABOR Y COLOR EN CADA BOCADO • BUBBLE TEAS Y HELADOS FRITOS • ¡ENDULZA TU DÍA! 🌈 • ";
+
+// Mapa opcional de imágenes locales para platos conocidos (si deseas usar imágenes de la carpeta public)
+// Ejemplo: { "Nombre del Plato": "nombre_imagen.jpg" }
+const LOCAL_IMAGES: Record<string, string> = {};
+
+const DEFAULT_CATEGORIES = [
+  { nombre: "Bebidas Calientes" },
+  { nombre: "Bebidas Frías" },
+  { nombre: "Jugos" },
+  { nombre: "Batidos" },
+  { nombre: "Waffles" },
+  { nombre: "Frutero" },
+  { nombre: "Frappé / Smoothie / Frozen" },
+  { nombre: "Limonadas" },
+  { nombre: "Bubbles Teas & Lattes" },
+  { nombre: "Helados Frito" },
+  { nombre: "Sandwich" },
+  { nombre: "Postres" }
+];
+
+const DEFAULT_DISHES = [
+  {
+    "categoría": "Bebidas Calientes",
+    "nombre del plato": "Americano",
+    "descripción": "",
+    "precio": "s/7.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Bebidas Calientes",
+    "nombre del plato": "Expresso",
+    "descripción": "",
+    "precio": "s/6.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Bebidas Calientes",
+    "nombre del plato": "Capuccino",
+    "descripción": "",
+    "precio": "s/10.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Bebidas Calientes",
+    "nombre del plato": "Mocaccino",
+    "descripción": "",
+    "precio": "s/12.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Bebidas Calientes",
+    "nombre del plato": "Latte",
+    "descripción": "",
+    "precio": "s/10.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Bebidas Calientes",
+    "nombre del plato": "Chai Latte",
+    "descripción": "",
+    "precio": "s/12.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Bebidas Calientes",
+    "nombre del plato": "Caramel Latte",
+    "descripción": "",
+    "precio": "s/12.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Bebidas Calientes",
+    "nombre del plato": "Chocolate Arcoiris",
+    "descripción": "",
+    "precio": "s/10.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Bebidas Frías",
+    "nombre del plato": "Iced Coffe",
+    "descripción": "",
+    "precio": "s/8.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Bebidas Frías",
+    "nombre del plato": "Iced Latte",
+    "descripción": "",
+    "precio": "s/12.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Bebidas Frías",
+    "nombre del plato": "Iced Caramel Macchiato",
+    "descripción": "",
+    "precio": "s/12.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Bebidas Frías",
+    "nombre del plato": "Orange Coffee",
+    "descripción": "",
+    "precio": "s/12.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Bebidas Frías",
+    "nombre del plato": "Iced Vainilla Latte",
+    "descripción": "",
+    "precio": "s/12.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Jugos",
+    "nombre del plato": "Fresa+Papaya+Piña",
+    "descripción": "",
+    "precio": "s/9.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Jugos",
+    "nombre del plato": "Fresa+Plátano+Naranja",
+    "descripción": "",
+    "precio": "s/9.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Jugos",
+    "nombre del plato": "Papaya+Piña",
+    "descripción": "",
+    "precio": "s/9.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Jugos",
+    "nombre del plato": "Papaya+Piña+Naranja",
+    "descripción": "",
+    "precio": "s/9.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Jugos",
+    "nombre del plato": "Papaya+Naranja",
+    "descripción": "",
+    "precio": "s/9.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Jugos",
+    "nombre del plato": "Fresa",
+    "descripción": "",
+    "precio": "s/8.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Jugos",
+    "nombre del plato": "Papaya",
+    "descripción": "",
+    "precio": "s/8.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Jugos",
+    "nombre del plato": "Piña",
+    "descripción": "",
+    "precio": "s/8.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Jugos",
+    "nombre del plato": "Naranja Arcoli",
+    "descripción": "",
+    "precio": "s/8.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Jugos",
+    "nombre del plato": "Mango",
+    "descripción": "",
+    "precio": "s/8.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Jugos",
+    "nombre del plato": "Surtido",
+    "descripción": "",
+    "precio": "s/8.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Batidos",
+    "nombre del plato": "Lúcuma+Leche",
+    "descripción": "",
+    "precio": "s/10.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Waffles",
+    "nombre del plato": "Waffle Con Helado",
+    "descripción": "Incluye Nutella+fresa + plátano+durazno +1 topping y helado frito sabor a elección",
+    "precio": "s/17.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Waffles",
+    "nombre del plato": "Waffle Personalizado",
+    "descripción": "Elige entre nutella, miel de maple, fosh omanjar blanco+3 frutas de estación +3 topping",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Frutero",
+    "nombre del plato": "Ensalada de Fruta",
+    "descripción": "La mejor selección de frutas de estación +yogurt+cereales",
+    "precio": "s/17.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Frappé / Smoothie / Frozen",
+    "nombre del plato": "Frappé Con Café",
+    "descripción": "Sabores: Café, Oreo, Caramelo, Manjar Blanco, Moka, Nutella, Algarrobina. Incluyen crema Chantilly",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Frappé / Smoothie / Frozen",
+    "nombre del plato": "Frappé Sin Café",
+    "descripción": "Sabores: Choco Lucuma, Pie de Limón, Taro, Matcha, Maracuyá Arcelik. Incluyen crema Chantilly",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Limonadas",
+    "nombre del plato": "Limonada Clásica o de Sabores",
+    "descripción": "Sabores: Fresa, Mango, Piña, Maracumango Fresa, Durazno, Sandia, Arcoiris. Incluyen crema Chantilly",
+    "precio": "s/10.50",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Bubbles Teas & Lattes",
+    "nombre del plato": "Leche de Coco",
+    "descripción": "Sabores: Piña Colada, Coconut, Mango",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Bubbles Teas & Lattes",
+    "nombre del plato": "Milk Tea",
+    "descripción": "Sabores: Matcha, Taro, Taro Oreo",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Bubbles Teas & Lattes",
+    "nombre del plato": "Base Yogurt",
+    "descripción": "Sabores: Fresa, Fresa+Arándanos, Lúcuma, Mango+Maracuyá",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Galletas",
+    "descripción": "Sabores: Oreo, Casino Menta, Vainilla, Morochas, Picaras. 1 Sabor 2 Toppings",
+    "precio": "s/10.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Chocolate",
+    "descripción": "Sabores: Nutella, Chocman, Sublime, Beso de mosa. 1 Sabor 2 Toppings",
+    "precio": "s/10.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado con Licores",
+    "descripción": "Sabores: Baileys, Ron con Pasas, Piña Colada. Incluye +4 toppings",
+    "precio": "s/14.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helados Otros Sabores",
+    "descripción": "Sabores: Café, Pistacho, Algarrobina. Incluye +2 toppings",
+    "precio": "s/12.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Sandwich",
+    "nombre del plato": "Croisant Clásico",
+    "descripción": "Jamón+ Queso Edam",
+    "precio": "s/6.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Sandwich",
+    "nombre del plato": "Croisant de Pollo",
+    "descripción": "Apio y Mayonesa",
+    "precio": "s/7.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Sandwich",
+    "nombre del plato": "Ciabatta de Pollo",
+    "descripción": "Apio y Mayonesa",
+    "precio": "s/7.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Sandwich",
+    "nombre del plato": "Triangulo Doble de Pollo",
+    "descripción": "Apio y Mayonesa",
+    "precio": "s/6.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Sandwich",
+    "nombre del plato": "Triple",
+    "descripción": "Pollo, Jamón y Queso",
+    "precio": "s/7.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Postres",
+    "nombre del plato": "Torta de Chocolate",
+    "descripción": "",
+    "precio": "s/8.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Postres",
+    "nombre del plato": "Cheesecake de Maracuya",
+    "descripción": "",
+    "precio": "s/10.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Postres",
+    "nombre del plato": "Queques de Casa",
+    "descripción": "Sabores: Naranja Chocolate, Zanahona, Platanol",
+    "precio": "s/4.00",
+    "URL de imagen": ""
+  }
+];
 
 interface Dish {
   nombre: string;
@@ -135,10 +419,14 @@ export default function App() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const [cats, dishes] = await Promise.all([
-          fetchSheetData<SheetCategory>('Categorías'),
-          fetchSheetData<SheetDish>('Platos')
-        ]);
+        let cats = await fetchSheetData<SheetCategory>('Categorías');
+        let dishes = await fetchSheetData<SheetDish>('Platos');
+
+        if (!cats || cats.length === 0 || !dishes || dishes.length === 0) {
+          console.log("No se pudieron cargar datos de Google Sheets o están vacíos. Usando datos por defecto.");
+          cats = DEFAULT_CATEGORIES;
+          dishes = DEFAULT_DISHES;
+        }
 
         const formattedCategories: Category[] = cats.map(c => ({
           id: c.nombre.toLowerCase().replace(/\s+/g, '-'),
@@ -155,7 +443,20 @@ export default function App() {
 
         setCategories(formattedCategories);
       } catch (error) {
-        console.error("Error loading data:", error);
+        console.error("Error loading data from sheet, using fallback default data:", error);
+        const formattedCategories: Category[] = DEFAULT_CATEGORIES.map(c => ({
+          id: c.nombre.toLowerCase().replace(/\s+/g, '-'),
+          nombre: c.nombre,
+          items: DEFAULT_DISHES
+            .filter(d => d.categoría === c.nombre)
+            .map(d => ({
+              nombre: d['nombre del plato'],
+              descripcion: d.descripción,
+              precio: d.precio,
+              imagen: LOCAL_IMAGES[d['nombre del plato']] || d['URL de imagen'] || null
+            }))
+        }));
+        setCategories(formattedCategories);
       } finally {
         setLoading(false);
       }
@@ -204,7 +505,7 @@ export default function App() {
 
   const sendToWhatsApp = () => {
     const total = calculateTotal();
-    let message = `*Hola La Isla del Lobo, deseo realizar un pedido:*\n\n`;
+    let message = `*Hola ${BUSINESS_NAME}, deseo realizar un pedido:*\n\n`;
     cart.forEach(item => {
       message += `• ${item.cantidad} x ${item.nombre} (${item.precio})\n`;
     });
@@ -275,46 +576,70 @@ export default function App() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-white">
-        <Loader2 className="w-12 h-12 text-isla-teal animate-spin mb-4" />
-        <p className="font-slogan text-isla-teal font-bold tracking-widest uppercase text-xs">Cargando delicias...</p>
+        <Loader2 className="w-12 h-12 text-primary animate-spin mb-4" />
+        <p className="font-slogan text-primary font-bold tracking-widest uppercase text-xs">Cargando menú...</p>
       </div>
     );
   }
 
   return (
     <div className="max-w-md mx-auto bg-white min-h-screen relative shadow-2xl overflow-hidden flex flex-col font-sans">
-      <header className="sticky top-0 bg-white/95 backdrop-blur-md z-50 px-5 py-4 flex justify-between items-center border-b border-gray-100">
-        <div className="flex flex-col items-start">
-          <h1 className="font-title text-[28px] text-isla-teal leading-none tracking-wide">La Isla del Lobo</h1>
-          <span className="font-slogan text-[11px] text-isla-orange font-bold tracking-wider mt-0.5">Sabor que atrapa</span>
+      <header className="sticky top-0 bg-white/95 backdrop-blur-md z-50 px-4 py-3 flex justify-between items-center border-b border-gray-100">
+        <div className="flex items-center gap-3">
+          {/* Logo recreado en contenedor rojo redondeado */}
+          <div className="bg-[#ef4444] px-4 py-2 rounded-2xl flex flex-col items-center justify-center shadow-md shadow-primary/20 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none"></div>
+            <div className="relative font-logo text-[23px] text-white leading-none tracking-wide select-none pt-1">
+              Arcoiris
+              {/* Icono de helado + arcoíris sobre el primer 'i' */}
+              <span className="absolute -top-[12px] left-[38px] w-[26px] h-[22px] pointer-events-none">
+                <svg viewBox="0 0 26 22" fill="none" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                  {/* Arcos del Arcoíris */}
+                  <path d="M10 8 C 11 3, 17 1, 23 2.5" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" />
+                  <path d="M10 10.5 C 12.5 5.5, 19.5 3.5, 25 5.5" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" opacity="0.85" />
+                  <path d="M10 13 C 14 8, 22 6, 26 8.5" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" opacity="0.7" />
+                  
+                  {/* Copa de helado base */}
+                  <path d="M3 15 L9.5 15 C10.5 15, 11 15.5, 10 17.5 L8 20.5 C7.5 21.2, 5 21.2, 4.5 20.5 L2.5 17.5 C1.5 15.5, 2 15, 3 15 Z" fill="#ffffff" opacity="0.25" stroke="#ffffff" strokeWidth="1" />
+                  {/* Bola de helado / copete */}
+                  <path d="M1.5 14 C0.5 12, 2.5 9.5, 4.5 9 C5 7.5, 7 6.5, 8.5 7 C9.5 6, 12 7.5, 12 9 C14 9.5, 15 12, 13.5 14 C11.5 15.5, 3.5 15.5, 1.5 14 Z" fill="#ffffff" stroke="#ffffff" strokeWidth="1" />
+                </svg>
+              </span>
+            </div>
+            <span className="text-[9px] text-white/90 font-sans font-bold tracking-widest uppercase mt-1 leading-none">{BUSINESS_SLOGAN}</span>
+          </div>
         </div>
         <div className="flex items-center gap-2">
-          <motion.a
-            href="https://www.facebook.com/LAISLADELOBO"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileTap={{ scale: 0.95 }}
-            className="w-11 h-11 bg-isla-teal/10 rounded-full flex items-center justify-center text-isla-teal cursor-pointer"
-          >
-            <Facebook size={22} />
-          </motion.a>
-          <motion.a
-            href="https://maps.app.goo.gl/Cebnnt1QLt2iVW6f9"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileTap={{ scale: 0.95 }}
-            className="w-11 h-11 bg-isla-teal/10 rounded-full flex items-center justify-center text-isla-teal cursor-pointer"
-          >
-            <MapPin size={22} />
-          </motion.a>
+          {FACEBOOK_URL && (
+            <motion.a
+              href={FACEBOOK_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileTap={{ scale: 0.95 }}
+              className="w-11 h-11 bg-primary/10 rounded-full flex items-center justify-center text-primary cursor-pointer"
+            >
+              <Facebook size={22} />
+            </motion.a>
+          )}
+          {MAPS_URL && (
+            <motion.a
+              href={MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileTap={{ scale: 0.95 }}
+              className="w-11 h-11 bg-primary/10 rounded-full flex items-center justify-center text-primary cursor-pointer"
+            >
+              <MapPin size={22} />
+            </motion.a>
+          )}
           <motion.div
             onClick={() => cartCount > 0 && setShowSummary(true)}
             whileTap={{ scale: 0.95 }}
-            className="w-11 h-11 bg-isla-teal/10 rounded-full flex items-center justify-center relative cursor-pointer"
+            className="w-11 h-11 bg-primary/10 rounded-full flex items-center justify-center relative cursor-pointer"
           >
-            <ShoppingBag size={22} className="text-isla-teal" />
+            <ShoppingBag size={22} className="text-primary" />
             {cartCount > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 min-w-[20px] h-5 bg-isla-orange text-white rounded-full text-[10px] font-bold flex items-center justify-center px-1">
+              <span className="absolute -top-0.5 -right-0.5 min-w-[20px] h-5 bg-secondary text-white rounded-full text-[10px] font-bold flex items-center justify-center px-1">
                 {cartCount}
               </span>
             )}
@@ -322,10 +647,10 @@ export default function App() {
         </div>
       </header>
 
-      <div className="w-full bg-isla-teal py-2 overflow-hidden flex items-center">
+      <div className="w-full bg-primary py-2 overflow-hidden flex items-center">
         <div className="animate-marquee flex gap-6 text-white font-slogan font-bold text-[11px] tracking-widest uppercase whitespace-nowrap">
           {[...Array(10)].map((_, i) => (
-            <span key={i}>🐺 LA ISLA DEL LOBO • SABOR DEL MAR • FRESCURA GARANTIZADA • </span>
+            <span key={i}>{MARQUEE_TEXT}</span>
           ))}
         </div>
       </div>
@@ -335,24 +660,35 @@ export default function App() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.95 }}
           animate={{ 
-            boxShadow: ["0px 0px 0px 0px rgba(249,115,22,0.6)", "0px 0px 20px 8px rgba(249,115,22,0)", "0px 0px 0px 0px rgba(249,115,22,0)"] 
+            boxShadow: ["0px 0px 0px 0px rgba(245,158,11,0.6)", "0px 0px 20px 8px rgba(245,158,11,0)", "0px 0px 0px 0px rgba(245,158,11,0)"] 
           }}
           transition={{ repeat: Infinity, duration: 1.5 }}
           onClick={() => setShowBirthdayForm(true)}
-          className="w-full bg-gradient-to-r from-orange-400 via-isla-orange to-orange-500 text-white py-3 rounded-2xl flex items-center justify-center gap-2 font-black text-[11px] sm:text-xs uppercase tracking-wider border border-orange-300 relative overflow-hidden group"
+          className="w-full bg-gradient-to-r from-secondary/80 via-secondary to-secondary/95 text-white py-3 rounded-2xl flex items-center justify-center gap-2 font-black text-[11px] sm:text-xs uppercase tracking-wider border border-secondary/20 relative overflow-hidden group"
         >
           <div className="absolute inset-0 shimmer opacity-30 mix-blend-overlay"></div>
           <Gift size={18} className="animate-bounce" />
-          <span>¡Registra tu cumpleaños <span className="text-yellow-200">aquí</span> y recibe una sorpresa!</span>
+          <span>¡Registra tu cumpleaños <span className="text-red-100">aquí</span> y recibe una dulce sorpresa arcoíris! 🎁</span>
         </motion.button>
       </div>
 
       <div className="px-5 pt-4 pb-3">
-        <div className="relative w-full rounded-3xl overflow-hidden shadow-xl aspect-[2/1] bg-gray-100">
+        <div className="relative w-full rounded-3xl overflow-hidden shadow-xl aspect-[2/1] bg-gray-100 flex items-center justify-center">
           <img 
             src="/banner.png" 
-            alt="La Isla del Lobo" 
+            alt={BUSINESS_NAME} 
             className="w-full h-full object-cover"
+            onError={(e) => {
+              // Si la imagen de banner no existe, muestra un placeholder elegante
+              e.currentTarget.style.display = 'none';
+              const parent = e.currentTarget.parentElement;
+              if (parent) {
+                const placeholder = document.createElement('div');
+                placeholder.className = "flex flex-col items-center justify-center text-gray-400 p-6 text-center";
+                placeholder.innerHTML = `<span class='font-bold text-sm'>Banner del Negocio</span><span class='text-[10px] mt-1'>(Sube tu imagen 'banner.png' en la carpeta public)</span>`;
+                parent.appendChild(placeholder);
+              }
+            }}
           />
         </div>
       </div>
@@ -365,8 +701,8 @@ export default function App() {
               onClick={() => scrollToCategory(cat.id)}
               className={`px-4 py-2 rounded-full text-[11px] font-semibold whitespace-nowrap transition-all duration-200 border
                 ${activeCategory === cat.id
-                  ? 'bg-isla-teal text-white border-isla-teal shadow-md shadow-isla-teal/20'
-                  : 'bg-white text-isla-dark border-gray-200 hover:border-isla-teal/40 hover:text-isla-teal'
+                  ? 'bg-primary text-white border-primary shadow-md shadow-primary/20'
+                  : 'bg-white text-dark border-gray-200 hover:border-primary/40 hover:text-primary'
                 }`}
             >
               {cat.nombre}
@@ -380,8 +716,8 @@ export default function App() {
           <section key={cat.id} id={`cat-${cat.id}`} className="mb-10 scroll-mt-28">
             <div className="mb-5 pt-2">
               <div className="flex items-center gap-2 mb-1">
-                <Anchor className="text-isla-teal wave-icon" size={22} />
-                <h3 className="font-title text-isla-teal text-[26px] leading-none tracking-wide category-underline">
+                <Utensils className="text-primary wave-icon" size={20} />
+                <h3 className="font-title text-primary text-[26px] leading-none tracking-wide category-underline">
                   {cat.nombre}
                 </h3>
               </div>
@@ -392,25 +728,28 @@ export default function App() {
                 <motion.div
                   key={idx}
                   whileHover={{ y: -4 }}
-                  className="bg-white rounded-[2rem] overflow-hidden flex flex-col shadow-sm border border-gray-100 hover:border-isla-teal/30 hover:shadow-md transition-all duration-200"
+                  className="bg-white rounded-[2rem] overflow-hidden flex flex-col shadow-sm border border-gray-100 hover:border-primary/30 hover:shadow-md transition-all duration-200"
                 >
                   <div 
-                    className="bg-white aspect-square flex items-center justify-center relative overflow-hidden cursor-pointer group"
+                    className="bg-gray-50 aspect-square flex items-center justify-center relative overflow-hidden cursor-pointer group p-2"
                     onClick={() => dish.imagen && setSelectedImage(dish.imagen.startsWith('http') ? dish.imagen : `/${dish.imagen}`)}
                   >
                     {dish.imagen ? (
                       <img 
                         src={dish.imagen.startsWith('http') ? dish.imagen : `/${dish.imagen}`} 
                         alt={dish.nombre} 
-                        className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300" 
+                        className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300 rounded-2xl" 
                       />
                     ) : (
-                      <span className="text-gray-400 text-[11px] uppercase tracking-wider font-semibold">Acá va imagen</span>
+                      <div className="text-center p-2 flex flex-col items-center">
+                        <Utensils className="text-gray-300 mb-1" size={24} />
+                        <span className="text-gray-400 text-[9px] uppercase tracking-wider font-semibold">Sin imagen</span>
+                      </div>
                     )}
                   </div>
                   
                   <div className="p-4 flex flex-col flex-1">
-                    <h4 className="font-bold text-isla-dark text-[13px] leading-tight mb-1">
+                    <h4 className="font-bold text-dark text-[13px] leading-tight mb-1">
                       {dish.nombre}
                     </h4>
                     {dish.descripcion && (
@@ -420,13 +759,13 @@ export default function App() {
                     )}
                     <div className="flex-1"></div>
                     <div className="flex items-center justify-between mt-2">
-                      <span className="font-bold text-isla-dark text-[16px] whitespace-nowrap">
+                      <span className="font-bold text-dark text-[16px] whitespace-nowrap">
                         {dish.precio}
                       </span>
                       <motion.button
                         whileTap={{ scale: 0.8 }}
                         onClick={() => addToCart(dish)}
-                        className="w-8 h-8 bg-[#E6F7F8] rounded-full flex items-center justify-center text-isla-teal transition-colors duration-200 shrink-0"
+                        className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors duration-200 shrink-0"
                       >
                         <Plus size={16} strokeWidth={3} />
                       </motion.button>
@@ -439,12 +778,12 @@ export default function App() {
         ))}
 
         <section className="mt-8 mb-4 border border-gray-100 bg-gray-50 rounded-3xl p-5 text-center shadow-sm">
-          <h3 className="font-title text-isla-teal text-[22px] leading-tight mb-2">¿Cómo estuvo todo?</h3>
+          <h3 className="font-title text-primary text-[22px] leading-tight mb-2">¿Cómo estuvo todo?</h3>
           <p className="text-[11px] text-gray-500 mb-4 px-4">Ayúdanos a mejorar calificando tu experiencia con nosotros</p>
           <motion.button 
             whileTap={{ scale: 0.95 }}
             onClick={() => setShowReviewForm(true)}
-            className="bg-isla-teal text-white px-6 py-3 rounded-2xl font-bold text-sm shadow-md shadow-isla-teal/20 flex items-center justify-center gap-2 mx-auto w-full"
+            className="bg-primary text-white px-6 py-3 rounded-2xl font-bold text-sm shadow-md shadow-primary/20 flex items-center justify-center gap-2 mx-auto w-full"
           >
             <Star size={18} className="fill-white" />
             Reseña nuestra comida
@@ -452,13 +791,29 @@ export default function App() {
         </section>
 
         <footer className="mt-8 pt-8 pb-10 border-t border-gray-200 flex flex-col items-center justify-center">
-
-          <p className="font-title text-2xl text-isla-teal mb-4">La Isla del Lobo</p>
-          <img src="/footer.jpeg" alt="Logo La Isla del Lobo" className="w-32 h-32 object-contain mb-6 rounded-2xl shadow-sm border border-gray-100" />
+          <p className="font-title text-2xl text-primary mb-4">{BUSINESS_NAME}</p>
+          <div className="w-32 h-32 bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100 shadow-sm mb-6 overflow-hidden">
+            <img 
+              src="/logo.png" 
+              alt="Logo" 
+              className="w-full h-full object-contain"
+              onError={(e) => {
+                // Si la imagen de logo no existe, muestra un placeholder elegante
+                e.currentTarget.style.display = 'none';
+                const parent = e.currentTarget.parentElement;
+                if (parent) {
+                  const placeholder = document.createElement('div');
+                  placeholder.className = "flex flex-col items-center justify-center text-gray-400 p-2 text-center";
+                  placeholder.innerHTML = `<span class='font-bold text-[11px]'>Logo</span><span class='text-[8px] mt-0.5'>(Sube tu 'logo.png' en public)</span>`;
+                  parent.appendChild(placeholder);
+                }
+              }}
+            />
+          </div>
           <p className="text-[11px] text-gray-400 font-medium">© 2026 Todos los derechos reservados.</p>
         </footer>
 
-        <div className="bg-isla-dark py-6 flex flex-col items-center justify-center">
+        <div className="bg-dark py-6 flex flex-col items-center justify-center rounded-2xl">
           <p className="text-[10px] font-bold tracking-[0.2em] uppercase mb-1 opacity-50 text-white/50">Digital Menu Experience</p>
           <motion.a 
             href="https://tymasolutions.lat/"
@@ -483,18 +838,18 @@ export default function App() {
           >
             <div className="glass rounded-[2rem] p-4 flex items-center justify-between border border-white/50 shadow-2xl">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-isla-teal rounded-2xl flex items-center justify-center relative overflow-hidden">
+                <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center relative overflow-hidden">
                   <div className="shimmer absolute inset-0 opacity-20"></div>
                   <ShoppingBag size={20} className="text-white" />
                 </div>
                 <div>
                   <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Tu Pedido</p>
-                  <p className="font-bold text-isla-dark text-lg">{cartCount} Artículos</p>
+                  <p className="font-bold text-dark text-lg">{cartCount} Artículos</p>
                 </div>
               </div>
               <button
                 onClick={() => setShowSummary(true)}
-                className="bg-isla-teal text-white px-6 py-3 rounded-2xl flex items-center gap-2 shadow-lg shadow-isla-teal/30 font-bold text-sm"
+                className="bg-primary text-white px-6 py-3 rounded-2xl flex items-center gap-2 shadow-lg shadow-primary/30 font-bold text-sm"
               >
                 Ver Pedido
                 <ChevronRight size={18} />
@@ -519,7 +874,7 @@ export default function App() {
               className="bg-white w-full max-w-md rounded-t-[3rem] p-6 max-h-[85vh] overflow-y-auto"
             >
               <div className="flex justify-between items-center mb-6">
-                <h2 className="font-title text-2xl text-isla-teal">Mi Pedido</h2>
+                <h2 className="font-title text-2xl text-primary">Mi Pedido</h2>
                 <button
                   onClick={() => setShowSummary(false)}
                   className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center"
@@ -534,15 +889,15 @@ export default function App() {
                     className="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl"
                   >
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-isla-dark text-sm truncate">{item.nombre}</h4>
-                      <p className="text-xs text-isla-teal font-bold">{item.precio}</p>
+                      <h4 className="font-semibold text-dark text-sm truncate">{item.nombre}</h4>
+                      <p className="text-xs text-primary font-bold">{item.precio}</p>
                     </div>
                     <div className="flex items-center gap-3 bg-white px-3 py-1.5 rounded-xl border border-gray-100">
                       <button onClick={() => updateQuantity(item.nombre, item.precio, -1)} className="text-gray-400">
                         <Minus size={16} />
                       </button>
                       <span className="font-bold text-sm w-4 text-center">{item.cantidad}</span>
-                      <button onClick={() => updateQuantity(item.nombre, item.precio, 1)} className="text-isla-teal">
+                      <button onClick={() => updateQuantity(item.nombre, item.precio, 1)} className="text-primary">
                         <Plus size={16} />
                       </button>
                     </div>
@@ -557,8 +912,8 @@ export default function App() {
               </div>
               <div className="border-t border-dashed border-gray-200 pt-6 mb-8">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-xl font-bold text-isla-dark">Total a pagar</h3>
-                  <h3 className="text-xl font-bold text-isla-teal">S/.{calculateTotal().toFixed(2)}</h3>
+                  <h3 className="text-xl font-bold text-dark">Total a pagar</h3>
+                  <h3 className="text-xl font-bold text-primary">S/.{calculateTotal().toFixed(2)}</h3>
                 </div>
               </div>
               <button
@@ -627,9 +982,9 @@ export default function App() {
 
               <div className="flex flex-col items-center text-center mb-5 mt-2">
                 <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-3">
-                  <Gift size={24} className="text-isla-orange" />
+                  <Gift size={24} className="text-secondary" />
                 </div>
-                <h2 className="font-title text-2xl text-isla-dark leading-none mb-2">¡Tu Cumpleaños!</h2>
+                <h2 className="font-title text-2xl text-dark leading-none mb-2">¡Tu Cumpleaños!</h2>
                 <p className="text-xs text-gray-500">Déjanos tus datos para enviarte una sorpresa en tu día especial.</p>
               </div>
 
@@ -641,29 +996,29 @@ export default function App() {
                 <form onSubmit={handleBirthdaySubmit} className="space-y-3">
                   <div>
                     <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Nombre Completo</label>
-                    <input required type="text" value={birthdayData.nombre} onChange={e => setBirthdayData({...birthdayData, nombre: e.target.value})} className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-isla-orange/50 transition-colors" placeholder="Ej. Juan Pérez" />
+                    <input required type="text" value={birthdayData.nombre} onChange={e => setBirthdayData({...birthdayData, nombre: e.target.value})} className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-secondary/50 transition-colors" placeholder="Ej. Juan Pérez" />
                   </div>
                   <div>
                     <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Teléfono</label>
                     <input required type="tel" minLength={9} maxLength={11} pattern="[0-9]*" value={birthdayData.telefono} onChange={e => {
                       const val = e.target.value.replace(/\D/g, '');
                       setBirthdayData({...birthdayData, telefono: val});
-                    }} className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-isla-orange/50 transition-colors" placeholder="Ej. 987654321" />
+                    }} className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-secondary/50 transition-colors" placeholder="Ej. 987654321" />
                   </div>
                   <div>
                     <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Fecha de Nacimiento</label>
-                    <input required type="date" value={birthdayData.fechaNacimiento} onChange={e => setBirthdayData({...birthdayData, fechaNacimiento: e.target.value})} className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-isla-orange/50 transition-colors text-gray-700" />
+                    <input required type="date" value={birthdayData.fechaNacimiento} onChange={e => setBirthdayData({...birthdayData, fechaNacimiento: e.target.value})} className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-secondary/50 transition-colors text-gray-700" />
                   </div>
                   <div>
                     <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Distrito</label>
-                    <input required type="text" value={birthdayData.distrito} onChange={e => setBirthdayData({...birthdayData, distrito: e.target.value})} className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-isla-orange/50 transition-colors" placeholder="Ej. Miraflores" />
+                    <input required type="text" value={birthdayData.distrito} onChange={e => setBirthdayData({...birthdayData, distrito: e.target.value})} className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-secondary/50 transition-colors" placeholder="Ej. Miraflores" />
                   </div>
                   <div>
                     <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Correo Electrónico (Opcional)</label>
-                    <input type="email" value={birthdayData.correo} onChange={e => setBirthdayData({...birthdayData, correo: e.target.value})} className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-isla-orange/50 transition-colors" placeholder="correo@ejemplo.com" />
+                    <input type="email" value={birthdayData.correo} onChange={e => setBirthdayData({...birthdayData, correo: e.target.value})} className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-secondary/50 transition-colors" placeholder="correo@ejemplo.com" />
                   </div>
                   
-                  <button disabled={isSubmittingBirthday} type="submit" className="w-full bg-isla-orange text-white py-3 rounded-xl font-bold text-sm shadow-md shadow-orange-200 mt-2 disabled:opacity-70 flex justify-center items-center">
+                  <button disabled={isSubmittingBirthday} type="submit" className="w-full bg-secondary text-white py-3 rounded-xl font-bold text-sm shadow-md shadow-secondary/20 mt-2 disabled:opacity-70 flex justify-center items-center">
                     {isSubmittingBirthday ? <Loader2 size={18} className="animate-spin" /> : "Guardar mis datos"}
                   </button>
                 </form>
@@ -696,9 +1051,9 @@ export default function App() {
 
               <div className="flex flex-col items-center text-center mb-5 mt-2">
                 <div className="w-12 h-12 bg-teal-50 rounded-full flex items-center justify-center mb-3">
-                  <Star size={24} className="text-isla-teal fill-isla-teal" />
+                  <Star size={24} className="text-primary fill-primary" />
                 </div>
-                <h2 className="font-title text-2xl text-isla-dark leading-none mb-2">¡Calificanos!</h2>
+                <h2 className="font-title text-2xl text-dark leading-none mb-2">¡Calificanos!</h2>
                 <p className="text-xs text-gray-500">Tu opinión es muy importante para nosotros.</p>
               </div>
 
@@ -745,12 +1100,12 @@ export default function App() {
                       rows={3} 
                       value={reviewData.comentario} 
                       onChange={e => setReviewData({...reviewData, comentario: e.target.value})} 
-                      className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-isla-teal/50 transition-colors resize-none mt-1" 
+                      className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary/50 transition-colors resize-none mt-1" 
                       placeholder="Cuéntanos más sobre tu experiencia..." 
                     />
                   </div>
                   
-                  <button disabled={isSubmittingReview} type="submit" className="w-full bg-isla-teal text-white py-3 rounded-xl font-bold text-sm shadow-md shadow-isla-teal/20 mt-2 disabled:opacity-70 flex justify-center items-center">
+                  <button disabled={isSubmittingReview} type="submit" className="w-full bg-primary text-white py-3 rounded-xl font-bold text-sm shadow-md shadow-primary/20 mt-2 disabled:opacity-70 flex justify-center items-center">
                     {isSubmittingReview ? <Loader2 size={18} className="animate-spin" /> : "Enviar Reseña"}
                   </button>
                 </form>

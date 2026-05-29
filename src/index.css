@@ -1,26 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Quicksand:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Pacifico&family=Poppins:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
+  /* CAMBIA AQUÍ LAS TIPOGRAFÍAS DEL MENÚ */
   --font-sans: "Poppins", system-ui, -apple-system, sans-serif;
-  --font-title: "Chewy", cursive;
-  --font-slogan: "Quicksand", sans-serif;
+  --font-title: "Fredoka", sans-serif; /* Tipografía para Títulos principales */
+  --font-slogan: "Poppins", sans-serif; /* Tipografía para eslóganes y subtítulos */
+  --font-logo: "Pacifico", cursive; /* Tipografía cursiva para el Logotipo de Arcoiris */
   
-  --color-isla-teal: #13A6B5;
-  --color-isla-orange: #F5A623;
-  --color-isla-dark: #333333;
-  --color-isla-bg: #FFFFFF;
+  /* CAMBIA AQUÍ LOS COLORES DEL MENÚ (Cualquier color CSS) */
+  --color-primary: #ef4444; /* Color Primario del Menú */
+  --color-secondary: #f59e0b; /* Color Secundario del Menú */
+  --color-dark: #1f2937; /* Color para textos oscuros o fondos oscuros */
+  --color-bg: #ffffff; /* Color de fondo principal de la app */
   
-  --shadow-glass: 0 8px 32px 0 rgba(19, 166, 181, 0.10);
+  --shadow-glass: 0 8px 32px 0 rgba(239, 68, 68, 0.10);
   --glass-bg: rgba(255, 255, 255, 0.92);
   --glass-border: rgba(255, 255, 255, 0.25);
 }
 
 body {
-  background-color: #f7fafa;
-  color: #333333;
+  background-color: #f8fafc;
+  color: var(--color-dark);
   -webkit-font-smoothing: antialiased;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-sans);
 }
 
 .glass {
@@ -91,6 +94,6 @@ body {
   left: 0;
   width: 60px;
   height: 3px;
-  background: linear-gradient(90deg, #13A6B5, #F5A623);
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
   border-radius: 2px;
 }
