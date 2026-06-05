@@ -9,14 +9,17 @@
   --font-logo: "Pacifico", cursive; /* Tipografía cursiva para el Logotipo de Arcoiris */
   
   /* CAMBIA AQUÍ LOS COLORES DEL MENÚ (Cualquier color CSS) */
-  --color-primary: #ef4444; /* Color Primario del Menú */
-  --color-secondary: #f59e0b; /* Color Secundario del Menú */
-  --color-dark: #1f2937; /* Color para textos oscuros o fondos oscuros */
-  --color-bg: #ffffff; /* Color de fondo principal de la app */
+  --color-primary: #ea1d24; /* Rojo Arcoiris Oficial */
+  --color-secondary: #ff9f43; /* Dorado Miel / Caramelo */
+  --color-accent: #06d6a0; /* Verde Menta */
+  --color-boba: #00b4d8; /* Azul Boba Refrescante */
+  --color-taro: #9d4edd; /* Morado Taro / Postres */
+  --color-dark: #1f2937; /* Gris Oscuro / Contraste */
+  --color-bg: #ffffff; /* Blanco Limpio */
   
-  --shadow-glass: 0 8px 32px 0 rgba(239, 68, 68, 0.10);
-  --glass-bg: rgba(255, 255, 255, 0.92);
-  --glass-border: rgba(255, 255, 255, 0.25);
+  --shadow-glass: 0 12px 32px 0 rgba(234, 29, 36, 0.06);
+  --glass-bg: rgba(255, 255, 255, 0.94);
+  --glass-border: rgba(234, 29, 36, 0.15);
 }
 
 body {
@@ -28,10 +31,22 @@ body {
 
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   box-shadow: var(--shadow-glass);
+}
+
+.sprinkles-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle, var(--color-primary) 6%, transparent 7%),
+    radial-gradient(circle, var(--color-secondary) 6%, transparent 7%);
+  background-size: 80px 80px;
+  background-position: 0 0, 40px 40px;
+  opacity: 0.03;
+  pointer-events: none;
 }
 
 @keyframes marquee {
@@ -40,7 +55,7 @@ body {
 }
 
 .animate-marquee {
-  animation: marquee 30s linear infinite;
+  animation: marquee 25s linear infinite;
   display: flex;
   width: max-content;
 }
@@ -68,7 +83,7 @@ body {
 /* Wave decoration for sections */
 @keyframes wave {
   0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-4px) rotate(2deg); }
+  50% { transform: translateY(-4px) rotate(3deg); }
 }
 
 .wave-icon {
@@ -76,10 +91,19 @@ body {
   display: inline-block;
 }
 
-/* Subtle pulse for prices */
-@keyframes pricePulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.85; }
+/* Float animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(1deg); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 4.5s ease-in-out infinite;
+  animation-delay: 1.5s;
 }
 
 /* Category header underline animation */
@@ -92,8 +116,27 @@ body {
   position: absolute;
   bottom: -4px;
   left: 0;
-  width: 60px;
-  height: 3px;
+  width: 50px;
+  height: 4px;
   background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
-  border-radius: 2px;
+  border-radius: 99px;
 }
+
+/* Ticket receipt zigzag style */
+.ticket-edge {
+  position: relative;
+}
+
+.ticket-edge::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background-image: linear-gradient(135deg, white 25%, transparent 25%), linear-gradient(225deg, white 25%, transparent 25%);
+  background-position: 0 0;
+  background-size: 16px 20px;
+  background-repeat: repeat-x;
+}
+

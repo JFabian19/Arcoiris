@@ -1,20 +1,20 @@
 categoría,nombre del plato,descripción,precio,URL de imagen
-Bebidas Calientes,Americano,,s/7.00,
-Bebidas Calientes,Expresso,,s/6.00,
-Bebidas Calientes,Capuccino,,s/10.00,
-Bebidas Calientes,Mocaccino,,s/12.00,
-Bebidas Calientes,Latte,,s/10.00,
-Bebidas Calientes,Chai Latte,,s/12.00,
-Bebidas Calientes,Caramel Latte,,s/12.00,
-Bebidas Calientes,Chocolate Arcoiris,,s/10.00,
-Bebidas Frías,Iced Coffe,,s/8.00,
+Bebidas Calientes,Americano,,s/7.00,americano.png
+Bebidas Calientes,Expresso,,s/6.00,Expresso.png
+Bebidas Calientes,Capuccino,,s/10.00,Capuccino.png
+Bebidas Calientes,Mocaccino,,s/12.00,Mocaccino.png
+Bebidas Calientes,Latte,,s/10.00,Latte.png
+Bebidas Calientes,Chai Latte,,s/12.00,Chai Latte.png
+Bebidas Calientes,Caramel Latte,,s/12.00,Caramel Latte.png
+Bebidas Calientes,Chocolate Arcoiris,,s/10.00,Chocolate Arcoiris.png
+Bebidas Frías,Iced Coffe,,s/8.00,Iced Coffe.png
 Bebidas Frías,Iced Latte,,s/12.00,
 Bebidas Frías,Iced Caramel Macchiato,,s/12.00,
-Bebidas Frías,Orange Coffee,,s/12.00,
+Bebidas Frías,Orange Coffee,,s/12.00,Orange Coffee.png
 Bebidas Frías,Iced Vainilla Latte,,s/12.00,
-Jugos,Fresa+Papaya+Piña,,s/9.00,
-Jugos,Fresa+Plátano+Naranja,,s/9.00,
-Jugos,Papaya+Piña,,s/9.00,
+Jugos,Fresa+Papaya+Piña,,s/9.00,Fresa+Papaya+Piña.png
+Jugos,Fresa+Plátano+Naranja,,s/9.00,Fresa+Plátano+Naranja.png
+Jugos,Papaya+Piña,,s/9.00,Papaya+Piña.png
 Jugos,Papaya+Piña+Naranja,,s/9.00,
 Jugos,Papaya+Naranja,,s/9.00,
 Jugos,Fresa,,s/8.00,
@@ -24,9 +24,10 @@ Jugos,Naranja Arcoli,,s/8.00,
 Jugos,Mango,,s/8.00,
 Jugos,Surtido,,s/8.00,
 Batidos,Lúcuma+Leche,,s/10.00,
-Waffles,Waffle Con Helado,"Incluye Nutella+fresa + plátano+durazno +1 topping y helado frito sabor a elección",s/17.00,
-Waffles,Waffle Personalizado,"Elige entre nutella, miel de maple, fosh omanjar blanco+3 frutas de estación +3 topping",s/15.00,
-Frutero,Ensalada de Fruta,La mejor selección de frutas de estación +yogurt+cereales,s/17.00,
+Wafles,Waffle Frutero,"Incluye Nutella, fresa, plátano, durazno, arándanos, kiwi, mango",s/17.00,
+Wafles,Waffle Con Helado,"Incluye Nutella + fresa + plátano + durazno + 1 topping y helado frito sabor a elección",s/22.00,
+Wafles,Waffle Personalizado,"Elige entre nutella, miel de maple, fosh o manjar blanco + 3 frutas de estación + 3 topping",s/17.00,
+Wafles,Ensalada de Fruta,La mejor selección de frutas de estación + yogurt + cereales,s/15.00,
 Frappé / Smoothie / Frozen,Frappé Con Café,"Sabores: Café, Oreo, Caramelo, Manjar Blanco, Moka, Nutella, Algarrobina. Incluyen crema Chantilly",s/15.00,
 Frappé / Smoothie / Frozen,Frappé Sin Café,"Sabores: Choco Lucuma, Pie de Limón, Taro, Matcha, Maracuyá Arcelik. Incluyen crema Chantilly",s/15.00,
 Limonadas,Limonada Clásica o de Sabores,"Sabores: Fresa, Mango, Piña, Maracumango Fresa, Durazno, Sandia, Arcoiris. Incluyen crema Chantilly",s/10.50,

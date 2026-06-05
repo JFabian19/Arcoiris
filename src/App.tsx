@@ -25,15 +25,28 @@ const MARQUEE_TEXT = "🍦 SABOR Y COLOR EN CADA BOCADO • BUBBLE TEAS Y HELADO
 
 // Mapa opcional de imágenes locales para platos conocidos (si deseas usar imágenes de la carpeta public)
 // Ejemplo: { "Nombre del Plato": "nombre_imagen.jpg" }
-const LOCAL_IMAGES: Record<string, string> = {};
+const LOCAL_IMAGES: Record<string, string> = {
+  "Americano": "americano.png",
+  "Capuccino": "Capuccino.png",
+  "Caramel Latte": "Caramel Latte.png",
+  "Chai Latte": "Chai Latte.png",
+  "Chocolate Arcoiris": "Chocolate Arcoiris.png",
+  "Expresso": "Expresso.png",
+  "Fresa+Papaya+Piña": "Fresa+Papaya+Piña.png",
+  "Fresa+Plátano+Naranja": "Fresa+Plátano+Naranja.png",
+  "Iced Coffe": "Iced Coffe.png",
+  "Latte": "Latte.png",
+  "Mocaccino": "Mocaccino.png",
+  "Orange Coffee": "Orange Coffee.png",
+  "Papaya+Piña": "Papaya+Piña.png"
+};
 
 const DEFAULT_CATEGORIES = [
   { nombre: "Bebidas Calientes" },
   { nombre: "Bebidas Frías" },
   { nombre: "Jugos" },
   { nombre: "Batidos" },
-  { nombre: "Waffles" },
-  { nombre: "Frutero" },
+  { nombre: "Wafles" },
   { nombre: "Frappé / Smoothie / Frozen" },
   { nombre: "Limonadas" },
   { nombre: "Bubbles Teas & Lattes" },
@@ -219,24 +232,59 @@ const DEFAULT_DISHES = [
     "URL de imagen": ""
   },
   {
-    "categoría": "Waffles",
+    "categoría": "Batidos",
+    "nombre del plato": "Fresa+Plátano+Leche",
+    "descripción": "",
+    "precio": "s/10.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Batidos",
+    "nombre del plato": "Mango+Fresa+Leche",
+    "descripción": "",
+    "precio": "s/10.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Batidos",
+    "nombre del plato": "Mango+Leche",
+    "descripción": "",
+    "precio": "s/10.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Batidos",
+    "nombre del plato": "Fresa+ Leche",
+    "descripción": "",
+    "precio": "s/10.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Wafles",
+    "nombre del plato": "Waffle Frutero",
+    "descripción": "Incluye Nutella, fresa, plátano, durazno, arándanos, kiwi, mango",
+    "precio": "s/17.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Wafles",
     "nombre del plato": "Waffle Con Helado",
-    "descripción": "Incluye Nutella+fresa + plátano+durazno +1 topping y helado frito sabor a elección",
-    "precio": "s/17.00",
+    "descripción": "Incluye Nutella + fresa + plátano + durazno + 1 topping y helado frito sabor a elección",
+    "precio": "s/22.00",
     "URL de imagen": ""
   },
   {
-    "categoría": "Waffles",
+    "categoría": "Wafles",
     "nombre del plato": "Waffle Personalizado",
-    "descripción": "Elige entre nutella, miel de maple, fosh omanjar blanco+3 frutas de estación +3 topping",
-    "precio": "s/15.00",
+    "descripción": "Elige entre nutella, miel de maple, fosh o manjar blanco + 3 frutas de estación + 3 topping",
+    "precio": "s/17.00",
     "URL de imagen": ""
   },
   {
-    "categoría": "Frutero",
+    "categoría": "Wafles",
     "nombre del plato": "Ensalada de Fruta",
-    "descripción": "La mejor selección de frutas de estación +yogurt+cereales",
-    "precio": "s/17.00",
+    "descripción": "La mejor selección de frutas de estación + yogurt + cereales",
+    "precio": "s/15.00",
     "URL de imagen": ""
   },
   {
@@ -249,14 +297,14 @@ const DEFAULT_DISHES = [
   {
     "categoría": "Frappé / Smoothie / Frozen",
     "nombre del plato": "Frappé Sin Café",
-    "descripción": "Sabores: Choco Lucuma, Pie de Limón, Taro, Matcha, Maracuyá Arcelik. Incluyen crema Chantilly",
+    "descripción": "Sabores: Choco Lúcuma, Pie de Limón, Taro, Matcha, Maracuyá. Incluyen crema Chantilly",
     "precio": "s/15.00",
     "URL de imagen": ""
   },
   {
     "categoría": "Limonadas",
-    "nombre del plato": "Limonada Clásica o de Sabores",
-    "descripción": "Sabores: Fresa, Mango, Piña, Maracumango Fresa, Durazno, Sandia, Arcoiris. Incluyen crema Chantilly",
+    "nombre del plato": "Limonada o Frozen de Frutas",
+    "descripción": "Sabores: Limonada de Fresa, Maracumango, Limonada Clásica, Durazno, Sandia, Mango, Piña, Fresa. Incluyen crema Chantilly",
     "precio": "s/10.50",
     "URL de imagen": ""
   },
@@ -385,6 +433,141 @@ interface CartItem {
   precio: string;
   cantidad: number;
 }
+
+// Configuración estética de categorías de Arcoiris
+const CATEGORY_THEMES: Record<string, {
+  icon: string;
+  bgLight: string;
+  bgActive: string;
+  text: string;
+  border: string;
+  accent: string;
+}> = {
+  "Bebidas Calientes": { icon: "☕", bgLight: "bg-amber-50/70", bgActive: "bg-amber-500", text: "text-amber-800", border: "border-amber-100", accent: "amber" },
+  "Bebidas Frías": { icon: "🥤", bgLight: "bg-cyan-50/70", bgActive: "bg-cyan-500", text: "text-cyan-800", border: "border-cyan-100", accent: "cyan" },
+  "Jugos": { icon: "🍊", bgLight: "bg-orange-50/70", bgActive: "bg-orange-500", text: "text-orange-850", border: "border-orange-100", accent: "orange" },
+  "Batidos": { icon: "🍓", bgLight: "bg-rose-50/70", bgActive: "bg-rose-500", text: "text-rose-800", border: "border-rose-100", accent: "rose" },
+  "Wafles": { icon: "🧇", bgLight: "bg-yellow-50/70", bgActive: "bg-yellow-500", text: "text-yellow-850", border: "border-yellow-100", accent: "yellow" },
+  "Frappé / Smoothie / Frozen": { icon: "🍧", bgLight: "bg-teal-50/70", bgActive: "bg-teal-500", text: "text-teal-800", border: "border-teal-100", accent: "teal" },
+  "Limonadas": { icon: "🍋", bgLight: "bg-lime-50/70", bgActive: "bg-lime-500", text: "text-lime-850", border: "border-lime-100", accent: "lime" },
+  "Bubbles Teas & Lattes": { icon: "🧋", bgLight: "bg-sky-50/70", bgActive: "bg-sky-500", text: "text-sky-850", border: "border-sky-100", accent: "sky" },
+  "Helados Frito": { icon: "🍦", bgLight: "bg-pink-50/70", bgActive: "bg-pink-500", text: "text-pink-850", border: "border-pink-100", accent: "pink" },
+  "Sandwich": { icon: "🥪", bgLight: "bg-amber-100/70", bgActive: "bg-amber-600", text: "text-amber-950", border: "border-amber-200", accent: "amber" },
+  "Postres": { icon: "🍰", bgLight: "bg-purple-50/70", bgActive: "bg-purple-500", text: "text-purple-850", border: "border-purple-100", accent: "purple" }
+};
+
+const DEFAULT_THEME = { icon: "✨", bgLight: "bg-primary/5", bgActive: "bg-primary", text: "text-primary", border: "border-primary/10", accent: "primary" };
+
+const getCategoryTheme = (name: string) => {
+  return CATEGORY_THEMES[name] || DEFAULT_THEME;
+};
+
+// Formateador de precios oficial S/. XX.XX
+const formatPrice = (p: string) => {
+  if (!p) return 'S/. 0.00';
+  const clean = p.toUpperCase().replace('S/', '').replace('. ', '.').trim();
+  if (clean.startsWith('.')) {
+    return `S/${clean}`;
+  }
+  return `S/. ${clean}`;
+};
+
+// Renderizador dinámico de vectores SVG para platos sin imagen
+const RenderPlaceholderSVG = ({ category, name }: { category: string, name: string }) => {
+  const theme = getCategoryTheme(category);
+  const strokeColor = "currentColor";
+  
+  const getSVGPath = () => {
+    switch (category) {
+      case "Bebidas Calientes":
+        return (
+          <g>
+            <path d="M12 24 C 6 24, 6 12, 12 12 L 28 12 C 34 12, 34 24, 28 24 Z" fill="none" stroke={strokeColor} strokeWidth="2.5" strokeLinecap="round" />
+            <path d="M28 15 C 33 15, 33 21, 28 21" fill="none" stroke={strokeColor} strokeWidth="2.5" strokeLinecap="round" />
+            <path d="M15 9 C 15 7, 17 7, 17 5" fill="none" stroke={strokeColor} strokeWidth="2" strokeLinecap="round" />
+            <path d="M20 9 C 20 7, 22 7, 22 5" fill="none" stroke={strokeColor} strokeWidth="2" strokeLinecap="round" />
+            <path d="M25 9 C 25 7, 27 7, 27 5" fill="none" stroke={strokeColor} strokeWidth="2" strokeLinecap="round" />
+            <path d="M8 27 L 32 27" fill="none" stroke={strokeColor} strokeWidth="2.5" strokeLinecap="round" />
+          </g>
+        );
+      case "Wafles":
+        return (
+          <g>
+            <rect x="8" y="8" width="24" height="24" rx="4" fill="none" stroke={strokeColor} strokeWidth="2.5" />
+            <line x1="14" y1="8" x2="14" y2="32" stroke={strokeColor} strokeWidth="2" />
+            <line x1="20" y1="8" x2="20" y2="32" stroke={strokeColor} strokeWidth="2" />
+            <line x1="26" y1="8" x2="26" y2="32" stroke={strokeColor} strokeWidth="2" />
+            <line x1="8" y1="14" x2="32" y2="14" stroke={strokeColor} strokeWidth="2" />
+            <line x1="8" y1="20" x2="32" y2="20" stroke={strokeColor} strokeWidth="2" />
+            <line x1="8" y1="26" x2="32" y2="26" stroke={strokeColor} strokeWidth="2" />
+            <circle cx="20" cy="20" r="3" fill="#ff4d6d" opacity="0.8" />
+          </g>
+        );
+      case "Helados Frito":
+        return (
+          <g>
+            <path d="M8 18 C 8 28, 32 28, 32 18 Z" fill="none" stroke={strokeColor} strokeWidth="2.5" />
+            <path d="M20 25 L 20 30" fill="none" stroke={strokeColor} strokeWidth="2.5" />
+            <path d="M14 30 L 26 30" fill="none" stroke={strokeColor} strokeWidth="2.5" />
+            <circle cx="15" cy="14" r="5" fill="none" stroke={strokeColor} strokeWidth="2.5" />
+            <circle cx="25" cy="14" r="5" fill="none" stroke={strokeColor} strokeWidth="2.5" />
+            <circle cx="20" cy="11" r="5" fill="none" stroke={strokeColor} strokeWidth="2.5" />
+            <circle cx="20" cy="5" r="2.5" fill="#ff4d6d" />
+            <path d="M20 5 C 21 2, 23 2, 24 3" fill="none" stroke={strokeColor} strokeWidth="1.5" />
+          </g>
+        );
+      case "Bubbles Teas & Lattes":
+      case "Frappé / Smoothie / Frozen":
+        return (
+          <g>
+            <path d="M10 8 L 13 28 C 13 30, 15 31, 18 31 L 22 31 C 25 31, 27 30, 27 28 L 30 8 Z" fill="none" stroke={strokeColor} strokeWidth="2.5" strokeLinejoin="round" />
+            <path d="M8 8 L 32 8" fill="none" stroke={strokeColor} strokeWidth="3" strokeLinecap="round" />
+            <path d="M24 2 L 24 16 L 21 28" fill="none" stroke={strokeColor} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            <circle cx="15" cy="22" r="2" fill="currentColor" />
+            <circle cx="19" cy="25" r="2" fill="currentColor" />
+            <circle cx="23" cy="21" r="2" fill="currentColor" />
+            <circle cx="25" cy="26" r="2" fill="currentColor" />
+            <circle cx="16" cy="27" r="2" fill="currentColor" />
+          </g>
+        );
+      case "Postres":
+        return (
+          <g>
+            <path d="M5 26 L 31 26 L 27 15 L 5 15 Z" fill="none" stroke={strokeColor} strokeWidth="2.5" strokeLinejoin="round" />
+            <path d="M27 15 L 18 8 L 5 15" fill="none" stroke={strokeColor} strokeWidth="2.5" strokeLinejoin="round" />
+            <line x1="5" y1="20" x2="29" y2="20" stroke={strokeColor} strokeWidth="1.5" />
+            <circle cx="18" cy="5" r="2" fill="#ff4d6d" />
+          </g>
+        );
+      case "Sandwich":
+        return (
+          <g>
+            <path d="M6 26 L 26 26 L 6 6 Z" fill="none" stroke={strokeColor} strokeWidth="2.5" strokeLinejoin="round" />
+            <path d="M12 28 L 32 28 L 32 8 Z" fill="none" stroke={strokeColor} strokeWidth="2.5" strokeLinejoin="round" />
+            <path d="M6 18 C 8 16, 12 20, 16 18" fill="none" stroke="#06d6a0" strokeWidth="2" />
+          </g>
+        );
+      default:
+        return (
+          <g>
+            <circle cx="20" cy="18" r="9" fill="none" stroke={strokeColor} strokeWidth="2.5" />
+            <path d="M15 27 C 15 22, 25 22, 25 27 Z" fill="none" stroke={strokeColor} strokeWidth="2.5" />
+            <path d="M28 8 L 30 6" fill="none" stroke={strokeColor} strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M28 6 L 30 8" fill="none" stroke={strokeColor} strokeWidth="1.5" strokeLinecap="round" />
+          </g>
+        );
+    }
+  };
+
+  return (
+    <div className={`w-16 h-16 rounded-full flex items-center justify-center ${theme.bgLight} ${theme.text} relative`}>
+      <svg width="36" height="36" viewBox="0 0 40 40" className="opacity-90">
+        {getSVGPath()}
+      </svg>
+      <span className="absolute -top-1 -right-1 text-[10px] animate-pulse">✨</span>
+    </div>
+  );
+};
 
 export default function App() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -583,31 +766,25 @@ export default function App() {
   }
 
   return (
-    <div className="max-w-md mx-auto bg-white min-h-screen relative shadow-2xl overflow-hidden flex flex-col font-sans">
-      <header className="sticky top-0 bg-white/95 backdrop-blur-md z-50 px-4 py-3 flex justify-between items-center border-b border-gray-100">
-        <div className="flex items-center gap-3">
-          {/* Logo recreado en contenedor rojo redondeado */}
-          <div className="bg-[#ef4444] px-4 py-2 rounded-2xl flex flex-col items-center justify-center shadow-md shadow-primary/20 relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none"></div>
-            <div className="relative font-logo text-[23px] text-white leading-none tracking-wide select-none pt-1">
-              Arcoiris
-              {/* Icono de helado + arcoíris sobre el primer 'i' */}
-              <span className="absolute -top-[12px] left-[38px] w-[26px] h-[22px] pointer-events-none">
-                <svg viewBox="0 0 26 22" fill="none" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                  {/* Arcos del Arcoíris */}
-                  <path d="M10 8 C 11 3, 17 1, 23 2.5" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" />
-                  <path d="M10 10.5 C 12.5 5.5, 19.5 3.5, 25 5.5" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" opacity="0.85" />
-                  <path d="M10 13 C 14 8, 22 6, 26 8.5" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" opacity="0.7" />
-                  
-                  {/* Copa de helado base */}
-                  <path d="M3 15 L9.5 15 C10.5 15, 11 15.5, 10 17.5 L8 20.5 C7.5 21.2, 5 21.2, 4.5 20.5 L2.5 17.5 C1.5 15.5, 2 15, 3 15 Z" fill="#ffffff" opacity="0.25" stroke="#ffffff" strokeWidth="1" />
-                  {/* Bola de helado / copete */}
-                  <path d="M1.5 14 C0.5 12, 2.5 9.5, 4.5 9 C5 7.5, 7 6.5, 8.5 7 C9.5 6, 12 7.5, 12 9 C14 9.5, 15 12, 13.5 14 C11.5 15.5, 3.5 15.5, 1.5 14 Z" fill="#ffffff" stroke="#ffffff" strokeWidth="1" />
-                </svg>
-              </span>
-            </div>
-            <span className="text-[9px] text-white/90 font-sans font-bold tracking-widest uppercase mt-1 leading-none">{BUSINESS_SLOGAN}</span>
-          </div>
+    <div className="max-w-md mx-auto bg-bg min-h-screen relative shadow-2xl overflow-hidden flex flex-col font-sans">
+      <div className="sprinkles-pattern"></div>
+      <header className="sticky top-0 bg-bg/90 backdrop-blur-md z-50 px-4 py-3 flex justify-between items-center border-b border-primary/5">
+        <div className="flex items-center">
+          <img 
+            src="/logo.png" 
+            alt="Arcoiris Logo" 
+            className="h-10 sm:h-11 w-auto object-contain select-none"
+            onError={(e) => {
+              e.currentTarget.style.display = 'none';
+              const parent = e.currentTarget.parentElement;
+              if (parent) {
+                const fallback = document.createElement('span');
+                fallback.className = "font-logo text-2xl text-primary";
+                fallback.innerText = "Arcoiris 🌈";
+                parent.appendChild(fallback);
+              }
+            }}
+          />
         </div>
         <div className="flex items-center gap-2">
           {FACEBOOK_URL && (
@@ -616,9 +793,9 @@ export default function App() {
               target="_blank"
               rel="noopener noreferrer"
               whileTap={{ scale: 0.95 }}
-              className="w-11 h-11 bg-primary/10 rounded-full flex items-center justify-center text-primary cursor-pointer"
+              className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary cursor-pointer hover:bg-primary hover:text-white transition-colors"
             >
-              <Facebook size={22} />
+              <Facebook size={20} />
             </motion.a>
           )}
           {MAPS_URL && (
@@ -627,19 +804,19 @@ export default function App() {
               target="_blank"
               rel="noopener noreferrer"
               whileTap={{ scale: 0.95 }}
-              className="w-11 h-11 bg-primary/10 rounded-full flex items-center justify-center text-primary cursor-pointer"
+              className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary cursor-pointer hover:bg-primary hover:text-white transition-colors"
             >
-              <MapPin size={22} />
+              <MapPin size={20} />
             </motion.a>
           )}
           <motion.div
             onClick={() => cartCount > 0 && setShowSummary(true)}
             whileTap={{ scale: 0.95 }}
-            className="w-11 h-11 bg-primary/10 rounded-full flex items-center justify-center relative cursor-pointer"
+            className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center relative cursor-pointer hover:bg-primary hover:text-white group transition-colors"
           >
-            <ShoppingBag size={22} className="text-primary" />
+            <ShoppingBag size={20} className="text-primary group-hover:text-white transition-colors" />
             {cartCount > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 min-w-[20px] h-5 bg-secondary text-white rounded-full text-[10px] font-bold flex items-center justify-center px-1">
+              <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-4.5 bg-secondary text-white rounded-full text-[9px] font-black flex items-center justify-center px-1 border border-white">
                 {cartCount}
               </span>
             )}
@@ -647,7 +824,7 @@ export default function App() {
         </div>
       </header>
 
-      <div className="w-full bg-primary py-2 overflow-hidden flex items-center">
+      <div className="w-full bg-gradient-to-r from-primary via-secondary to-primary py-2 overflow-hidden flex items-center">
         <div className="animate-marquee flex gap-6 text-white font-slogan font-bold text-[11px] tracking-widest uppercase whitespace-nowrap">
           {[...Array(10)].map((_, i) => (
             <span key={i}>{MARQUEE_TEXT}</span>
@@ -657,29 +834,28 @@ export default function App() {
 
       <div className="px-5 pt-4">
         <motion.button 
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
           animate={{ 
-            boxShadow: ["0px 0px 0px 0px rgba(245,158,11,0.6)", "0px 0px 20px 8px rgba(245,158,11,0)", "0px 0px 0px 0px rgba(245,158,11,0)"] 
+            boxShadow: ["0px 0px 0px 0px rgba(255,77,109,0.4)", "0px 0px 20px 8px rgba(255,77,109,0)", "0px 0px 0px 0px rgba(255,77,109,0)"] 
           }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
+          transition={{ repeat: Infinity, duration: 2 }}
           onClick={() => setShowBirthdayForm(true)}
-          className="w-full bg-gradient-to-r from-secondary/80 via-secondary to-secondary/95 text-white py-3 rounded-2xl flex items-center justify-center gap-2 font-black text-[11px] sm:text-xs uppercase tracking-wider border border-secondary/20 relative overflow-hidden group"
+          className="w-full bg-gradient-to-r from-primary via-secondary to-primary text-white py-3.5 rounded-2xl flex items-center justify-center gap-2 font-bold text-[11px] sm:text-xs uppercase tracking-wider border border-white/20 relative overflow-hidden group shadow-md cursor-pointer"
         >
-          <div className="absolute inset-0 shimmer opacity-30 mix-blend-overlay"></div>
+          <div className="absolute inset-0 shimmer opacity-20 mix-blend-overlay"></div>
           <Gift size={18} className="animate-bounce" />
-          <span>¡Registra tu cumpleaños <span className="text-red-100">aquí</span> y recibe una dulce sorpresa arcoíris! 🎁</span>
+          <span>¡Registra tu cumpleaños <span className="underline decoration-wavy text-yellow-100 font-extrabold">aquí</span> y recibe una sorpresa! 🎁</span>
         </motion.button>
       </div>
 
       <div className="px-5 pt-4 pb-3">
-        <div className="relative w-full rounded-3xl overflow-hidden shadow-xl aspect-[2/1] bg-gray-100 flex items-center justify-center">
+        <div className="relative w-full rounded-[2.5rem] overflow-hidden shadow-md aspect-[2/1] bg-gray-50 flex items-center justify-center border border-primary/5">
           <img 
             src="/banner.png" 
             alt={BUSINESS_NAME} 
             className="w-full h-full object-cover"
             onError={(e) => {
-              // Si la imagen de banner no existe, muestra un placeholder elegante
               e.currentTarget.style.display = 'none';
               const parent = e.currentTarget.parentElement;
               if (parent) {
@@ -694,120 +870,138 @@ export default function App() {
       </div>
 
       <div className="px-5 py-3 overflow-x-auto no-scrollbar">
-        <div className="flex gap-2 w-max">
-          {categories.map(cat => (
-            <button
-              key={cat.id}
-              onClick={() => scrollToCategory(cat.id)}
-              className={`px-4 py-2 rounded-full text-[11px] font-semibold whitespace-nowrap transition-all duration-200 border
-                ${activeCategory === cat.id
-                  ? 'bg-primary text-white border-primary shadow-md shadow-primary/20'
-                  : 'bg-white text-dark border-gray-200 hover:border-primary/40 hover:text-primary'
-                }`}
-            >
-              {cat.nombre}
-            </button>
-          ))}
+        <div className="flex gap-2 w-max py-1">
+          {categories.map(cat => {
+            const theme = getCategoryTheme(cat.nombre);
+            const isActive = activeCategory === cat.id;
+            return (
+              <motion.button
+                key={cat.id}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => scrollToCategory(cat.id)}
+                className={`px-4 py-2.5 rounded-full text-[10px] font-title font-black uppercase tracking-wider whitespace-nowrap transition-all duration-200 border flex items-center gap-1.5 cursor-pointer shadow-sm
+                  ${isActive
+                    ? `${theme.bgActive} text-white border-transparent shadow-md scale-105`
+                    : `bg-white/80 backdrop-blur-sm text-dark ${theme.border} hover:border-primary/40`
+                  }`}
+              >
+                <span className="text-xs">{theme.icon.trim()}</span>
+                {cat.nombre}
+              </motion.button>
+            );
+          })}
         </div>
       </div>
 
       <main className="flex-1 overflow-y-auto pb-32 px-5">
-        {categories.map(cat => (
-          <section key={cat.id} id={`cat-${cat.id}`} className="mb-10 scroll-mt-28">
-            <div className="mb-5 pt-2">
-              <div className="flex items-center gap-2 mb-1">
-                <Utensils className="text-primary wave-icon" size={20} />
-                <h3 className="font-title text-primary text-[26px] leading-none tracking-wide category-underline">
-                  {cat.nombre}
-                </h3>
+        {categories.map(cat => {
+          const theme = getCategoryTheme(cat.nombre);
+          return (
+            <section key={cat.id} id={`cat-${cat.id}`} className="mb-10 scroll-mt-28">
+              <div className="mb-6 pt-4">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-3xl wave-icon select-none">{theme.icon.trim()}</span>
+                  <h3 className="font-title text-primary text-[25px] sm:text-[27px] font-black tracking-wide leading-none uppercase category-underline">
+                    {cat.nombre}
+                  </h3>
+                </div>
               </div>
-            </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              {cat.items.map((dish, idx) => (
-                <motion.div
-                  key={idx}
-                  whileHover={{ y: -4 }}
-                  className="bg-white rounded-[2rem] overflow-hidden flex flex-col shadow-sm border border-gray-100 hover:border-primary/30 hover:shadow-md transition-all duration-200"
-                >
-                  <div 
-                    className="bg-gray-50 aspect-square flex items-center justify-center relative overflow-hidden cursor-pointer group p-2"
-                    onClick={() => dish.imagen && setSelectedImage(dish.imagen.startsWith('http') ? dish.imagen : `/${dish.imagen}`)}
-                  >
-                    {dish.imagen ? (
-                      <img 
-                        src={dish.imagen.startsWith('http') ? dish.imagen : `/${dish.imagen}`} 
-                        alt={dish.nombre} 
-                        className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300 rounded-2xl" 
-                      />
-                    ) : (
-                      <div className="text-center p-2 flex flex-col items-center">
-                        <Utensils className="text-gray-300 mb-1" size={24} />
-                        <span className="text-gray-400 text-[9px] uppercase tracking-wider font-semibold">Sin imagen</span>
-                      </div>
-                    )}
-                  </div>
-                  
-                  <div className="p-4 flex flex-col flex-1">
-                    <h4 className="font-bold text-dark text-[13px] leading-tight mb-1">
-                      {dish.nombre}
-                    </h4>
-                    {dish.descripcion && (
-                      <p className="text-[10px] text-gray-400 leading-tight mb-2">
-                        {dish.descripcion}
-                      </p>
-                    )}
-                    <div className="flex-1"></div>
-                    <div className="flex items-center justify-between mt-2">
-                      <span className="font-bold text-dark text-[16px] whitespace-nowrap">
-                        {dish.precio}
-                      </span>
-                      <motion.button
-                        whileTap={{ scale: 0.8 }}
-                        onClick={() => addToCart(dish)}
-                        className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors duration-200 shrink-0"
+              <div className="grid grid-cols-2 gap-4">
+                {cat.items.map((dish, idx) => {
+                  const isPopular = idx % 5 === 0;
+                  const isNew = idx % 7 === 3;
+                  return (
+                    <motion.div
+                      key={idx}
+                      whileHover={{ y: -6, boxShadow: "0 12px 20px -8px rgba(255, 77, 109, 0.15)" }}
+                      className="bg-white/90 backdrop-blur-sm rounded-[2rem] overflow-hidden flex flex-col shadow-sm border border-gray-100/80 hover:border-primary/20 transition-all duration-300 relative group"
+                    >
+                      {isPopular && (
+                        <span className="absolute top-2.5 left-2.5 z-10 bg-secondary text-white text-[8px] font-black uppercase px-2 py-0.5 rounded-full shadow-sm select-none">
+                          ⭐ TOP
+                        </span>
+                      )}
+                      {isNew && (
+                        <span className="absolute top-2.5 left-2.5 z-10 bg-primary text-white text-[8px] font-black uppercase px-2 py-0.5 rounded-full shadow-sm select-none">
+                          🍦 NUEVO
+                        </span>
+                      )}
+                      
+                      <div 
+                        className="bg-gray-50/50 aspect-square flex items-center justify-center relative overflow-hidden cursor-pointer group p-2"
+                        onClick={() => dish.imagen && setSelectedImage(dish.imagen.startsWith('http') ? dish.imagen : `/${dish.imagen}`)}
                       >
-                        <Plus size={16} strokeWidth={3} />
-                      </motion.button>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </section>
-        ))}
+                        {dish.imagen ? (
+                          <img 
+                            src={dish.imagen.startsWith('http') ? dish.imagen : `/${dish.imagen}`} 
+                            alt={dish.nombre} 
+                            className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-300 rounded-2xl" 
+                          />
+                        ) : (
+                          <RenderPlaceholderSVG category={cat.nombre} name={dish.nombre} />
+                        )}
+                      </div>
+                      
+                      <div className="p-4 flex flex-col flex-1">
+                        <h4 className="font-title text-dark text-[13px] leading-tight mb-1 font-bold group-hover:text-primary transition-colors">
+                          {dish.nombre}
+                        </h4>
+                        {dish.descripcion && (
+                          <p className="text-[10px] text-gray-500 leading-tight mb-2 line-clamp-2">
+                            {dish.descripcion}
+                          </p>
+                        )}
+                        <div className="flex-1"></div>
+                        <div className="flex items-center justify-between mt-2 pt-1 border-t border-gray-50">
+                          <span className="font-title text-primary text-[15px] font-black">
+                            {formatPrice(dish.precio)}
+                          </span>
+                          <motion.button
+                            whileTap={{ scale: 0.8 }}
+                            whileHover={{ scale: 1.1 }}
+                            onClick={() => addToCart(dish)}
+                            className="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-200 shrink-0 cursor-pointer"
+                          >
+                            <Plus size={16} strokeWidth={3} />
+                          </motion.button>
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </section>
+          );
+        })}
 
-        <section className="mt-8 mb-4 border border-gray-100 bg-gray-50 rounded-3xl p-5 text-center shadow-sm">
-          <h3 className="font-title text-primary text-[22px] leading-tight mb-2">¿Cómo estuvo todo?</h3>
-          <p className="text-[11px] text-gray-500 mb-4 px-4">Ayúdanos a mejorar calificando tu experiencia con nosotros</p>
+        <section className="mt-8 mb-4 border border-primary/10 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 rounded-[2.5rem] p-6 text-center shadow-sm relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-8 h-8 bg-primary/10 rounded-full blur-sm -translate-x-3 -translate-y-3"></div>
+          <div className="absolute bottom-0 right-0 w-12 h-12 bg-secondary/10 rounded-full blur-sm translate-x-4 translate-y-4"></div>
+          
+          <h3 className="font-title text-primary text-[22px] leading-tight mb-1.5 flex items-center justify-center gap-1.5">
+            <span>¿Qué tan dulce fue tu visita?</span>
+            <span className="animate-bounce">🍭</span>
+          </h3>
+          <p className="text-[11px] text-gray-500 mb-4 px-4 leading-normal">Cuéntanos tu experiencia y ayúdanos a llenar el mundo de sabor</p>
           <motion.button 
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => setShowReviewForm(true)}
-            className="bg-primary text-white px-6 py-3 rounded-2xl font-bold text-sm shadow-md shadow-primary/20 flex items-center justify-center gap-2 mx-auto w-full"
+            className="bg-primary hover:bg-primary/95 text-white px-6 py-3 rounded-2xl font-bold text-sm shadow-md shadow-primary/20 flex items-center justify-center gap-2 mx-auto w-full max-w-xs cursor-pointer"
           >
             <Star size={18} className="fill-white" />
-            Reseña nuestra comida
+            Califica tu experiencia
           </motion.button>
         </section>
 
-        <footer className="mt-8 pt-8 pb-10 border-t border-gray-200 flex flex-col items-center justify-center">
-          <p className="font-title text-2xl text-primary mb-4">{BUSINESS_NAME}</p>
-          <div className="w-32 h-32 bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100 shadow-sm mb-6 overflow-hidden">
+        <footer className="mt-10 pt-8 pb-10 border-t border-primary/10 flex flex-col items-center justify-center">
+          <div className="h-12 mb-6 flex items-center justify-center animate-float">
             <img 
               src="/logo.png" 
-              alt="Logo" 
-              className="w-full h-full object-contain"
-              onError={(e) => {
-                // Si la imagen de logo no existe, muestra un placeholder elegante
-                e.currentTarget.style.display = 'none';
-                const parent = e.currentTarget.parentElement;
-                if (parent) {
-                  const placeholder = document.createElement('div');
-                  placeholder.className = "flex flex-col items-center justify-center text-gray-400 p-2 text-center";
-                  placeholder.innerHTML = `<span class='font-bold text-[11px]'>Logo</span><span class='text-[8px] mt-0.5'>(Sube tu 'logo.png' en public)</span>`;
-                  parent.appendChild(placeholder);
-                }
-              }}
+              alt="Arcoiris Logo" 
+              className="h-full object-contain select-none"
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
             />
           </div>
           <p className="text-[11px] text-gray-400 font-medium">© 2026 Todos los derechos reservados.</p>
@@ -843,16 +1037,16 @@ export default function App() {
                   <ShoppingBag size={20} className="text-white" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Tu Pedido</p>
-                  <p className="font-bold text-dark text-lg">{cartCount} Artículos</p>
+                  <p className="font-title text-[9px] font-bold text-gray-400 uppercase tracking-widest">Tu Pedido</p>
+                  <p className="font-title font-black text-dark text-lg leading-tight">{cartCount} Artículos</p>
                 </div>
               </div>
               <button
                 onClick={() => setShowSummary(true)}
-                className="bg-primary text-white px-6 py-3 rounded-2xl flex items-center gap-2 shadow-lg shadow-primary/30 font-bold text-sm"
+                className="bg-primary hover:bg-primary/95 text-white px-6 py-3 rounded-2xl flex items-center gap-2 shadow-lg shadow-primary/30 font-title font-black text-xs uppercase tracking-wider cursor-pointer transition-colors"
               >
                 Ver Pedido
-                <ChevronRight size={18} />
+                <ChevronRight size={16} className="animate-[float_1.5s_infinite]" />
               </button>
             </div>
           </motion.div>
@@ -866,18 +1060,23 @@ export default function App() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-end justify-center p-4 lg:p-0"
+            onClick={() => setShowSummary(false)}
           >
             <motion.div
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
-              className="bg-white w-full max-w-md rounded-t-[3rem] p-6 max-h-[85vh] overflow-y-auto"
+              className="bg-white w-full max-w-md rounded-t-[3rem] p-6 pb-12 max-h-[85vh] overflow-y-auto ticket-edge shadow-2xl relative"
+              onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-6">
-                <h2 className="font-title text-2xl text-primary">Mi Pedido</h2>
+                <h2 className="font-title text-2xl font-bold tracking-tight text-primary flex items-center gap-2">
+                  <span>Tu Pedido Dulce</span>
+                  <span className="animate-bounce">🧁</span>
+                </h2>
                 <button
                   onClick={() => setShowSummary(false)}
-                  className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center"
+                  className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors cursor-pointer"
                 >
                   <X size={20} className="text-gray-400" />
                 </button>
@@ -886,43 +1085,45 @@ export default function App() {
                 {cart.map(item => (
                   <div
                     key={`${item.nombre}-${item.precio}`}
-                    className="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl"
+                    className="flex items-center gap-4 bg-gray-50/70 p-4 rounded-2xl border border-gray-100/65"
                   >
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-dark text-sm truncate">{item.nombre}</h4>
-                      <p className="text-xs text-primary font-bold">{item.precio}</p>
+                      <h4 className="font-title text-dark text-sm font-semibold tracking-wide truncate">{item.nombre}</h4>
+                      <p className="font-title text-xs font-bold text-primary mt-1">{formatPrice(item.precio)}</p>
                     </div>
-                    <div className="flex items-center gap-3 bg-white px-3 py-1.5 rounded-xl border border-gray-100">
-                      <button onClick={() => updateQuantity(item.nombre, item.precio, -1)} className="text-gray-400">
-                        <Minus size={16} />
+                    <div className="flex items-center gap-3 bg-white px-3 py-1.5 rounded-xl border border-gray-150">
+                      <button onClick={() => updateQuantity(item.nombre, item.precio, -1)} className="text-gray-400 hover:text-primary cursor-pointer transition-colors">
+                        <Minus size={12} strokeWidth={3} />
                       </button>
-                      <span className="font-bold text-sm w-4 text-center">{item.cantidad}</span>
-                      <button onClick={() => updateQuantity(item.nombre, item.precio, 1)} className="text-primary">
-                        <Plus size={16} />
+                      <span className="font-title font-bold text-sm w-4 text-center text-dark">{item.cantidad}</span>
+                      <button onClick={() => updateQuantity(item.nombre, item.precio, 1)} className="text-primary hover:text-secondary cursor-pointer transition-colors">
+                        <Plus size={12} strokeWidth={3} />
                       </button>
                     </div>
                     <button
                       onClick={() => updateQuantity(item.nombre, item.precio, -item.cantidad)}
-                      className="text-red-300 ml-1"
+                      className="text-red-400 hover:text-red-600 ml-1 cursor-pointer transition-colors"
                     >
                       <Trash2 size={18} />
                     </button>
                   </div>
                 ))}
               </div>
-              <div className="border-t border-dashed border-gray-200 pt-6 mb-8">
+              <div className="border-t-2 border-dashed border-gray-200 pt-6 mb-8">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-xl font-bold text-dark">Total a pagar</h3>
-                  <h3 className="text-xl font-bold text-primary">S/.{calculateTotal().toFixed(2)}</h3>
+                  <h3 className="font-title text-sm font-bold text-gray-500 uppercase tracking-wider">Total del Pedido:</h3>
+                  <h3 className="font-title text-2xl font-black text-primary tracking-tight">S/. {calculateTotal().toFixed(2)}</h3>
                 </div>
               </div>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={sendToWhatsApp}
-                className="w-full bg-[#25D366] text-white py-4 rounded-2xl flex items-center justify-center gap-3 shadow-xl shadow-green-100 hover:scale-[1.02] transition-transform font-bold"
+                className="w-full bg-[#25D366] hover:bg-[#20ba5a] text-white py-4 rounded-2xl flex items-center justify-center gap-2.5 shadow-lg shadow-green-150 transition-colors font-title font-black text-sm uppercase tracking-wider cursor-pointer"
               >
-                Enviar Pedido a WhatsApp
-                <ChevronRight size={20} />
-              </button>
+                <span>Enviar Pedido a WhatsApp</span>
+                <ChevronRight size={18} className="animate-[float_1.5s_infinite]" />
+              </motion.button>
             </motion.div>
           </motion.div>
         )}
@@ -966,68 +1167,76 @@ export default function App() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={() => setShowBirthdayForm(false)}
           >
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white w-full max-w-sm rounded-[2rem] p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto"
+              className="bg-white w-full max-w-sm rounded-[2.5rem] p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setShowBirthdayForm(false)}
-                className="absolute top-4 right-4 w-8 h-8 bg-gray-50 rounded-full flex items-center justify-center"
+                className="absolute top-4 right-4 w-8 h-8 bg-gray-50 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors"
               >
                 <X size={18} className="text-gray-400" />
               </button>
-
+ 
               <div className="flex flex-col items-center text-center mb-5 mt-2">
-                <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-3">
-                  <Gift size={24} className="text-secondary" />
+                <div className="w-14 h-14 bg-gradient-to-tr from-secondary to-primary/80 rounded-full flex items-center justify-center mb-3 shadow-md animate-float">
+                  <Gift size={26} className="text-white" />
                 </div>
                 <h2 className="font-title text-2xl text-dark leading-none mb-2">¡Tu Cumpleaños!</h2>
-                <p className="text-xs text-gray-500">Déjanos tus datos para enviarte una sorpresa en tu día especial.</p>
+                <p className="text-xs text-gray-500 leading-relaxed px-4">Déjanos tus datos para enviarte una dulce sorpresa en tu día especial. 🧁</p>
               </div>
-
+ 
               {birthdaySuccess ? (
-                <div className="bg-green-50 text-green-600 p-4 rounded-2xl text-center text-sm font-bold border border-green-100">
-                  ¡Gracias! Tus datos han sido guardados.
+                <div className="bg-green-50 text-green-600 p-4 rounded-2xl text-center text-sm font-bold border border-green-100 animate-bounce">
+                  ¡Gracias! Tus datos han sido guardados. 🎉
                 </div>
               ) : (
-                <form onSubmit={handleBirthdaySubmit} className="space-y-3">
+                <form onSubmit={handleBirthdaySubmit} className="space-y-4">
                   <div>
                     <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Nombre Completo</label>
-                    <input required type="text" value={birthdayData.nombre} onChange={e => setBirthdayData({...birthdayData, nombre: e.target.value})} className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-secondary/50 transition-colors" placeholder="Ej. Juan Pérez" />
+                    <input required type="text" value={birthdayData.nombre} onChange={e => setBirthdayData({...birthdayData, nombre: e.target.value})} className="w-full bg-gray-50/50 border border-gray-150 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all" placeholder="Ej. Juan Pérez" />
                   </div>
                   <div>
                     <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Teléfono</label>
                     <input required type="tel" minLength={9} maxLength={11} pattern="[0-9]*" value={birthdayData.telefono} onChange={e => {
                       const val = e.target.value.replace(/\D/g, '');
                       setBirthdayData({...birthdayData, telefono: val});
-                    }} className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-secondary/50 transition-colors" placeholder="Ej. 987654321" />
+                    }} className="w-full bg-gray-50/50 border border-gray-150 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all" placeholder="Ej. 987654321" />
                   </div>
                   <div>
                     <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Fecha de Nacimiento</label>
-                    <input required type="date" value={birthdayData.fechaNacimiento} onChange={e => setBirthdayData({...birthdayData, fechaNacimiento: e.target.value})} className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-secondary/50 transition-colors text-gray-700" />
+                    <input required type="date" value={birthdayData.fechaNacimiento} onChange={e => setBirthdayData({...birthdayData, fechaNacimiento: e.target.value})} className="w-full bg-gray-50/50 border border-gray-150 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all text-gray-700 font-medium" />
                   </div>
                   <div>
                     <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Distrito</label>
-                    <input required type="text" value={birthdayData.distrito} onChange={e => setBirthdayData({...birthdayData, distrito: e.target.value})} className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-secondary/50 transition-colors" placeholder="Ej. Miraflores" />
+                    <input required type="text" value={birthdayData.distrito} onChange={e => setBirthdayData({...birthdayData, distrito: e.target.value})} className="w-full bg-gray-50/50 border border-gray-150 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all" placeholder="Ej. Miraflores" />
                   </div>
                   <div>
                     <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Correo Electrónico (Opcional)</label>
-                    <input type="email" value={birthdayData.correo} onChange={e => setBirthdayData({...birthdayData, correo: e.target.value})} className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-secondary/50 transition-colors" placeholder="correo@ejemplo.com" />
+                    <input type="email" value={birthdayData.correo} onChange={e => setBirthdayData({...birthdayData, correo: e.target.value})} className="w-full bg-gray-50/50 border border-gray-150 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all" placeholder="correo@ejemplo.com" />
                   </div>
                   
-                  <button disabled={isSubmittingBirthday} type="submit" className="w-full bg-secondary text-white py-3 rounded-xl font-bold text-sm shadow-md shadow-secondary/20 mt-2 disabled:opacity-70 flex justify-center items-center">
+                  <motion.button 
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    disabled={isSubmittingBirthday} 
+                    type="submit" 
+                    className="w-full bg-secondary text-white py-3.5 rounded-2xl font-bold text-sm shadow-md shadow-secondary/20 mt-2 disabled:opacity-70 flex justify-center items-center cursor-pointer"
+                  >
                     {isSubmittingBirthday ? <Loader2 size={18} className="animate-spin" /> : "Guardar mis datos"}
-                  </button>
+                  </motion.button>
                 </form>
               )}
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-
+ 
       <AnimatePresence>
         {showReviewForm && (
           <motion.div
@@ -1035,79 +1244,87 @@ export default function App() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={() => setShowReviewForm(false)}
           >
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white w-full max-w-sm rounded-[2rem] p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto"
+              className="bg-white w-full max-w-sm rounded-[2.5rem] p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setShowReviewForm(false)}
-                className="absolute top-4 right-4 w-8 h-8 bg-gray-50 rounded-full flex items-center justify-center"
+                className="absolute top-4 right-4 w-8 h-8 bg-gray-50 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors"
               >
                 <X size={18} className="text-gray-400" />
               </button>
-
+ 
               <div className="flex flex-col items-center text-center mb-5 mt-2">
-                <div className="w-12 h-12 bg-teal-50 rounded-full flex items-center justify-center mb-3">
-                  <Star size={24} className="text-primary fill-primary" />
+                <div className="w-14 h-14 bg-pink-100 rounded-full flex items-center justify-center mb-3 animate-float">
+                  <Star size={26} className="text-primary fill-primary" />
                 </div>
-                <h2 className="font-title text-2xl text-dark leading-none mb-2">¡Calificanos!</h2>
-                <p className="text-xs text-gray-500">Tu opinión es muy importante para nosotros.</p>
+                <h2 className="font-title text-2xl text-dark leading-none mb-2">¡Tu Opinión!</h2>
+                <p className="text-xs text-gray-500 leading-relaxed px-4">Califica tu experiencia para seguir endulzando tus momentos.</p>
               </div>
-
+ 
               {reviewSuccess ? (
-                <div className="bg-green-50 text-green-600 p-4 rounded-2xl text-center text-sm font-bold border border-green-100">
-                  ¡Gracias por tu reseña! Nos ayuda a mejorar.
+                <div className="bg-green-50 text-green-600 p-4 rounded-2xl text-center text-sm font-bold border border-green-100 animate-bounce">
+                  ¡Gracias por tu reseña! Nos ayuda muchísimo. 💖
                 </div>
               ) : (
-                <form onSubmit={handleReviewSubmit} className="space-y-5">
+                <form onSubmit={handleReviewSubmit} className="space-y-4">
                   
-                  <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100 flex flex-col items-center">
-                    <p className="text-xs font-bold text-gray-500 mb-2">Atención del Mozo</p>
-                    <div className="flex gap-1">
+                  <div className="bg-gray-50/50 p-4 rounded-[1.5rem] border border-gray-100 flex flex-col items-center">
+                    <p className="text-xs font-bold text-gray-500 mb-2 font-title uppercase tracking-wider">Atención del Mozo</p>
+                    <div className="flex gap-1.5">
                       {[1,2,3,4,5].map(star => (
                         <button 
                           key={star} type="button" 
                           onClick={() => setReviewData({...reviewData, estrellasMozo: star})}
-                          className="p-1 transition-transform hover:scale-110"
+                          className="p-1 transition-transform hover:scale-120 cursor-pointer"
                         >
-                          <Star size={28} className={reviewData.estrellasMozo >= star ? "text-yellow-400 fill-yellow-400" : "text-gray-300"} />
+                          <Star size={28} className={reviewData.estrellasMozo >= star ? "text-yellow-400 fill-yellow-400 filter drop-shadow-sm" : "text-gray-200"} />
                         </button>
                       ))}
                     </div>
                   </div>
-
-                  <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100 flex flex-col items-center">
-                    <p className="text-xs font-bold text-gray-500 mb-2">Calidad de la Comida</p>
-                    <div className="flex gap-1">
+ 
+                  <div className="bg-gray-50/50 p-4 rounded-[1.5rem] border border-gray-100 flex flex-col items-center">
+                    <p className="text-xs font-bold text-gray-500 mb-2 font-title uppercase tracking-wider">Calidad de la Comida</p>
+                    <div className="flex gap-1.5">
                       {[1,2,3,4,5].map(star => (
                         <button 
                           key={star} type="button" 
                           onClick={() => setReviewData({...reviewData, estrellasComida: star})}
-                          className="p-1 transition-transform hover:scale-110"
+                          className="p-1 transition-transform hover:scale-120 cursor-pointer"
                         >
-                          <Star size={28} className={reviewData.estrellasComida >= star ? "text-yellow-400 fill-yellow-400" : "text-gray-300"} />
+                          <Star size={28} className={reviewData.estrellasComida >= star ? "text-yellow-400 fill-yellow-400 filter drop-shadow-sm" : "text-gray-200"} />
                         </button>
                       ))}
                     </div>
                   </div>
-
+ 
                   <div>
                     <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Comentario (Opcional)</label>
                     <textarea 
                       rows={3} 
                       value={reviewData.comentario} 
                       onChange={e => setReviewData({...reviewData, comentario: e.target.value})} 
-                      className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary/50 transition-colors resize-none mt-1" 
+                      className="w-full bg-gray-50/50 border border-gray-150 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none mt-1" 
                       placeholder="Cuéntanos más sobre tu experiencia..." 
                     />
                   </div>
                   
-                  <button disabled={isSubmittingReview} type="submit" className="w-full bg-primary text-white py-3 rounded-xl font-bold text-sm shadow-md shadow-primary/20 mt-2 disabled:opacity-70 flex justify-center items-center">
+                  <motion.button 
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    disabled={isSubmittingReview} 
+                    type="submit" 
+                    className="w-full bg-primary text-white py-3.5 rounded-2xl font-bold text-sm shadow-md shadow-primary/20 mt-2 disabled:opacity-70 flex justify-center items-center cursor-pointer"
+                  >
                     {isSubmittingReview ? <Loader2 size={18} className="animate-spin" /> : "Enviar Reseña"}
-                  </button>
+                  </motion.button>
                 </form>
               )}
             </motion.div>
