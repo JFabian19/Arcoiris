@@ -32,13 +32,13 @@ const LOCAL_IMAGES: Record<string, string> = {
   "Chai Latte": "Chai Latte.png",
   "Chocolate Arcoiris": "Chocolate Arcoiris.png",
   "Expresso": "Expresso.png",
-  "Fresa+Papaya+Piña": "Fresa+Papaya+Piña.png",
-  "Fresa+Plátano+Naranja": "Fresa+Plátano+Naranja.png",
+  "Fresa + papaya + piña": "Fresa+Papaya+Piña.png",
+  "Fresa + plátano + naranja": "Fresa+Plátano+Naranja.png",
   "Iced Coffe": "Iced Coffe.png",
   "Latte": "Latte.png",
   "Mocaccino": "Mocaccino.png",
   "Orange Coffee": "Orange Coffee.png",
-  "Papaya+Piña": "Papaya+Piña.png"
+  "Papaya + piña": "Papaya+Piña.png"
 };
 
 const DEFAULT_CATEGORIES = [
@@ -47,372 +47,916 @@ const DEFAULT_CATEGORIES = [
   { nombre: "Jugos" },
   { nombre: "Batidos" },
   { nombre: "Wafles" },
-  { nombre: "Frappé / Smoothie / Frozen" },
-  { nombre: "Limonadas" },
-  { nombre: "Bubbles Teas & Lattes" },
+  { nombre: "Ensalada de frutas" },
+  { nombre: "Frozen" },
+  { nombre: "Bubble Juice" },
+  { nombre: "Bubble Teas" },
+  { nombre: "Bubble Lattes" },
+  { nombre: "Bebidas Especiales" },
+  { nombre: "Frappé" },
   { nombre: "Helados Frito" },
+  { nombre: "Complementos" },
   { nombre: "Sandwich" },
   { nombre: "Postres" }
 ];
 
 const DEFAULT_DISHES = [
-  {
+{
     "categoría": "Bebidas Calientes",
     "nombre del plato": "Americano",
     "descripción": "",
     "precio": "s/7.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Bebidas Calientes",
     "nombre del plato": "Expresso",
     "descripción": "",
     "precio": "s/6.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Bebidas Calientes",
     "nombre del plato": "Capuccino",
     "descripción": "",
     "precio": "s/10.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Bebidas Calientes",
     "nombre del plato": "Mocaccino",
     "descripción": "",
     "precio": "s/12.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Bebidas Calientes",
     "nombre del plato": "Latte",
     "descripción": "",
     "precio": "s/10.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Bebidas Calientes",
     "nombre del plato": "Chai Latte",
     "descripción": "",
     "precio": "s/12.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Bebidas Calientes",
     "nombre del plato": "Caramel Latte",
     "descripción": "",
     "precio": "s/12.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Bebidas Calientes",
     "nombre del plato": "Chocolate Arcoiris",
     "descripción": "",
     "precio": "s/10.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Bebidas Frías",
     "nombre del plato": "Iced Coffe",
     "descripción": "",
     "precio": "s/8.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Bebidas Frías",
     "nombre del plato": "Iced Latte",
     "descripción": "",
     "precio": "s/12.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Bebidas Frías",
     "nombre del plato": "Iced Caramel Macchiato",
     "descripción": "",
     "precio": "s/12.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Bebidas Frías",
     "nombre del plato": "Orange Coffee",
     "descripción": "",
     "precio": "s/12.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Bebidas Frías",
     "nombre del plato": "Iced Vainilla Latte",
     "descripción": "",
     "precio": "s/12.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Jugos",
-    "nombre del plato": "Fresa+Papaya+Piña",
+    "nombre del plato": "Fresa + papaya + piña",
     "descripción": "",
     "precio": "s/9.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Jugos",
-    "nombre del plato": "Fresa+Plátano+Naranja",
+    "nombre del plato": "Fresa + plátano + naranja",
     "descripción": "",
     "precio": "s/9.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Jugos",
-    "nombre del plato": "Papaya+Piña",
+    "nombre del plato": "Papaya + piña",
     "descripción": "",
     "precio": "s/9.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Jugos",
-    "nombre del plato": "Papaya+Piña+Naranja",
+    "nombre del plato": "Papaya + piña + naranja",
     "descripción": "",
     "precio": "s/9.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Jugos",
-    "nombre del plato": "Papaya+Naranja",
+    "nombre del plato": "Papaya + naranja",
     "descripción": "",
     "precio": "s/9.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Jugos",
     "nombre del plato": "Fresa",
     "descripción": "",
     "precio": "s/8.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Jugos",
     "nombre del plato": "Papaya",
     "descripción": "",
     "precio": "s/8.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Jugos",
     "nombre del plato": "Piña",
     "descripción": "",
     "precio": "s/8.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Jugos",
-    "nombre del plato": "Naranja Arcoli",
+    "nombre del plato": "Naranja",
     "descripción": "",
     "precio": "s/8.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Jugos",
     "nombre del plato": "Mango",
     "descripción": "",
     "precio": "s/8.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Jugos",
     "nombre del plato": "Surtido",
     "descripción": "",
     "precio": "s/8.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Batidos",
-    "nombre del plato": "Lúcuma+Leche",
+    "nombre del plato": "Lúcuma + leche",
     "descripción": "",
     "precio": "s/10.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Batidos",
-    "nombre del plato": "Fresa+Plátano+Leche",
+    "nombre del plato": "Fresa + plátano + leche",
     "descripción": "",
     "precio": "s/10.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Batidos",
-    "nombre del plato": "Mango+Fresa+Leche",
+    "nombre del plato": "Mango + fresa + leche",
     "descripción": "",
     "precio": "s/10.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Batidos",
-    "nombre del plato": "Mango+Leche",
+    "nombre del plato": "Mango + leche",
     "descripción": "",
     "precio": "s/10.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Batidos",
-    "nombre del plato": "Fresa+ Leche",
+    "nombre del plato": "Fresa + leche",
     "descripción": "",
     "precio": "s/10.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
+    "categoría": "Batidos",
+    "nombre del plato": "Papaya + leche",
+    "descripción": "",
+    "precio": "s/10.00",
+    "URL de imagen": ""
+},
+{
     "categoría": "Wafles",
-    "nombre del plato": "Waffle Frutero",
+    "nombre del plato": "W. Clásico",
+    "descripción": "Incluye fosh o miel de maple, fresa, plátano y arándanos",
+    "precio": "S/20.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Wafles",
+    "nombre del plato": "W. Frutero",
     "descripción": "Incluye Nutella, fresa, plátano, durazno, arándanos, kiwi, mango",
-    "precio": "s/17.00",
+    "precio": "S/22.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Wafles",
-    "nombre del plato": "Waffle Con Helado",
+    "nombre del plato": "W. Personalizado",
+    "descripción": "Personaliza a tu gusto: nutella, miel de maple, fosh o manjar blanco + 3 frutas + 3 topping",
+    "precio": "S/22.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Wafles",
+    "nombre del plato": "W. con Helado",
     "descripción": "Incluye Nutella + fresa + plátano + durazno + 1 topping y helado frito sabor a elección",
-    "precio": "s/22.00",
+    "precio": "S/27.00",
     "URL de imagen": ""
-  },
-  {
-    "categoría": "Wafles",
-    "nombre del plato": "Waffle Personalizado",
-    "descripción": "Elige entre nutella, miel de maple, fosh o manjar blanco + 3 frutas de estación + 3 topping",
-    "precio": "s/17.00",
-    "URL de imagen": ""
-  },
-  {
-    "categoría": "Wafles",
-    "nombre del plato": "Ensalada de Fruta",
+},
+{
+    "categoría": "Ensalada de frutas",
+    "nombre del plato": "Ensalada de frutas",
     "descripción": "La mejor selección de frutas de estación + yogurt + cereales",
-    "precio": "s/15.00",
+    "precio": "S/17.00",
     "URL de imagen": ""
-  },
-  {
-    "categoría": "Frappé / Smoothie / Frozen",
-    "nombre del plato": "Frappé Con Café",
-    "descripción": "Sabores: Café, Oreo, Caramelo, Manjar Blanco, Moka, Nutella, Algarrobina. Incluyen crema Chantilly",
-    "precio": "s/15.00",
-    "URL de imagen": ""
-  },
-  {
-    "categoría": "Frappé / Smoothie / Frozen",
-    "nombre del plato": "Frappé Sin Café",
-    "descripción": "Sabores: Choco Lúcuma, Pie de Limón, Taro, Matcha, Maracuyá. Incluyen crema Chantilly",
-    "precio": "s/15.00",
-    "URL de imagen": ""
-  },
-  {
-    "categoría": "Limonadas",
-    "nombre del plato": "Limonada o Frozen de Frutas",
-    "descripción": "Sabores: Limonada de Fresa, Maracumango, Limonada Clásica, Durazno, Sandia, Mango, Piña, Fresa. Incluyen crema Chantilly",
+},
+{
+    "categoría": "Frozen",
+    "nombre del plato": "Limonada Clásica",
+    "descripción": "Fruta natural",
     "precio": "s/10.50",
     "URL de imagen": ""
-  },
-  {
-    "categoría": "Bubbles Teas & Lattes",
-    "nombre del plato": "Leche de Coco",
-    "descripción": "Sabores: Piña Colada, Coconut, Mango",
+},
+{
+    "categoría": "Frozen",
+    "nombre del plato": "Limonada de Fresa",
+    "descripción": "Fruta natural",
+    "precio": "s/10.50",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frozen",
+    "nombre del plato": "Maracumango",
+    "descripción": "Fruta natural",
+    "precio": "s/10.50",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frozen",
+    "nombre del plato": "Maracuyá",
+    "descripción": "Fruta natural",
+    "precio": "s/10.50",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frozen",
+    "nombre del plato": "Limonada",
+    "descripción": "Fruta natural",
+    "precio": "s/10.50",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frozen",
+    "nombre del plato": "Durazno",
+    "descripción": "Fruta natural",
+    "precio": "s/10.50",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frozen",
+    "nombre del plato": "Sandia",
+    "descripción": "Fruta natural",
+    "precio": "s/10.50",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frozen",
+    "nombre del plato": "Mango",
+    "descripción": "Fruta natural",
+    "precio": "s/10.50",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frozen",
+    "nombre del plato": "Piña",
+    "descripción": "Fruta natural",
+    "precio": "s/10.50",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frozen",
+    "nombre del plato": "Fresa",
+    "descripción": "Fruta natural",
+    "precio": "s/10.50",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bubble Juice",
+    "nombre del plato": "Fresa",
+    "descripción": "Bebidas a base de frutas naturales",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bubble Juice",
+    "nombre del plato": "Piña",
+    "descripción": "Bebidas a base de frutas naturales",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bubble Juice",
+    "nombre del plato": "Fresa + papaya + piña",
+    "descripción": "Bebidas a base de frutas naturales",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bubble Juice",
+    "nombre del plato": "Papaya + piña + naranja",
+    "descripción": "Bebidas a base de frutas naturales",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bubble Juice",
+    "nombre del plato": "Granadilla + naranja + ...",
+    "descripción": "Bebidas a base de frutas naturales",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bubble Teas",
+    "nombre del plato": "Bubble Tea de Fresa",
+    "descripción": "Jazmine green tea",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bubble Teas",
+    "nombre del plato": "Bubble Tea de Mango",
+    "descripción": "Jazmine green tea",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bubble Teas",
+    "nombre del plato": "Bubble Tea de Piña",
+    "descripción": "Jazmine green tea",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bubble Teas",
+    "nombre del plato": "Bubble Tea de Uva",
+    "descripción": "Jazmine green tea",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bubble Teas",
+    "nombre del plato": "Bubble Tea de Maracuyá",
+    "descripción": "Jazmine green tea",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bubble Teas",
+    "nombre del plato": "Bubble Tea de Fresa + maracuyá",
+    "descripción": "Jazmine green tea",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bubble Teas",
+    "nombre del plato": "Bubble Tea de Mango + maracuyá",
+    "descripción": "Jazmine green tea",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bubble Teas",
+    "nombre del plato": "Bubble Tea de Maracuyá + Sandia",
+    "descripción": "Jazmine green tea",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bubble Lattes",
+    "nombre del plato": "Taro",
+    "descripción": "Latte con leche. Incluye tapioca",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bubble Lattes",
+    "nombre del plato": "Brown sugar",
+    "descripción": "Latte con leche. Incluye tapioca",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bubble Lattes",
+    "nombre del plato": "Matcha",
+    "descripción": "Latte con leche. Incluye tapioca",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bubble Lattes",
+    "nombre del plato": "Matcha fresa",
+    "descripción": "Latte con leche. Incluye tapioca",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bubble Lattes",
+    "nombre del plato": "Taro oreo",
+    "descripción": "Latte con leche. Incluye tapioca",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bebidas Especiales",
+    "nombre del plato": "Piña Colada",
+    "descripción": "Bebida Tropical",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bebidas Especiales",
+    "nombre del plato": "Coconut",
+    "descripción": "Bebida Tropical",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Bebidas Especiales",
+    "nombre del plato": "Strawberry matcha",
+    "descripción": "Especialidad. Incluye complemento tapioca",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frappé",
+    "nombre del plato": "Frappé de café",
+    "descripción": "Incluye café, crema batida y topping",
     "precio": "s/15.00",
     "URL de imagen": ""
-  },
-  {
-    "categoría": "Bubbles Teas & Lattes",
-    "nombre del plato": "Milk Tea",
-    "descripción": "Sabores: Matcha, Taro, Taro Oreo",
+},
+{
+    "categoría": "Frappé",
+    "nombre del plato": "Frappé de oreo",
+    "descripción": "Incluye café, crema batida y topping",
     "precio": "s/15.00",
     "URL de imagen": ""
-  },
-  {
-    "categoría": "Bubbles Teas & Lattes",
-    "nombre del plato": "Base Yogurt",
-    "descripción": "Sabores: Fresa, Fresa+Arándanos, Lúcuma, Mango+Maracuyá",
+},
+{
+    "categoría": "Frappé",
+    "nombre del plato": "Frappé de caramelo",
+    "descripción": "Incluye café, crema batida y topping",
     "precio": "s/15.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
+    "categoría": "Frappé",
+    "nombre del plato": "Frappé de manjar blanco",
+    "descripción": "Incluye café, crema batida y topping",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frappé",
+    "nombre del plato": "Frappé de moka",
+    "descripción": "Incluye café, crema batida y topping",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frappé",
+    "nombre del plato": "Frappé de Nutella",
+    "descripción": "Incluye café, crema batida y topping",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frappé",
+    "nombre del plato": "Frappé de Algarrobina",
+    "descripción": "Incluye café, crema batida y topping",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frappé",
+    "nombre del plato": "Frappé de Mocha Blanco",
+    "descripción": "Incluye café, crema batida y topping",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frappé",
+    "nombre del plato": "Frappé de Baileys",
+    "descripción": "Incluye café, crema batida y topping",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frappé",
+    "nombre del plato": "Frappé de Choco lúcuma",
+    "descripción": "No Incluye café, incluye crema batida y topping",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frappé",
+    "nombre del plato": "Frappé de Pie de limón",
+    "descripción": "No Incluye café, incluye crema batida y topping",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frappé",
+    "nombre del plato": "Frappé de Fresa",
+    "descripción": "No Incluye café, incluye crema batida y topping",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frappé",
+    "nombre del plato": "Frappe de Matcha",
+    "descripción": "No Incluye café, incluye crema batida y topping",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frappé",
+    "nombre del plato": "Frappe de maracuyá",
+    "descripción": "No Incluye café, incluye crema batida y topping",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frappé",
+    "nombre del plato": "Frappe de Choco Menta",
+    "descripción": "No Incluye café, incluye crema batida y topping",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frappé",
+    "nombre del plato": "Frappe de Cookies and Cream",
+    "descripción": "No Incluye café, incluye crema batida y topping",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Frappé",
+    "nombre del plato": "Frappe de Pistacho",
+    "descripción": "No Incluye café, incluye crema batida y topping",
+    "precio": "s/15.00",
+    "URL de imagen": ""
+},
+{
     "categoría": "Helados Frito",
-    "nombre del plato": "Helado de Galletas",
-    "descripción": "Sabores: Oreo, Casino Menta, Vainilla, Morochas, Picaras. 1 Sabor 2 Toppings",
+    "nombre del plato": "Helado de Oreo",
+    "descripción": "Base Galletas",
     "precio": "s/10.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Helados Frito",
-    "nombre del plato": "Helado de Chocolate",
-    "descripción": "Sabores: Nutella, Chocman, Sublime, Beso de mosa. 1 Sabor 2 Toppings",
+    "nombre del plato": "Helado de Casino menta",
+    "descripción": "Base Galletas",
     "precio": "s/10.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Helados Frito",
-    "nombre del plato": "Helado con Licores",
-    "descripción": "Sabores: Baileys, Ron con Pasas, Piña Colada. Incluye +4 toppings",
+    "nombre del plato": "Helado de Vainilla",
+    "descripción": "Base Galletas",
+    "precio": "s/10.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Morochas",
+    "descripción": "Base Galletas",
+    "precio": "s/10.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Pícaras",
+    "descripción": "Base Galletas",
+    "precio": "s/10.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Nutella",
+    "descripción": "Base Chocolates",
+    "precio": "s/10.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Chocman",
+    "descripción": "Base Chocolates",
+    "precio": "s/10.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Beso de moza",
+    "descripción": "Base Chocolates",
+    "precio": "s/10.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Baileys",
+    "descripción": "Base Licores",
     "precio": "s/14.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Helados Frito",
-    "nombre del plato": "Helados Otros Sabores",
-    "descripción": "Sabores: Café, Pistacho, Algarrobina. Incluye +2 toppings",
+    "nombre del plato": "Helado de Ron c/n pasas",
+    "descripción": "Base Licores",
+    "precio": "s/14.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Piña Colada",
+    "descripción": "Base Licores",
+    "precio": "s/14.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Café",
+    "descripción": "Otros sabores",
     "precio": "s/12.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Algarrobina",
+    "descripción": "Otros sabores",
+    "precio": "s/12.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Fresa",
+    "descripción": "Base Frutas",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Lúcuma",
+    "descripción": "Base Frutas",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Mango",
+    "descripción": "Base Frutas",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Arándanos",
+    "descripción": "Base Frutas",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Coco",
+    "descripción": "Base Frutas",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Aguaymanto",
+    "descripción": "Base Frutas",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Plátano",
+    "descripción": "Base Frutas",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Limón",
+    "descripción": "Base Frutas",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Kiwi",
+    "descripción": "Base Frutas",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Helados Frito",
+    "nombre del plato": "Helado de Maracuyá",
+    "descripción": "Base Frutas",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Complementos",
+    "nombre del plato": "Mango",
+    "descripción": "Complemento extra",
+    "precio": "+S/3.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Complementos",
+    "nombre del plato": "Tapioca",
+    "descripción": "Complemento extra",
+    "precio": "+S/3.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Complementos",
+    "nombre del plato": "Arándanos",
+    "descripción": "Complemento extra",
+    "precio": "+S/3.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Complementos",
+    "nombre del plato": "Fresa",
+    "descripción": "Complemento extra",
+    "precio": "+S/3.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Complementos",
+    "nombre del plato": "Maracuyá",
+    "descripción": "Complemento extra",
+    "precio": "+S/3.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Complementos",
+    "nombre del plato": "Manzana Verde",
+    "descripción": "Complemento extra",
+    "precio": "+S/3.00",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Complementos",
+    "nombre del plato": "Popping Boba",
+    "descripción": "Topping para helados o bebidas",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Complementos",
+    "nombre del plato": "Pecanas",
+    "descripción": "Topping para helado frito",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Complementos",
+    "nombre del plato": "Chispas de chocolate",
+    "descripción": "Topping para helado frito",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Complementos",
+    "nombre del plato": "Malvaviscos",
+    "descripción": "Topping para helado frito",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Complementos",
+    "nombre del plato": "Chin-chin",
+    "descripción": "Topping para helado frito",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Complementos",
+    "nombre del plato": "Gomitas",
+    "descripción": "Topping para helado frito",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Complementos",
+    "nombre del plato": "Oreo",
+    "descripción": "Topping para helado frito",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
+    "categoría": "Complementos",
+    "nombre del plato": "Barquillos",
+    "descripción": "Topping para helado frito",
+    "precio": "",
+    "URL de imagen": ""
+},
+{
     "categoría": "Sandwich",
     "nombre del plato": "Croisant Clásico",
     "descripción": "Jamón+ Queso Edam",
     "precio": "s/6.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Sandwich",
     "nombre del plato": "Croisant de Pollo",
     "descripción": "Apio y Mayonesa",
     "precio": "s/7.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Sandwich",
     "nombre del plato": "Ciabatta de Pollo",
     "descripción": "Apio y Mayonesa",
     "precio": "s/7.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Sandwich",
     "nombre del plato": "Triangulo Doble de Pollo",
     "descripción": "Apio y Mayonesa",
     "precio": "s/6.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Sandwich",
     "nombre del plato": "Triple",
     "descripción": "Pollo, Jamón y Queso",
     "precio": "s/7.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Postres",
     "nombre del plato": "Torta de Chocolate",
     "descripción": "",
     "precio": "s/8.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Postres",
     "nombre del plato": "Cheesecake de Maracuya",
     "descripción": "",
     "precio": "s/10.00",
     "URL de imagen": ""
-  },
-  {
+},
+{
     "categoría": "Postres",
     "nombre del plato": "Queques de Casa",
-    "descripción": "Sabores: Naranja Chocolate, Zanahona, Platanol",
+    "descripción": "Sabores: Naranja Chocolate, Zanahoria, Platano",
     "precio": "s/4.00",
     "URL de imagen": ""
-  }
+}
 ];
 
 interface Dish {
@@ -448,10 +992,15 @@ const CATEGORY_THEMES: Record<string, {
   "Jugos": { icon: "🍊", bgLight: "bg-orange-50/70", bgActive: "bg-orange-500", text: "text-orange-850", border: "border-orange-100", accent: "orange" },
   "Batidos": { icon: "🍓", bgLight: "bg-rose-50/70", bgActive: "bg-rose-500", text: "text-rose-800", border: "border-rose-100", accent: "rose" },
   "Wafles": { icon: "🧇", bgLight: "bg-yellow-50/70", bgActive: "bg-yellow-500", text: "text-yellow-850", border: "border-yellow-100", accent: "yellow" },
-  "Frappé / Smoothie / Frozen": { icon: "🍧", bgLight: "bg-teal-50/70", bgActive: "bg-teal-500", text: "text-teal-800", border: "border-teal-100", accent: "teal" },
-  "Limonadas": { icon: "🍋", bgLight: "bg-lime-50/70", bgActive: "bg-lime-500", text: "text-lime-850", border: "border-lime-100", accent: "lime" },
-  "Bubbles Teas & Lattes": { icon: "🧋", bgLight: "bg-sky-50/70", bgActive: "bg-sky-500", text: "text-sky-850", border: "border-sky-100", accent: "sky" },
+  "Ensalada de frutas": { icon: "🥣", bgLight: "bg-emerald-50/70", bgActive: "bg-emerald-500", text: "text-emerald-800", border: "border-emerald-100", accent: "emerald" },
+  "Frozen": { icon: "🍧", bgLight: "bg-teal-50/70", bgActive: "bg-teal-500", text: "text-teal-800", border: "border-teal-100", accent: "teal" },
+  "Bubble Juice": { icon: "🧃", bgLight: "bg-lime-50/70", bgActive: "bg-lime-500", text: "text-lime-850", border: "border-lime-100", accent: "lime" },
+  "Bubble Teas": { icon: "🧋", bgLight: "bg-sky-50/70", bgActive: "bg-sky-500", text: "text-sky-850", border: "border-sky-100", accent: "sky" },
+  "Bubble Lattes": { icon: "🧋", bgLight: "bg-indigo-50/70", bgActive: "bg-indigo-500", text: "text-indigo-850", border: "border-indigo-100", accent: "indigo" },
+  "Bebidas Especiales": { icon: "✨", bgLight: "bg-violet-50/70", bgActive: "bg-violet-500", text: "text-violet-850", border: "border-violet-100", accent: "violet" },
+  "Frappé": { icon: "🍧", bgLight: "bg-rose-50/70", bgActive: "bg-rose-500", text: "text-rose-800", border: "border-rose-100", accent: "rose" },
   "Helados Frito": { icon: "🍦", bgLight: "bg-pink-50/70", bgActive: "bg-pink-500", text: "text-pink-850", border: "border-pink-100", accent: "pink" },
+  "Complementos": { icon: "🍫", bgLight: "bg-yellow-50/70", bgActive: "bg-yellow-600", text: "text-yellow-900", border: "border-yellow-200", accent: "yellow" },
   "Sandwich": { icon: "🥪", bgLight: "bg-amber-100/70", bgActive: "bg-amber-600", text: "text-amber-950", border: "border-amber-200", accent: "amber" },
   "Postres": { icon: "🍰", bgLight: "bg-purple-50/70", bgActive: "bg-purple-500", text: "text-purple-850", border: "border-purple-100", accent: "purple" }
 };
@@ -491,6 +1040,7 @@ const RenderPlaceholderSVG = ({ category, name }: { category: string, name: stri
           </g>
         );
       case "Wafles":
+      case "Ensalada de frutas":
         return (
           <g>
             <rect x="8" y="8" width="24" height="24" rx="4" fill="none" stroke={strokeColor} strokeWidth="2.5" />
@@ -516,8 +1066,12 @@ const RenderPlaceholderSVG = ({ category, name }: { category: string, name: stri
             <path d="M20 5 C 21 2, 23 2, 24 3" fill="none" stroke={strokeColor} strokeWidth="1.5" />
           </g>
         );
-      case "Bubbles Teas & Lattes":
-      case "Frappé / Smoothie / Frozen":
+      case "Bubble Juice":
+      case "Bubble Teas":
+      case "Bubble Lattes":
+      case "Bebidas Especiales":
+      case "Frappé":
+      case "Frozen":
         return (
           <g>
             <path d="M10 8 L 13 28 C 13 30, 15 31, 18 31 L 22 31 C 25 31, 27 30, 27 28 L 30 8 Z" fill="none" stroke={strokeColor} strokeWidth="2.5" strokeLinejoin="round" />
