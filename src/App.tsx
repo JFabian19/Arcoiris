@@ -372,27 +372,30 @@ export default function App() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        let cats = await fetchSheetData<SheetCategory>('Categorías');
-        let dishes = await fetchSheetData<SheetDish>('Platos');
+        let cats = await fetchSheetData<SheetCategory>('categorías');
+        let dishes = await fetchSheetData<SheetDish>('platos');
 
         if (!cats || cats.length === 0 || !dishes || dishes.length === 0) {
           console.log("No se pudieron cargar datos de Google Sheets o están vacíos. Usando datos por defecto.");
-          cats = DEFAULT_CATEGORIES;
-          dishes = DEFAULT_DISHES;
+          cats = DEFAULT_CATEGORIES as any;
+          dishes = DEFAULT_DISHES as any;
         }
 
-        const formattedCategories: Category[] = cats.map(c => ({
-          id: c.nombre.toLowerCase().replace(/\s+/g, '-'),
-          nombre: c.nombre,
-          items: dishes
-            .filter(d => d.categoría === c.nombre)
-            .map(d => ({
-              nombre: d['nombre del plato'],
-              descripcion: d.descripción,
-              precio: d.precio,
-              imagen: LOCAL_IMAGES[`${c.nombre} | ${d['nombre del plato']}`] || LOCAL_IMAGES[d['nombre del plato']] || d['URL de imagen'] || null
-            }))
-        }));
+        const formattedCategories: Category[] = cats.map(c => {
+          const catName = c.nombres || (c as any).nombre;
+          return {
+            id: catName.toLowerCase().replace(/\s+/g, '-'),
+            nombre: catName,
+            items: dishes
+              .filter(d => (d.nombres || (d as any).categoría) === catName)
+              .map(d => ({
+                nombre: d['nombre del plato'],
+                descripcion: d.descripción,
+                precio: d.precio,
+                imagen: LOCAL_IMAGES[`${catName} | ${d['nombre del plato']}`] || LOCAL_IMAGES[d['nombre del plato']] || d['URL de imagen'] || null
+              }))
+          };
+        });
 
         setCategories(formattedCategories);
       } catch (error) {
@@ -476,7 +479,7 @@ export default function App() {
   const handleBirthdaySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmittingBirthday(true);
-    const success = await submitSheetData('Cumpleaños', {
+    const success = await submitSheetData('fidelizaciones', {
       timestamp: new Date().toLocaleString('es-PE'),
       nombre: birthdayData.nombre,
       telefono: birthdayData.telefono,
@@ -506,7 +509,7 @@ export default function App() {
     }
 
     setIsSubmittingReview(true);
-    const success = await submitSheetData('Reseñas', {
+    const success = await submitSheetData('reseñas', {
       timestamp: new Date().toLocaleString('es-PE'),
       estrellasMozo: reviewData.estrellasMozo,
       estrellasComida: reviewData.estrellasComida,
