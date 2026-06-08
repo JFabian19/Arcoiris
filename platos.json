@@ -1,5 +1,54 @@
 [
   {
+    "categoría": "Combos Desayunos",
+    "nombre del plato": "Combo 1",
+    "descripción": "Cafe americano + Keke",
+    "precio": "S/ 10.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Combos Desayunos",
+    "nombre del plato": "Combo 2",
+    "descripción": "Cafe americano + Croissant Mixto",
+    "precio": "S/ 13.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Combos Desayunos",
+    "nombre del plato": "Combo 3",
+    "descripción": "Cafe americano + Ciabatta de Pollo",
+    "precio": "S/ 13.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Combos Desayunos",
+    "nombre del plato": "Combo 4",
+    "descripción": "Capuccino + Ciabatta de Pollo",
+    "precio": "S/ 15.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Combos Desayunos",
+    "nombre del plato": "Combo 5",
+    "descripción": "Capuccino + Croissant de Pollo",
+    "precio": "S/ 16.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Combos Desayunos",
+    "nombre del plato": "Combo 6",
+    "descripción": "Jugo Clásico + Triple",
+    "precio": "S/ 17.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Combos Desayunos",
+    "nombre del plato": "Combo 7",
+    "descripción": "Jugo Clásico + Croissant Mixto",
+    "precio": "S/ 16.00",
+    "URL de imagen": ""
+  },
+  {
     "categoría": "Bebidas Calientes",
     "nombre del plato": "Americano",
     "descripción": "",
@@ -225,8 +274,8 @@
   },
   {
     "categoría": "Wafles",
-    "nombre del plato": "W. Personalizado",
-    "descripción": "Personaliza a tu gusto: nutella, miel de maple, fosh o manjar blanco + 3 frutas + 3 topping",
+    "nombre del plato": "W. Perzonalizado",
+    "descripción": "Personaliza a tu gusto: puedes agregarle nutella, miel de maple, fosh o manjar blanco + 3 frutas de estación + 3 topping",
     "precio": "S/22.00",
     "URL de imagen": ""
   },
@@ -238,7 +287,7 @@
     "URL de imagen": ""
   },
   {
-    "categoría": "Ensalada de frutas",
+    "categoría": "Wafles",
     "nombre del plato": "Ensalada de frutas",
     "descripción": "La mejor selección de frutas de estación + yogurt + cereales",
     "precio": "S/17.00",
