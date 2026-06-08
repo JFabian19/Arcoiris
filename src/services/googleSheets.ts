@@ -38,7 +38,7 @@ export const fetchSheetData = async <T>(sheetName: string): Promise<T[]> => {
 
 // Configura aquí la URL de tu Google Apps Script Web App para poder registrar respuestas (Fidelización)
 // Instrucciones: Crea un proyecto de Google Apps Script, pega el código de integración, impleméntalo como Aplicación Web y pega la URL resultante aquí.
-export const WEB_APP_URL = '';
+export const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzn4rGHqqBN0Jv-rT0b4-lnJsoMcq4fUszONIadxd16h7_H7oWqXm5n-Nctj-H24E7KIg/exec';
 
 export const submitSheetData = async (sheetName: string, data: any): Promise<boolean> => {
   if (!WEB_APP_URL) {
