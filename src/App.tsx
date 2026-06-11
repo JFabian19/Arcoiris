@@ -149,9 +149,18 @@ const LOCAL_IMAGES: Record<string, string> = {
   "Batidos | Mango + leche": "batido_mango.webp",
   "Batidos | Fresa + leche": "batido_fresa.webp",
   "Batidos | Papaya + leche": "batido_mango_fresa.webp",
-  "Bebidas Especiales | Piña Colada": "pina colada.webp",
-  "Bebidas Especiales | Coconut": "Coconut.webp",
-  "Bebidas Especiales | Strawberry matcha": "Strawberry matcha.webp",
+  "Smoothies | Piña Colada": "pina colada.webp",
+  "Smoothies | Coconut": "Coconut.webp",
+  "Smoothies | Strawberry matcha": "Strawberry matcha.webp",
+  "Smoothies | Fresa": "smoothie_fresa.webp",
+  "Smoothies | Fresa + Arándanos": "smoothie_fresa_arandanos.webp",
+  "Smoothies | Lucuma": "smoothie_lucuma.webp",
+  "Smoothies | Matcha": "smoothie_matcha.webp",
+  "Smoothies | Taro oreo": "smoothie_taro_oreo.webp",
+  "Smoothies | Taro": "smoothie_taro.webp",
+  "Bebidas Frías | Iced Mocaccino": "iced_mocaccino.webp",
+  "Bebidas Frías | Iced Avellana Latte": "iced_avellana_latte.webp",
+  "Bebidas Frías | Iced Strawberry Latte": "iced_strawberry_latte.webp",
   "Complementos | Mango": "topping_mango.webp",
   "Complementos | Tapioca": "topping_tapioca.webp",
   "Complementos | Arándanos": "topping_arandanos.webp",
@@ -212,7 +221,7 @@ const CATEGORY_THEMES: Record<string, {
   "Bubble Juice": { icon: "🧃", bgLight: "bg-lime-50/70", bgActive: "bg-lime-500", text: "text-lime-850", border: "border-lime-100", accent: "lime" },
   "Bubble Teas": { icon: "🧋", bgLight: "bg-sky-50/70", bgActive: "bg-sky-500", text: "text-sky-850", border: "border-sky-100", accent: "sky" },
   "Bubble Lattes": { icon: "🧋", bgLight: "bg-indigo-50/70", bgActive: "bg-indigo-500", text: "text-indigo-850", border: "border-indigo-100", accent: "indigo" },
-  "Bebidas Especiales": { icon: "✨", bgLight: "bg-violet-50/70", bgActive: "bg-violet-500", text: "text-violet-850", border: "border-violet-100", accent: "violet" },
+  "Smoothies": { icon: "✨", bgLight: "bg-violet-50/70", bgActive: "bg-violet-500", text: "text-violet-850", border: "border-violet-100", accent: "violet" },
   "Frappé": { icon: "🍧", bgLight: "bg-rose-50/70", bgActive: "bg-rose-500", text: "text-rose-800", border: "border-rose-100", accent: "rose" },
   "Helados Frito": { icon: "🍦", bgLight: "bg-pink-50/70", bgActive: "bg-pink-500", text: "text-pink-850", border: "border-pink-100", accent: "pink" },
   "Complementos": { icon: "🍫", bgLight: "bg-yellow-50/70", bgActive: "bg-yellow-600", text: "text-yellow-900", border: "border-yellow-200", accent: "yellow" },
@@ -284,7 +293,7 @@ const RenderPlaceholderSVG = ({ category, name }: { category: string, name: stri
       case "Bubble Juice":
       case "Bubble Teas":
       case "Bubble Lattes":
-      case "Bebidas Especiales":
+      case "Smoothies":
       case "Frappé":
       case "Frozen":
         return (

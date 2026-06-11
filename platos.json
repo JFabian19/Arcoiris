@@ -490,21 +490,21 @@
     "URL de imagen": ""
   },
   {
-    "categoría": "Bebidas Especiales",
+    "categoría": "Smoothies",
     "nombre del plato": "Piña Colada",
     "descripción": "Bebida Tropical",
     "precio": "",
     "URL de imagen": ""
   },
   {
-    "categoría": "Bebidas Especiales",
+    "categoría": "Smoothies",
     "nombre del plato": "Coconut",
     "descripción": "Bebida Tropical",
     "precio": "",
     "URL de imagen": ""
   },
   {
-    "categoría": "Bebidas Especiales",
+    "categoría": "Smoothies",
     "nombre del plato": "Strawberry matcha",
     "descripción": "Especialidad. Incluye complemento tapioca",
     "precio": "",
@@ -942,6 +942,69 @@
     "nombre del plato": "Queques de Casa",
     "descripción": "Sabores: Naranja Chocolate, Zanahoria, Platano",
     "precio": "s/4.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Smoothies",
+    "nombre del plato": "Fresa",
+    "descripción": "Smoothie refrescante de fresa natural",
+    "precio": "",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Smoothies",
+    "nombre del plato": "Fresa + Arándanos",
+    "descripción": "Smoothie de fresas y arándanos frescos",
+    "precio": "",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Smoothies",
+    "nombre del plato": "Lucuma",
+    "descripción": "Smoothie cremoso de lúcuma",
+    "precio": "",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Smoothies",
+    "nombre del plato": "Matcha",
+    "descripción": "Smoothie de matcha con leche",
+    "precio": "",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Smoothies",
+    "nombre del plato": "Taro oreo",
+    "descripción": "Smoothie de taro con galletas oreo trituradas",
+    "precio": "",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Smoothies",
+    "nombre del plato": "Taro",
+    "descripción": "Smoothie de taro clásico",
+    "precio": "",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Bebidas Frías",
+    "nombre del plato": "Iced Mocaccino",
+    "descripción": "Espresso helado con chocolate y leche",
+    "precio": "s/13.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Bebidas Frías",
+    "nombre del plato": "Iced Avellana Latte",
+    "descripción": "Espresso helado con leche y jarabe de avellana",
+    "precio": "s/12.00",
+    "URL de imagen": ""
+  },
+  {
+    "categoría": "Bebidas Frías",
+    "nombre del plato": "Iced Strawberry Latte",
+    "descripción": "Café latte helado con jarabe de fresa natural",
+    "precio": "s/12.00",
     "URL de imagen": ""
   }
 ]
