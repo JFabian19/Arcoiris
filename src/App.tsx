@@ -151,7 +151,7 @@ const LOCAL_IMAGES: Record<string, string> = {
   "Batidos | Papaya + leche": "batido_mango_fresa.webp",
   "Smoothies | Piña Colada": "pina colada.webp",
   "Smoothies | Coconut": "Coconut.webp",
-  "Smoothies | Strawberry matcha": "Strawberry matcha.webp",
+  "Smoothies | Strawberry matcha": "smoothie_strawberry_matcha.webp",
   "Smoothies | Fresa": "smoothie_fresa.webp",
   "Smoothies | Fresa + Arándanos": "smoothie_fresa_arandanos.webp",
   "Smoothies | Lucuma": "smoothie_lucuma.webp",
