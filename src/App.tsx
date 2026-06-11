@@ -199,6 +199,8 @@ interface CartItem {
   nombre: string;
   precio: string;
   cantidad: number;
+  opcionesTexto?: string;
+  precioAdicional?: number;
 }
 
 // Configuración estética de categorías de Arcoiris
@@ -378,6 +380,95 @@ export default function App() {
     comentario: ''
   });
 
+  // States for interactive product options modal
+  const [activeOptionDish, setActiveOptionDish] = useState<{ dish: Dish; category: string } | null>(null);
+  const [selectedSugar, setSelectedSugar] = useState("Tradicional (Con azúcar)");
+  const [addAlmondMilk, setAddAlmondMilk] = useState(false);
+  const [selectedTemp, setSelectedTemp] = useState("Helada");
+  const [addSizeUpgrade, setAddSizeUpgrade] = useState(false);
+  const [selectedSauce, setSelectedSauce] = useState("");
+  const [selectedFrutas, setSelectedFrutas] = useState<string[]>([]);
+  const [selectedToppings, setSelectedToppings] = useState<string[]>([]);
+  const [selectedYogurt, setSelectedYogurt] = useState("");
+  const [selectedComplement, setSelectedComplement] = useState("Ninguno");
+
+  const getDishOptionConfig = (category: string, dishName: string) => {
+    if (category === "Bebidas Frías") {
+      return { sugarLevel: true, almondMilk: true };
+    }
+    if (category === "Jugos" || category === "Batidos") {
+      return { temperature: true, sizeUpgrade: true };
+    }
+    if (category === "Wafles") {
+      if (dishName === "W. Clásico") {
+        return { waffleClassicSauce: true };
+      }
+      if (dishName === "W. Perzonalizado" || dishName === "W. Personalizado") {
+        return { waffleCustomOptions: true };
+      }
+      if (dishName === "Ensalada de frutas") {
+        return { fruitSaladYogurt: true };
+      }
+    }
+    if (category === "Frozen") {
+      return { frozenTopping: true };
+    }
+    if (category === "Bubble Juice" || category === "Bubble Teas") {
+      return { bubbleJuiceTopping: true, sizeUpgrade: true };
+    }
+    if (category === "Helados Frito") {
+      return { friedIceCreamTopping: true };
+    }
+    return null;
+  };
+
+  const getCategorySizeInfo = (category: string): string => {
+    switch (category) {
+      case "Bebidas Frías":
+      case "Jugos":
+      case "Batidos":
+      case "Frappé":
+        return "16 oz";
+      case "Bubble Juice":
+        return "16 oz";
+      case "Bubble Teas":
+      case "Bubble Lattes":
+        return "16 oz (incluye tapioca)";
+      case "Smoothies":
+        return "21 oz (incluye tapioca)";
+      case "Frozen":
+        return "21 oz";
+      default:
+        return "";
+    }
+  };
+
+  useEffect(() => {
+    if (activeOptionDish) {
+      setSelectedSugar("Tradicional (Con azúcar)");
+      setAddAlmondMilk(false);
+      setSelectedTemp("Helada");
+      setAddSizeUpgrade(false);
+      
+      const config = getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre);
+      if (config) {
+        if (config.waffleClassicSauce) setSelectedSauce("Miel de maple");
+        else if (config.waffleCustomOptions) setSelectedSauce("Nutella");
+        else setSelectedSauce("");
+        
+        setSelectedFrutas([]);
+        setSelectedToppings([]);
+        
+        if (config.fruitSaladYogurt) setSelectedYogurt("Fresa");
+        else setSelectedYogurt("");
+        
+        if (config.frozenTopping) setSelectedComplement("Ninguno");
+        else if (config.bubbleJuiceTopping) setSelectedComplement("Tapioca");
+        else setSelectedComplement("");
+      }
+    }
+  }, [activeOptionDish]);
+
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -432,25 +523,103 @@ export default function App() {
 
   const cartCount = useMemo(() => cart.reduce((acc, item) => acc + item.cantidad, 0), [cart]);
 
-  const addToCart = (dish: Dish) => {
+  const addToCart = (dish: Dish, categoryName?: string) => {
+    const cat = categoryName || "";
+    const config = getDishOptionConfig(cat, dish.nombre);
+    
+    if (config) {
+      setActiveOptionDish({ dish, category: cat });
+    } else {
+      addItemToCartDirect(dish, "", 0);
+    }
+  };
+
+  const addItemToCartDirect = (dish: Dish, opcionesTexto: string, precioAdicional: number) => {
     setCart(prev => {
-      const existing = prev.find(i => i.nombre === dish.nombre && i.precio === dish.precio);
+      const existing = prev.find(i => 
+        i.nombre === dish.nombre && 
+        i.precio === dish.precio && 
+        (i.opcionesTexto || "") === opcionesTexto
+      );
       if (existing) {
         return prev.map(i =>
-          (i.nombre === dish.nombre && i.precio === dish.precio)
+          (i.nombre === dish.nombre && i.precio === dish.precio && (i.opcionesTexto || "") === opcionesTexto)
             ? { ...i, cantidad: i.cantidad + 1 }
             : i
         );
       }
-      return [...prev, { nombre: dish.nombre, precio: dish.precio, cantidad: 1 }];
+      return [...prev, { 
+        nombre: dish.nombre, 
+        precio: dish.precio, 
+        cantidad: 1,
+        opcionesTexto,
+        precioAdicional
+      }];
     });
   };
 
-  const updateQuantity = (nombre: string, precio: string, delta: number) => {
+  const handleConfirmOptions = () => {
+    if (!activeOptionDish) return;
+    
+    const { dish, category } = activeOptionDish;
+    const config = getDishOptionConfig(category, dish.nombre);
+    
+    let opciones: string[] = [];
+    let adicional = 0;
+    
+    if (config) {
+      if (config.sugarLevel) {
+        opciones.push(`Azúcar: ${selectedSugar}`);
+      }
+      if (config.almondMilk && addAlmondMilk) {
+        opciones.push("Leche de almendras");
+        adicional += 3;
+      }
+      if (config.temperature) {
+        opciones.push(`Temperatura: ${selectedTemp}`);
+      }
+      if (config.sizeUpgrade && addSizeUpgrade) {
+        opciones.push("Agrandado a 21oz");
+        adicional += 3;
+      }
+      if (config.waffleClassicSauce) {
+        opciones.push(`Salsa: ${selectedSauce}`);
+      }
+      if (config.waffleCustomOptions) {
+        opciones.push(`Salsa: ${selectedSauce}`);
+        if (selectedFrutas.length > 0) {
+          opciones.push(`Frutas: ${selectedFrutas.join(", ")}`);
+        }
+        if (selectedToppings.length > 0) {
+          opciones.push(`Toppings: ${selectedToppings.join(", ")}`);
+        }
+      }
+      if (config.fruitSaladYogurt) {
+        opciones.push(`Yogurt: ${selectedYogurt}`);
+      }
+      if (config.frozenTopping && selectedComplement !== "Ninguno") {
+        opciones.push(`Complemento: ${selectedComplement}`);
+        adicional += 3;
+      }
+      if (config.bubbleJuiceTopping && selectedComplement) {
+        opciones.push(`Complemento: ${selectedComplement}`);
+      }
+      if (config.friedIceCreamTopping && selectedToppings.length > 0) {
+        opciones.push(`Toppings: ${selectedToppings.join(", ")}`);
+      }
+    }
+    
+    const opcionesTexto = opciones.join(" | ");
+    addItemToCartDirect(dish, opcionesTexto, adicional);
+    setActiveOptionDish(null);
+  };
+
+  const updateQuantity = (nombre: string, precio: string, delta: number, opcionesTexto?: string) => {
+    const opt = opcionesTexto || "";
     setCart(prev =>
       prev
         .map(i => {
-          if (i.nombre === nombre && i.precio === precio) {
+          if (i.nombre === nombre && i.precio === precio && (i.opcionesTexto || "") === opt) {
             const newQty = i.cantidad + delta;
             return newQty > 0 ? { ...i, cantidad: newQty } : null;
           }
@@ -464,7 +633,8 @@ export default function App() {
     return cart.reduce((acc, item) => {
       const cleanPrice = item.precio.replace(/^[^\d]*/, '');
       const num = parseFloat(cleanPrice) || 0;
-      return acc + num * item.cantidad;
+      const add = item.precioAdicional || 0;
+      return acc + (num + add) * item.cantidad;
     }, 0);
   };
 
@@ -472,9 +642,14 @@ export default function App() {
     const total = calculateTotal();
     let message = `*Hola ${BUSINESS_NAME}, deseo realizar un pedido:*\n\n`;
     cart.forEach(item => {
-      message += `• ${item.cantidad} x ${item.nombre} (${item.precio})\n`;
+      const cleanPrice = item.precio.replace(/^[^\d]*/, '');
+      const num = parseFloat(cleanPrice) || 0;
+      const add = item.precioAdicional || 0;
+      const singlePrice = num + add;
+      const optionsStr = item.opcionesTexto ? `\n   _${item.opcionesTexto}_` : '';
+      message += `• ${item.cantidad} x ${item.nombre} (S/. ${singlePrice.toFixed(2)} c/u)${optionsStr}\n`;
     });
-    message += `\n*TOTAL: S/.${total.toFixed(2)}*`;
+    message += `\n*TOTAL: S/. ${total.toFixed(2)}*`;
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   };
@@ -749,14 +924,19 @@ export default function App() {
                           </p>
                         )}
                         <div className="flex-1"></div>
-                        <div className="flex items-center justify-between mt-2 pt-1 border-t border-gray-50">
+                        {getCategorySizeInfo(cat.nombre) && (
+                          <div className="inline-flex items-center gap-1 text-[9px] text-primary/70 bg-primary/5 px-2 py-0.5 rounded-full w-max mb-1.5 font-semibold">
+                            <span>🥤 {getCategorySizeInfo(cat.nombre)}</span>
+                          </div>
+                        )}
+                        <div className="flex items-center justify-between mt-1 pt-1 border-t border-gray-50">
                           <span className="font-title text-primary text-[15px] font-black">
                             {formatPrice(dish.precio)}
                           </span>
                           <motion.button
                             whileTap={{ scale: 0.8 }}
                             whileHover={{ scale: 1.1 }}
-                            onClick={() => addToCart(dish)}
+                            onClick={() => addToCart(dish, cat.nombre)}
                             className="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-200 shrink-0 cursor-pointer"
                           >
                             <Plus size={16} strokeWidth={3} />
@@ -880,24 +1060,33 @@ export default function App() {
               <div className="space-y-3 mb-8">
                 {cart.map(item => (
                   <div
-                    key={`${item.nombre}-${item.precio}`}
+                    key={`${item.nombre}-${item.precio}-${item.opcionesTexto || ""}`}
                     className="flex items-center gap-4 bg-gray-50/70 p-4 rounded-2xl border border-gray-100/65"
                   >
                     <div className="flex-1 min-w-0">
                       <h4 className="font-title text-dark text-sm font-semibold tracking-wide truncate">{item.nombre}</h4>
-                      <p className="font-title text-xs font-bold text-primary mt-1">{formatPrice(item.precio)}</p>
+                      {item.opcionesTexto && (
+                        <p className="text-[10px] text-gray-500 italic mt-0.5 whitespace-pre-line leading-tight">{item.opcionesTexto}</p>
+                      )}
+                      <p className="font-title text-xs font-bold text-primary mt-1">
+                        {(() => {
+                          const base = parseFloat(item.precio.replace(/^[^\d]*/, '')) || 0;
+                          const add = item.precioAdicional || 0;
+                          return formatPrice(`S/ ${(base + add).toFixed(2)}`);
+                        })()}
+                      </p>
                     </div>
                     <div className="flex items-center gap-3 bg-white px-3 py-1.5 rounded-xl border border-gray-150">
-                      <button onClick={() => updateQuantity(item.nombre, item.precio, -1)} className="text-gray-400 hover:text-primary cursor-pointer transition-colors">
+                      <button onClick={() => updateQuantity(item.nombre, item.precio, -1, item.opcionesTexto)} className="text-gray-400 hover:text-primary cursor-pointer transition-colors">
                         <Minus size={12} strokeWidth={3} />
                       </button>
                       <span className="font-title font-bold text-sm w-4 text-center text-dark">{item.cantidad}</span>
-                      <button onClick={() => updateQuantity(item.nombre, item.precio, 1)} className="text-primary hover:text-secondary cursor-pointer transition-colors">
+                      <button onClick={() => updateQuantity(item.nombre, item.precio, 1, item.opcionesTexto)} className="text-primary hover:text-secondary cursor-pointer transition-colors">
                         <Plus size={12} strokeWidth={3} />
                       </button>
                     </div>
                     <button
-                      onClick={() => updateQuantity(item.nombre, item.precio, -item.cantidad)}
+                      onClick={() => updateQuantity(item.nombre, item.precio, -item.cantidad, item.opcionesTexto)}
                       className="text-red-400 hover:text-red-600 ml-1 cursor-pointer transition-colors"
                     >
                       <Trash2 size={18} />
@@ -1123,6 +1312,382 @@ export default function App() {
                   </motion.button>
                 </form>
               )}
+            </motion.div>
+          </motion.div>
+        )}
+
+        {activeOptionDish && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/40 backdrop-blur-md z-[70] flex items-center justify-center p-4 overflow-y-auto"
+            onClick={() => setActiveOptionDish(null)}
+          >
+            <motion.div
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 50, opacity: 0 }}
+              className="bg-white rounded-3xl p-6 shadow-2xl max-w-md w-full border border-gray-100 max-h-[90vh] overflow-y-auto ticket-edge"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <h3 className="font-title text-lg font-bold text-dark tracking-wide">{activeOptionDish.dish.nombre}</h3>
+                  <p className="text-[11px] text-gray-400 font-bold uppercase mt-1">
+                    {activeOptionDish.category} {getCategorySizeInfo(activeOptionDish.category) ? `| Vaso: ${getCategorySizeInfo(activeOptionDish.category)}` : ""}
+                  </p>
+                </div>
+                <span className="font-title text-primary text-lg font-black">{formatPrice(activeOptionDish.dish.precio || "S/ 0.00")}</span>
+              </div>
+
+              {/* Options fields */}
+              <div className="space-y-6">
+                {/* 1. Sugar level */}
+                {getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre)?.sugarLevel && (
+                  <div>
+                    <h4 className="font-title text-xs font-bold text-gray-500 uppercase mb-3 tracking-wider">Nivel de Azúcar</h4>
+                    <div className="grid grid-cols-2 gap-3">
+                      {["Tradicional (Con azúcar)", "Bajo en azúcar"].map((level) => (
+                        <button
+                          key={level}
+                          type="button"
+                          onClick={() => setSelectedSugar(level)}
+                          className={`py-3 px-4 rounded-2xl text-xs font-semibold border text-center transition-all cursor-pointer ${
+                            selectedSugar === level
+                              ? "bg-primary text-white border-primary shadow-sm"
+                              : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
+                          }`}
+                        >
+                          {level}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 2. Leche de almendras */}
+                {getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre)?.almondMilk && (
+                  <div>
+                    <h4 className="font-title text-xs font-bold text-gray-500 uppercase mb-3 tracking-wider">Adicionales</h4>
+                    <button
+                      type="button"
+                      onClick={() => setAddAlmondMilk(!addAlmondMilk)}
+                      className={`w-full py-3 px-4 rounded-2xl text-xs font-semibold border flex items-center justify-between transition-all cursor-pointer ${
+                        addAlmondMilk
+                          ? "bg-primary/5 text-primary border-primary/20 font-bold"
+                          : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm">🥛</span>
+                        <span>Añadir leche de almendras</span>
+                      </div>
+                      <span className="font-bold">+ S/. 3.00</span>
+                    </button>
+                  </div>
+                )}
+
+                {/* 3. Temperatura */}
+                {getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre)?.temperature && (
+                  <div>
+                    <h4 className="font-title text-xs font-bold text-gray-500 uppercase mb-3 tracking-wider">Temperatura</h4>
+                    <div className="grid grid-cols-2 gap-3">
+                      {["Helada", "Natural (Sin helar)"].map((temp) => (
+                        <button
+                          key={temp}
+                          type="button"
+                          onClick={() => setSelectedTemp(temp)}
+                          className={`py-3 px-4 rounded-2xl text-xs font-semibold border text-center transition-all cursor-pointer ${
+                            selectedTemp === temp
+                              ? "bg-primary text-white border-primary shadow-sm"
+                              : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
+                          }`}
+                        >
+                          {temp}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 4. Agrandar vaso */}
+                {getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre)?.sizeUpgrade && (
+                  <div>
+                    <h4 className="font-title text-xs font-bold text-gray-500 uppercase mb-3 tracking-wider">Tamaño</h4>
+                    <button
+                      type="button"
+                      onClick={() => setAddSizeUpgrade(!addSizeUpgrade)}
+                      className={`w-full py-3 px-4 rounded-2xl text-xs font-semibold border flex items-center justify-between transition-all cursor-pointer ${
+                        addSizeUpgrade
+                          ? "bg-primary/5 text-primary border-primary/20 font-bold"
+                          : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm">🥤</span>
+                        <span>Agrandar vaso a 21 oz</span>
+                      </div>
+                      <span className="font-bold">+ S/. 3.00</span>
+                    </button>
+                  </div>
+                )}
+
+                {/* 5. Waffle Classic Sauce */}
+                {getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre)?.waffleClassicSauce && (
+                  <div>
+                    <h4 className="font-title text-xs font-bold text-gray-500 uppercase mb-3 tracking-wider">Elige una Salsa</h4>
+                    <div className="grid grid-cols-2 gap-3">
+                      {["Miel de maple", "Fudge"].map((sauce) => (
+                        <button
+                          key={sauce}
+                          type="button"
+                          onClick={() => setSelectedSauce(sauce)}
+                          className={`py-3 px-4 rounded-2xl text-xs font-semibold border text-center transition-all cursor-pointer ${
+                            selectedSauce === sauce
+                              ? "bg-primary text-white border-primary shadow-sm"
+                              : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
+                          }`}
+                        >
+                          {sauce}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 6. Waffle Custom Options */}
+                {getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre)?.waffleCustomOptions && (
+                  <div className="space-y-4">
+                    {/* Salsa */}
+                    <div>
+                      <h4 className="font-title text-xs font-bold text-gray-500 uppercase mb-3 tracking-wider">Salsa (Elige 1)</h4>
+                      <div className="grid grid-cols-2 gap-2">
+                        {["Nutella", "Fudge", "Miel de maple", "Manjar blanco"].map((sauce) => (
+                          <button
+                            key={sauce}
+                            type="button"
+                            onClick={() => setSelectedSauce(sauce)}
+                            className={`py-2 px-3 rounded-xl text-[11px] font-semibold border text-center transition-all cursor-pointer ${
+                              selectedSauce === sauce
+                                ? "bg-primary text-white border-primary shadow-sm"
+                                : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
+                            }`}
+                          >
+                            {sauce}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Frutas */}
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <h4 className="font-title text-xs font-bold text-gray-500 uppercase tracking-wider">Frutas (Elige exactamente 3)</h4>
+                        <span className="text-[10px] text-primary font-bold">{selectedFrutas.length}/3</span>
+                      </div>
+                      <div className="grid grid-cols-3 gap-2">
+                        {["Fresa", "Plátano", "Arándanos", "Kiwi", "Durazno", "Mango"].map((fruit) => {
+                          const isSelected = selectedFrutas.includes(fruit);
+                          return (
+                            <button
+                              key={fruit}
+                              type="button"
+                              onClick={() => {
+                                if (isSelected) {
+                                  setSelectedFrutas(selectedFrutas.filter((f) => f !== fruit));
+                                } else if (selectedFrutas.length < 3) {
+                                  setSelectedFrutas([...selectedFrutas, fruit]);
+                                }
+                              }}
+                              className={`py-2 px-1 rounded-xl text-[11px] font-semibold border text-center transition-all cursor-pointer ${
+                                isSelected
+                                  ? "bg-primary/10 text-primary border-primary font-bold"
+                                  : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
+                              }`}
+                            >
+                              {fruit}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Toppings */}
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <h4 className="font-title text-xs font-bold text-gray-500 uppercase tracking-wider">Toppings (Elige exactamente 3)</h4>
+                        <span className="text-[10px] text-primary font-bold">{selectedToppings.length}/3</span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        {["Pecanas", "Marshmallow", "Chispas de chocolate blanco", "Chispas de chocolate oscuro", "Chin chin", "Grageas", "Oreo"].map((top) => {
+                          const isSelected = selectedToppings.includes(top);
+                          return (
+                            <button
+                              key={top}
+                              type="button"
+                              onClick={() => {
+                                if (isSelected) {
+                                  setSelectedToppings(selectedToppings.filter((t) => t !== top));
+                                } else if (selectedToppings.length < 3) {
+                                  setSelectedToppings([...selectedToppings, top]);
+                                }
+                              }}
+                              className={`py-2 px-2 rounded-xl text-[10px] font-semibold border text-center transition-all cursor-pointer truncate ${
+                                isSelected
+                                  ? "bg-primary/10 text-primary border-primary font-bold"
+                                  : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
+                              }`}
+                              title={top}
+                            >
+                              {top}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* 7. Fruit Salad Yogurt */}
+                {getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre)?.fruitSaladYogurt && (
+                  <div>
+                    <h4 className="font-title text-xs font-bold text-gray-500 uppercase mb-3 tracking-wider">Sabor de Yogurt (Elige 1)</h4>
+                    <div className="grid grid-cols-2 gap-3">
+                      {["Fresa", "Guanábana", "Lúcuma", "Vainilla"].map((yogurt) => (
+                        <button
+                          key={yogurt}
+                          type="button"
+                          onClick={() => setSelectedYogurt(yogurt)}
+                          className={`py-3 px-4 rounded-2xl text-xs font-semibold border text-center transition-all cursor-pointer ${
+                            selectedYogurt === yogurt
+                              ? "bg-primary text-white border-primary shadow-sm"
+                              : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
+                          }`}
+                        >
+                          {yogurt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 8. Frozen Topping (Optional, +S/3) */}
+                {getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre)?.frozenTopping && (
+                  <div>
+                    <h4 className="font-title text-xs font-bold text-gray-500 uppercase mb-3 tracking-wider">Añadir Complemento (+ S/. 3.00)</h4>
+                    <div className="grid grid-cols-2 gap-2">
+                      {["Ninguno", "Topping boba de fresa", "Topping boba de arándanos", "Topping boba de manzana verde", "Topping boba de mango", "Topping boba de maracuyá", "Topping boba de frambuesa", "Tapioca"].map((comp) => (
+                        <button
+                          key={comp}
+                          type="button"
+                          onClick={() => setSelectedComplement(comp)}
+                          className={`py-2 px-2 rounded-xl text-[10px] font-semibold border text-center transition-all cursor-pointer ${
+                            selectedComplement === comp
+                              ? "bg-primary text-white border-primary shadow-sm"
+                              : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
+                          }`}
+                        >
+                          {comp}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 9. Bubble Juice Topping (Included, choose 1) */}
+                {getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre)?.bubbleJuiceTopping && (
+                  <div>
+                    <h4 className="font-title text-xs font-bold text-gray-500 uppercase mb-3 tracking-wider">Complemento gratis (Elige 1)</h4>
+                    <div className="grid grid-cols-2 gap-2">
+                      {["Topping boba de fresa", "Topping boba de arándanos", "Topping boba de manzana verde", "Topping boba de mango", "Topping boba de maracuyá", "Topping boba de frambuesa", "Tapioca"].map((comp) => (
+                        <button
+                          key={comp}
+                          type="button"
+                          onClick={() => setSelectedComplement(comp)}
+                          className={`py-2 px-2 rounded-xl text-[10px] font-semibold border text-center transition-all cursor-pointer ${
+                            selectedComplement === comp
+                              ? "bg-primary text-white border-primary shadow-sm"
+                              : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
+                          }`}
+                        >
+                          {comp}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 10. Fried Ice Cream Topping (Free, choose up to 2) */}
+                {getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre)?.friedIceCreamTopping && (
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <h4 className="font-title text-xs font-bold text-gray-500 uppercase tracking-wider">Toppings Gratis (Elige hasta 2)</h4>
+                      <span className="text-[10px] text-primary font-bold">{selectedToppings.length}/2</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {["Pecanas", "Marshmallow", "Chispas de chocolate blanco", "Chispas de chocolate oscuro", "Chin chin"].map((top) => {
+                        const isSelected = selectedToppings.includes(top);
+                        return (
+                          <button
+                            key={top}
+                            type="button"
+                            onClick={() => {
+                              if (isSelected) {
+                                setSelectedToppings(selectedToppings.filter((t) => t !== top));
+                              } else if (selectedToppings.length < 2) {
+                                setSelectedToppings([...selectedToppings, top]);
+                              }
+                            }}
+                            className={`py-2.5 px-3 rounded-xl text-[11px] font-semibold border text-center transition-all cursor-pointer ${
+                              isSelected
+                                ? "bg-primary/10 text-primary border-primary font-bold"
+                                : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
+                            }`}
+                          >
+                            {top}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="border-t border-gray-100 pt-5 mt-8 flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => setActiveOptionDish(null)}
+                  className="flex-1 py-3 border border-gray-200 rounded-2xl font-bold text-xs text-gray-500 hover:bg-gray-50 transition-colors cursor-pointer text-center"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="button"
+                  onClick={handleConfirmOptions}
+                  disabled={
+                    !!(getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre)?.waffleCustomOptions &&
+                      (selectedFrutas.length !== 3 || selectedToppings.length !== 3))
+                  }
+                  className={`flex-[2] py-3 rounded-2xl font-bold text-xs text-white text-center shadow-lg transition-all cursor-pointer ${
+                    getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre)?.waffleCustomOptions &&
+                    (selectedFrutas.length !== 3 || selectedToppings.length !== 3)
+                      ? "bg-gray-300 shadow-none cursor-not-allowed"
+                      : "bg-primary hover:bg-primary/95 shadow-primary/20"
+                  }`}
+                >
+                  Agregar (S/. {(() => {
+                    const base = parseFloat(activeOptionDish.dish.precio.replace(/^[^\d]*/, '')) || 0;
+                    let addon = 0;
+                    if (addAlmondMilk) addon += 3;
+                    if (addSizeUpgrade) addon += 3;
+                    if (selectedComplement !== "Ninguno" && getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre)?.frozenTopping) addon += 3;
+                    return (base + addon).toFixed(2);
+                  })()})
+                </button>
+              </div>
             </motion.div>
           </motion.div>
         )}
