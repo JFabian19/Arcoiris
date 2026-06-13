@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { ShoppingBag, Plus, Minus, ChevronRight, X, Trash2, Utensils, Facebook, MapPin, Loader2, Gift, Star } from 'lucide-react';
+import { ShoppingBag, Plus, Minus, ChevronRight, X, Trash2, Utensils, Facebook, MapPin, Loader2, Gift, Star, CreditCard, Coins, Smartphone, Copy, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { fetchSheetData, submitSheetData, SheetDish, SheetCategory } from './services/googleSheets';
 import platosData from '../platos.json';
@@ -362,6 +362,9 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [showSummary, setShowSummary] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'tarjeta' | 'efectivo' | 'yape_plin' | null>(null);
+  const [copiedNumber, setCopiedNumber] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -689,7 +692,7 @@ export default function App() {
     }, 0);
   };
 
-  const sendToWhatsApp = () => {
+  const sendToWhatsApp = (method: 'tarjeta' | 'efectivo' | 'yape_plin') => {
     const total = calculateTotal();
     let message = `*Hola ${BUSINESS_NAME}, deseo realizar un pedido:*\n\n`;
     cart.forEach(item => {
@@ -701,6 +704,14 @@ export default function App() {
       message += `• ${item.cantidad} x ${item.nombre} (S/. ${singlePrice.toFixed(2)} c/u)${optionsStr}\n`;
     });
     message += `\n*TOTAL: S/. ${total.toFixed(2)}*`;
+
+    let methodLabel = "";
+    if (method === 'tarjeta') methodLabel = "Tarjeta (POS)";
+    else if (method === 'efectivo') methodLabel = "Efectivo";
+    else if (method === 'yape_plin') methodLabel = "Yape / Plin";
+
+    message += `\n\n*Método de Pago:* ${methodLabel}`;
+
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   };
@@ -1171,7 +1182,10 @@ export default function App() {
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={sendToWhatsApp}
+                onClick={() => {
+                  setShowPaymentModal(true);
+                  setSelectedPaymentMethod(null);
+                }}
                 className="w-full bg-[#25D366] hover:bg-[#20ba5a] text-white py-4 rounded-2xl flex items-center justify-center gap-2.5 shadow-lg shadow-green-150 transition-colors font-title font-black text-sm uppercase tracking-wider cursor-pointer"
               >
                 <span>Enviar Pedido a WhatsApp</span>
@@ -1380,6 +1394,152 @@ export default function App() {
                   </motion.button>
                 </form>
               )}
+            </motion.div>
+          </motion.div>
+        )}
+
+        {showPaymentModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={() => setShowPaymentModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="bg-white w-full max-w-sm rounded-[2.5rem] p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setShowPaymentModal(false)}
+                className="absolute top-4 right-4 w-8 h-8 bg-gray-50 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors"
+              >
+                <X size={18} className="text-gray-400" />
+              </button>
+
+              <div className="flex flex-col items-center text-center mb-5 mt-2">
+                <div className="w-14 h-14 bg-gradient-to-tr from-[#25D366]/20 to-[#25D366]/40 rounded-full flex items-center justify-center mb-3 shadow-md animate-float">
+                  <ShoppingBag size={26} className="text-[#25D366]" />
+                </div>
+                <h2 className="font-title text-2xl text-dark leading-none mb-2">Método de Pago</h2>
+                <p className="text-xs text-gray-500 leading-relaxed px-4">Selecciona cómo deseas realizar el pago de tu pedido. 🌈</p>
+              </div>
+
+              <div className="space-y-3">
+                <button
+                  type="button"
+                  onClick={() => setSelectedPaymentMethod('tarjeta')}
+                  className={`w-full flex items-center gap-4 p-4 rounded-2xl border text-left transition-all cursor-pointer ${
+                    selectedPaymentMethod === 'tarjeta'
+                      ? 'bg-primary/5 border-primary shadow-sm scale-[1.01]'
+                      : 'bg-gray-50/50 border-gray-150 hover:bg-gray-50 hover:border-gray-200'
+                  }`}
+                >
+                  <div className={`p-2.5 rounded-xl transition-colors ${selectedPaymentMethod === 'tarjeta' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-500'}`}>
+                    <CreditCard size={20} />
+                  </div>
+                  <div>
+                    <h3 className="font-title font-bold text-sm text-dark">Tarjeta (POS)</h3>
+                    <p className="text-[11px] text-gray-400">Paga con tarjeta física al recibir o retirar.</p>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setSelectedPaymentMethod('efectivo')}
+                  className={`w-full flex items-center gap-4 p-4 rounded-2xl border text-left transition-all cursor-pointer ${
+                    selectedPaymentMethod === 'efectivo'
+                      ? 'bg-primary/5 border-primary shadow-sm scale-[1.01]'
+                      : 'bg-gray-50/50 border-gray-150 hover:bg-gray-50 hover:border-gray-200'
+                  }`}
+                >
+                  <div className={`p-2.5 rounded-xl transition-colors ${selectedPaymentMethod === 'efectivo' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-500'}`}>
+                    <Coins size={20} />
+                  </div>
+                  <div>
+                    <h3 className="font-title font-bold text-sm text-dark">Efectivo</h3>
+                    <p className="text-[11px] text-gray-400">Paga en efectivo al recibir tu pedido.</p>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setSelectedPaymentMethod('yape_plin')}
+                  className={`w-full flex items-center gap-4 p-4 rounded-2xl border text-left transition-all cursor-pointer ${
+                    selectedPaymentMethod === 'yape_plin'
+                      ? 'bg-primary/5 border-primary shadow-sm scale-[1.01]'
+                      : 'bg-gray-50/50 border-gray-150 hover:bg-gray-50 hover:border-gray-200'
+                  }`}
+                >
+                  <div className={`p-2.5 rounded-xl transition-colors ${selectedPaymentMethod === 'yape_plin' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-500'}`}>
+                    <Smartphone size={20} />
+                  </div>
+                  <div>
+                    <h3 className="font-title font-bold text-sm text-dark">Yape / Plin</h3>
+                    <p className="text-[11px] text-gray-400">Transferencia móvil rápida.</p>
+                  </div>
+                </button>
+              </div>
+
+              <AnimatePresence>
+                {selectedPaymentMethod === 'yape_plin' && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0, y: -10 }}
+                    animate={{ opacity: 1, height: 'auto', y: 0 }}
+                    exit={{ opacity: 0, height: 0, y: -10 }}
+                    className="mt-4 bg-gray-50/80 rounded-2xl p-4 border border-gray-150 space-y-2.5 overflow-hidden"
+                  >
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Titular</span>
+                      <span className="text-xs font-bold text-dark">Patricia G</span>
+                    </div>
+                    <div className="flex justify-between items-center gap-2">
+                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Número de Pago</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-bold text-dark font-mono">997 119 246</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            navigator.clipboard.writeText('997119246');
+                            setCopiedNumber(true);
+                            setTimeout(() => setCopiedNumber(false), 2000);
+                          }}
+                          className="p-1.5 rounded-lg bg-white border border-gray-200 text-gray-500 hover:text-primary hover:border-primary/30 transition-colors flex items-center justify-center cursor-pointer shadow-sm active:scale-95"
+                          title="Copiar número"
+                        >
+                          {copiedNumber ? (
+                            <Check size={14} className="text-green-500" />
+                          ) : (
+                            <Copy size={14} />
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                    {copiedNumber && (
+                      <p className="text-[10px] text-green-500 text-right font-bold animate-pulse">¡Número copiado al portapapeles!</p>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => {
+                  if (selectedPaymentMethod) {
+                    sendToWhatsApp(selectedPaymentMethod);
+                    setShowPaymentModal(false);
+                  }
+                }}
+                disabled={!selectedPaymentMethod}
+                className="w-full bg-[#25D366] hover:bg-[#20ba5a] text-white py-3.5 rounded-2xl font-bold text-sm shadow-lg shadow-green-100 mt-5 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2 cursor-pointer transition-all uppercase tracking-wider font-title"
+              >
+                <span>Confirmar y Enviar Pedido</span>
+                <ChevronRight size={16} />
+              </motion.button>
             </motion.div>
           </motion.div>
         )}
