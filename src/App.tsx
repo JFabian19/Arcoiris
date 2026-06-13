@@ -23,7 +23,7 @@ const MAPS_URL = "";
 const TIKTOK_URL = "https://www.tiktok.com/@arcoiris.heladeri?_r=1&_t=ZS-96sqtfXsgxZ";
 
 // Texto del banner infinito (Marquee)
-const MARQUEE_TEXT = "🍦 SABOR Y COLOR EN CADA BOCADO • BUBBLE TEAS Y HELADOS FRITOS • ¡ENDULZA TU DÍA! 🌈 • ";
+const MARQUEE_TEXT = "Café, Helado , wafles , Buble tea y más 🌈 ¡Endulza tu día! Más que un antojo, una experiencia. • ";
 
 // Mapa opcional de imágenes locales para platos conocidos (si deseas usar imágenes de la carpeta public)
 // Ejemplo: { "Nombre del Plato": "nombre_imagen.jpg" }
@@ -119,8 +119,8 @@ const LOCAL_IMAGES: Record<string, string> = {
   "Bubble Lattes | Brown sugar": "bubble_latte_brown_sugar.webp",
   "Bubble Lattes | Matcha": "bubble_latte_matcha.webp",
   "Bubble Lattes | Matcha fresa": "bubble_latte_matcha_fresa.webp",
-  "Bubble Lattes | Fresa matcha": "fresa matcha bubble late.png",
-  "Bubble Lattes | Mango matcha": "mango matcha bubble latte.png",
+  "Bubble Lattes | Fresa matcha": "fresa matcha bubble late.webp",
+  "Bubble Lattes | Mango matcha": "mango matcha bubble latte.webp",
   "Bubble Lattes | Taro oreo": "bubble_latte_taro_oreo.webp",
   "Combos Desayunos | Combo 1": "combo1.webp",
   "Combos Desayunos | Combo 2": "combo2.webp",
@@ -133,11 +133,12 @@ const LOCAL_IMAGES: Record<string, string> = {
   "Sandwich | Croisant de Pollo": "Croisant de Pollo.webp",
   "Sandwich | Ciabatta de Pollo": "Ciabatta de Pollo.webp",
   "Sandwich | Triangulo Doble de Pollo": "Triangulo Doble de Pollo.webp",
+  "Sandwich | Triple": "triple.webp",
   "Sandwich | Triple Pollo, Jamón y Queso": "triple.webp",
-  "Sandwich | Empanada mixta": "empanada mixta.png",
+  "Sandwich | Empanada mixta": "empanada mixta.webp",
   "Postres | Torta de Chocolate": "Torta de Chocolate.webp",
   "Postres | Cheesecake de Maracuya": "Cheesecake de Maracuya.webp",
-  "Postres | Queques": "queque de casa.png",
+  "Postres | Queques": "Carrot Cake.webp",
   "Bubble Teas | Bubble Tea de Fresa": "bubble_tea_fresa.webp",
   "Bubble Teas | Bubble Tea de Mango": "bubble_tea_mango.webp",
   "Bubble Teas | Bubble Tea de Piña": "bubble_tea_pina.webp",
@@ -152,15 +153,15 @@ const LOCAL_IMAGES: Record<string, string> = {
   "Batidos | Mango + leche": "batido_mango.webp",
   "Batidos | Fresa + leche": "batido_fresa.webp",
   "Batidos | Papaya + leche": "batido_mango_fresa.webp",
-  "Smoothies | Piña Colada": "pina colada.png",
-  "Smoothies | Coconut": "coconut.png",
-  "Smoothies | Strawberry matcha": "Strawberry matcha.png",
+  "Smoothies | Piña Colada": "pina colada.webp",
+  "Smoothies | Coconut": "coconut.webp",
+  "Smoothies | Strawberry matcha": "Strawberry matcha.webp",
   "Smoothies | Fresa": "frozen de fresa.webp",
-  "Smoothies | Fresa + Arándanos": "fresa + arandanos.png",
-  "Smoothies | Lucuma": "smoothie lucuma .png",
-  "Smoothies | Matcha": "smoothie matcha.png",
-  "Smoothies | Taro oreo": "smoothie taro oreo.png",
-  "Smoothies | Taro": "smoothie taro.png",
+  "Smoothies | Fresa + Arándanos": "fresa + arandanos.webp",
+  "Smoothies | Lucuma": "smoothie lucuma .webp",
+  "Smoothies | Matcha": "smoothie matcha.webp",
+  "Smoothies | Taro oreo": "smoothie taro oreo.webp",
+  "Smoothies | Taro": "smoothie taro.webp",
   "Bebidas Frías | Iced Mocaccino": "iced_mocaccino.webp",
   "Bebidas Frías | Iced Avellana Latte": "iced_avellana_latte.webp",
   "Bebidas Frías | Iced Strawberry Latte": "iced_strawberry_latte.webp",
@@ -396,8 +397,18 @@ export default function App() {
   const [selectedComplement, setSelectedComplement] = useState("Ninguno");
   const [selectedFlavor, setSelectedFlavor] = useState("Naranja");
   const [selectedIceCreamFlavor, setSelectedIceCreamFlavor] = useState("Oreo");
+  const [selectedJugo, setSelectedJugo] = useState("Jugo de fresa");
+  const [selectedJugoTemp, setSelectedJugoTemp] = useState("Helado");
 
   const getDishOptionConfig = (category: string, dishName: string) => {
+    if (category === "Combos Desayunos") {
+      if (dishName === "Combo 1") {
+        return { combo1Keke: true };
+      }
+      if (dishName === "Combo 6" || dishName === "Combo 7") {
+        return { combo67Options: true };
+      }
+    }
     if (category === "Postres" && (dishName === "Queques" || dishName === "Queques de Casa")) {
       return { quequeFlavors: true };
     }
@@ -477,8 +488,16 @@ export default function App() {
         else if (config.bubbleJuiceTopping) setSelectedComplement("Tapioca");
         else setSelectedComplement("");
         
-        setSelectedFlavor("Naranja");
+        if (config.combo1Keke) setSelectedFlavor("Keke de naranja");
+        else if (config.quequeFlavors) setSelectedFlavor("Zanahoria");
+        else setSelectedFlavor("Naranja");
+        
         setSelectedIceCreamFlavor("Oreo");
+        
+        if (config.combo67Options) {
+          setSelectedJugo("Jugo de fresa");
+          setSelectedJugoTemp("Helado");
+        }
       }
     }
   }, [activeOptionDish]);
@@ -629,6 +648,13 @@ export default function App() {
       if (config.waffleIceCreamFlavor) {
         opciones.push(`Helado: ${selectedIceCreamFlavor}`);
       }
+      if (config.combo1Keke) {
+        opciones.push(`Keke: ${selectedFlavor}`);
+      }
+      if (config.combo67Options) {
+        opciones.push(`Jugo: ${selectedJugo}`);
+        opciones.push(`Temperatura: ${selectedJugoTemp}`);
+      }
     }
     
     const opcionesTexto = opciones.join(" | ");
@@ -750,7 +776,7 @@ export default function App() {
       <header className="sticky top-0 bg-bg/90 backdrop-blur-md z-50 px-4 py-3 flex justify-between items-center border-b border-primary/5">
         <div className="flex items-center">
           <img 
-            src="/logo.png" 
+            src="/logo.webp" 
             alt="Arcoiris Logo" 
             className="h-10 sm:h-11 w-auto object-contain select-none"
             onError={(e) => {
@@ -844,7 +870,7 @@ export default function App() {
       <div className="px-5 pt-4 pb-3">
         <div className="relative w-full rounded-[2.5rem] overflow-hidden shadow-md aspect-[2/1] bg-gray-50 flex items-center justify-center border border-primary/5">
           <img 
-            src="/banner.png" 
+            src="/banner.webp" 
             alt={BUSINESS_NAME} 
             className="w-full h-full object-cover"
             onError={(e) => {
@@ -853,7 +879,7 @@ export default function App() {
               if (parent) {
                 const placeholder = document.createElement('div');
                 placeholder.className = "flex flex-col items-center justify-center text-gray-400 p-6 text-center";
-                placeholder.innerHTML = `<span class='font-bold text-sm'>Banner del Negocio</span><span class='text-[10px] mt-1'>(Sube tu imagen 'banner.png' en la carpeta public)</span>`;
+                placeholder.innerHTML = `<span class='font-bold text-sm'>Banner del Negocio</span><span class='text-[10px] mt-1'>(Sube tu imagen 'banner.webp' en la carpeta public)</span>`;
                 parent.appendChild(placeholder);
               }
             }}
@@ -958,9 +984,11 @@ export default function App() {
                         )}
                         <div className="flex items-center justify-between mt-1 pt-1 border-t border-gray-50">
                           <span className="font-title text-primary text-[15px] font-black">
-                            {formatPrice(dish.precio)}
+                            {dish.precio && dish.precio.trim() !== "" ? formatPrice(dish.precio) : ""}
                           </span>
-                          {dish.proximamente ? (
+                          {!dish.precio || dish.precio.trim() === "" ? (
+                            null
+                          ) : dish.proximamente ? (
                             <span className="text-[10px] text-gray-400 font-bold bg-gray-100 px-2.5 py-1 rounded-xl">Próximamente</span>
                           ) : (
                             <motion.button
@@ -1005,7 +1033,7 @@ export default function App() {
         <footer className="mt-10 pt-8 pb-10 border-t border-primary/10 flex flex-col items-center justify-center">
           <div className="h-12 mb-6 flex items-center justify-center animate-float">
             <img 
-              src="/logo.png" 
+              src="/logo.webp" 
               alt="Arcoiris Logo" 
               className="h-full object-contain select-none"
               onError={(e) => { e.currentTarget.style.display = 'none'; }}
@@ -1712,62 +1740,85 @@ export default function App() {
                 {getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre)?.waffleIceCreamFlavor && (
                   <div className="space-y-4">
                     <h4 className="font-title text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Sabor de Helado Frito (Elige 1)</h4>
-                    
+                    <div className="grid grid-cols-3 gap-1.5 mt-2">
+                      {["Fresa", "Mango", "Arándanos", "Lúcuma", "Plátano", "Coco", "Limón", "Aguaymanto", "Maracuyá", "Oreo", "Nutella", "Morochas", "Kiwi 🥝", "Casino menta", "Pícaras"].map((flavor) => (
+                        <button
+                          key={flavor}
+                          type="button"
+                          onClick={() => setSelectedIceCreamFlavor(flavor)}
+                          className={`py-2 px-1 rounded-xl text-[9px] font-semibold border text-center transition-all cursor-pointer ${
+                            selectedIceCreamFlavor === flavor
+                              ? "bg-primary text-white border-primary shadow-sm font-bold"
+                              : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
+                          }`}
+                        >
+                          {flavor}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Combo 1 Keke Selection */}
+                {getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre)?.combo1Keke && (
+                  <div>
+                    <h4 className="font-title text-xs font-bold text-gray-500 uppercase mb-3 tracking-wider">Elige tu Keke</h4>
+                    <div className="grid grid-cols-2 gap-2">
+                      {["Keke de naranja", "Keke de plátano", "Keke de zanahoria", "Keke de chocolate"].map((flavor) => (
+                        <button
+                          key={flavor}
+                          type="button"
+                          onClick={() => setSelectedFlavor(flavor)}
+                          className={`py-2.5 px-3 rounded-xl text-[11px] font-semibold border text-center transition-all cursor-pointer ${
+                            selectedFlavor === flavor
+                              ? "bg-primary text-white border-primary shadow-sm"
+                              : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
+                          }`}
+                        >
+                          {flavor}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Combo 6 & 7 Options */}
+                {getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre)?.combo67Options && (
+                  <div className="space-y-4">
                     <div>
-                      <div className="text-[10px] font-bold text-primary bg-primary/5 px-2.5 py-1 rounded-lg w-max select-none">Frutas</div>
-                      <div className="grid grid-cols-3 gap-1.5 mt-2">
-                        {["Fresa", "Arándanos", "Mango", "Lúcuma", "Maracuyá", "Aguaymanto", "Kiwi", "Plátano", "Limón"].map((flavor) => (
+                      <h4 className="font-title text-xs font-bold text-gray-500 uppercase mb-2 tracking-wider">Elige tu Jugo</h4>
+                      <div className="grid grid-cols-2 gap-2">
+                        {["Jugo de fresa", "Jugo de naranja", "Jugo de papaya", "Jugo de piña", "Jugo papaya+piña"].map((jugo) => (
                           <button
-                            key={flavor}
+                            key={jugo}
                             type="button"
-                            onClick={() => setSelectedIceCreamFlavor(flavor)}
-                            className={`py-1.5 px-1 rounded-xl text-[9px] font-semibold border text-center transition-all cursor-pointer ${
-                              selectedIceCreamFlavor === flavor
-                                ? "bg-primary text-white border-primary shadow-sm font-bold"
+                            onClick={() => setSelectedJugo(jugo)}
+                            className={`py-2 px-2 rounded-xl text-[10px] font-semibold border text-center transition-all cursor-pointer ${
+                              selectedJugo === jugo
+                                ? "bg-primary text-white border-primary shadow-sm"
                                 : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
                             }`}
                           >
-                            {flavor}
+                            {jugo}
                           </button>
                         ))}
                       </div>
                     </div>
-
                     <div>
-                      <div className="text-[10px] font-bold text-primary bg-primary/5 px-2.5 py-1 rounded-lg w-max select-none">Galletas</div>
-                      <div className="grid grid-cols-2 gap-1.5 mt-2">
-                        {["Oreo", "Casino Menta", "Casino Vainilla", "Morochas"].map((flavor) => (
+                      <h4 className="font-title text-xs font-bold text-gray-500 uppercase mb-2 tracking-wider">Temperatura</h4>
+                      <div className="grid grid-cols-2 gap-2">
+                        {["Helado", "Natural (al tiempo)"].map((temp) => (
                           <button
-                            key={flavor}
+                            key={temp}
                             type="button"
-                            onClick={() => setSelectedIceCreamFlavor(flavor)}
-                            className={`py-1.5 px-1 rounded-xl text-[9px] font-semibold border text-center transition-all cursor-pointer ${
-                              selectedIceCreamFlavor === flavor
-                                ? "bg-primary text-white border-primary shadow-sm font-bold"
+                            onClick={() => setSelectedJugoTemp(temp)}
+                            className={`py-2 px-2 rounded-xl text-[10px] font-semibold border text-center transition-all cursor-pointer ${
+                              selectedJugoTemp === temp
+                                ? "bg-primary text-white border-primary shadow-sm"
                                 : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
                             }`}
                           >
-                            {flavor}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="text-[10px] font-bold text-primary bg-primary/5 px-2.5 py-1 rounded-lg w-max select-none">Chocolate</div>
-                      <div className="grid grid-cols-3 gap-1.5 mt-2">
-                        {["Nutella", "Chocman", "Beso de Moza"].map((flavor) => (
-                          <button
-                            key={flavor}
-                            type="button"
-                            onClick={() => setSelectedIceCreamFlavor(flavor)}
-                            className={`py-1.5 px-1 rounded-xl text-[9px] font-semibold border text-center transition-all cursor-pointer ${
-                              selectedIceCreamFlavor === flavor
-                                ? "bg-primary text-white border-primary shadow-sm font-bold"
-                                : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
-                            }`}
-                          >
-                            {flavor}
+                            {temp}
                           </button>
                         ))}
                       </div>
