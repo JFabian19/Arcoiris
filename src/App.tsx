@@ -95,7 +95,7 @@ const LOCAL_IMAGES: Record<string, string> = {
   "Frozen | Sandia": "frozen_sandia.webp",
   "Frozen | Mango": "frozen_mango.webp",
   "Frozen | Piña": "frozen_pina.webp",
-  "Frozen | Fresa": "frozen_limonada_fresa.webp",
+  "Frozen | Fresa": "frozen de fresa.webp",
   "Wafles | W. Clásico": "w_clasico.webp",
   "Wafles | W. Frutero": "wafle frutero.webp",
   "Wafles | W. Perzonalizado": "w_personalizado.webp",
@@ -119,6 +119,8 @@ const LOCAL_IMAGES: Record<string, string> = {
   "Bubble Lattes | Brown sugar": "bubble_latte_brown_sugar.webp",
   "Bubble Lattes | Matcha": "bubble_latte_matcha.webp",
   "Bubble Lattes | Matcha fresa": "bubble_latte_matcha_fresa.webp",
+  "Bubble Lattes | Fresa matcha": "fresa matcha bubble late.png",
+  "Bubble Lattes | Mango matcha": "mango matcha bubble latte.png",
   "Bubble Lattes | Taro oreo": "bubble_latte_taro_oreo.webp",
   "Combos Desayunos | Combo 1": "combo1.webp",
   "Combos Desayunos | Combo 2": "combo2.webp",
@@ -131,10 +133,11 @@ const LOCAL_IMAGES: Record<string, string> = {
   "Sandwich | Croisant de Pollo": "Croisant de Pollo.webp",
   "Sandwich | Ciabatta de Pollo": "Ciabatta de Pollo.webp",
   "Sandwich | Triangulo Doble de Pollo": "Triangulo Doble de Pollo.webp",
-  "Sandwich | Triple": "Triple.webp",
+  "Sandwich | Triple Pollo, Jamón y Queso": "triple.webp",
+  "Sandwich | Empanada mixta": "empanada mixta.png",
   "Postres | Torta de Chocolate": "Torta de Chocolate.webp",
   "Postres | Cheesecake de Maracuya": "Cheesecake de Maracuya.webp",
-  "Postres | Queques de Casa": "Queques de Casa.webp",
+  "Postres | Queques": "queque de casa.png",
   "Bubble Teas | Bubble Tea de Fresa": "bubble_tea_fresa.webp",
   "Bubble Teas | Bubble Tea de Mango": "bubble_tea_mango.webp",
   "Bubble Teas | Bubble Tea de Piña": "bubble_tea_pina.webp",
@@ -149,15 +152,15 @@ const LOCAL_IMAGES: Record<string, string> = {
   "Batidos | Mango + leche": "batido_mango.webp",
   "Batidos | Fresa + leche": "batido_fresa.webp",
   "Batidos | Papaya + leche": "batido_mango_fresa.webp",
-  "Smoothies | Piña Colada": "pina colada.webp",
-  "Smoothies | Coconut": "Coconut.webp",
-  "Smoothies | Strawberry matcha": "smoothie_strawberry_matcha.webp",
-  "Smoothies | Fresa": "smoothie_fresa.webp",
-  "Smoothies | Fresa + Arándanos": "smoothie_fresa_arandanos.webp",
-  "Smoothies | Lucuma": "smoothie_lucuma.webp",
-  "Smoothies | Matcha": "smoothie_matcha.webp",
-  "Smoothies | Taro oreo": "smoothie_taro_oreo.webp",
-  "Smoothies | Taro": "smoothie_taro.webp",
+  "Smoothies | Piña Colada": "pina colada.png",
+  "Smoothies | Coconut": "coconut.png",
+  "Smoothies | Strawberry matcha": "Strawberry matcha.png",
+  "Smoothies | Fresa": "frozen de fresa.webp",
+  "Smoothies | Fresa + Arándanos": "fresa + arandanos.png",
+  "Smoothies | Lucuma": "smoothie lucuma .png",
+  "Smoothies | Matcha": "smoothie matcha.png",
+  "Smoothies | Taro oreo": "smoothie taro oreo.png",
+  "Smoothies | Taro": "smoothie taro.png",
   "Bebidas Frías | Iced Mocaccino": "iced_mocaccino.webp",
   "Bebidas Frías | Iced Avellana Latte": "iced_avellana_latte.webp",
   "Bebidas Frías | Iced Strawberry Latte": "iced_strawberry_latte.webp",
@@ -391,8 +394,13 @@ export default function App() {
   const [selectedToppings, setSelectedToppings] = useState<string[]>([]);
   const [selectedYogurt, setSelectedYogurt] = useState("");
   const [selectedComplement, setSelectedComplement] = useState("Ninguno");
+  const [selectedFlavor, setSelectedFlavor] = useState("Naranja");
+  const [selectedIceCreamFlavor, setSelectedIceCreamFlavor] = useState("Oreo");
 
   const getDishOptionConfig = (category: string, dishName: string) => {
+    if (category === "Postres" && (dishName === "Queques" || dishName === "Queques de Casa")) {
+      return { quequeFlavors: true };
+    }
     if (category === "Bebidas Frías") {
       return { sugarLevel: true, almondMilk: true };
     }
@@ -405,6 +413,9 @@ export default function App() {
       }
       if (dishName === "W. Perzonalizado" || dishName === "W. Personalizado") {
         return { waffleCustomOptions: true };
+      }
+      if (dishName === "W. con Helado" || dishName === "W. con helado" || dishName === "Waffle con Helado" || dishName === "Waffle con Helado frito") {
+        return { waffleIceCreamFlavor: true };
       }
       if (dishName === "Ensalada de frutas") {
         return { fruitSaladYogurt: true };
@@ -433,9 +444,9 @@ export default function App() {
         return "16 oz";
       case "Bubble Teas":
       case "Bubble Lattes":
-        return "16 oz (incluye tapioca)";
+        return "16 oz (incluye complemento)";
       case "Smoothies":
-        return "21 oz (incluye tapioca)";
+        return "21 oz (incluye complemento)";
       case "Frozen":
         return "21 oz";
       default:
@@ -465,6 +476,9 @@ export default function App() {
         if (config.frozenTopping) setSelectedComplement("Ninguno");
         else if (config.bubbleJuiceTopping) setSelectedComplement("Tapioca");
         else setSelectedComplement("");
+        
+        setSelectedFlavor("Naranja");
+        setSelectedIceCreamFlavor("Oreo");
       }
     }
   }, [activeOptionDish]);
@@ -492,7 +506,8 @@ export default function App() {
                 nombre: d['nombre del plato'],
                 descripcion: d.descripción,
                 precio: d.precio,
-                imagen: LOCAL_IMAGES[`${catName} | ${d['nombre del plato']}`] || LOCAL_IMAGES[d['nombre del plato']] || d['URL de imagen'] || null
+                imagen: LOCAL_IMAGES[`${catName} | ${d['nombre del plato']}`] || LOCAL_IMAGES[d['nombre del plato']] || d['URL de imagen'] || null,
+                proximamente: d['próximamente'] === 'on' || (d as any).proximamente === 'on' || d['próximamente'] === 'true'
               }))
           };
         });
@@ -509,7 +524,8 @@ export default function App() {
               nombre: d['nombre del plato'],
               descripcion: d.descripción,
               precio: d.precio,
-              imagen: LOCAL_IMAGES[`${c.nombre} | ${d['nombre del plato']}`] || LOCAL_IMAGES[d['nombre del plato']] || d['URL de imagen'] || null
+              imagen: LOCAL_IMAGES[`${c.nombre} | ${d['nombre del plato']}`] || LOCAL_IMAGES[d['nombre del plato']] || d['URL de imagen'] || null,
+              proximamente: (d as any)['próximamente'] === 'on' || (d as any).proximamente === 'on' || (d as any)['próximamente'] === 'true'
             }))
         }));
         setCategories(formattedCategories);
@@ -606,6 +622,12 @@ export default function App() {
       }
       if (config.friedIceCreamTopping && selectedToppings.length > 0) {
         opciones.push(`Toppings: ${selectedToppings.join(", ")}`);
+      }
+      if (config.quequeFlavors) {
+        opciones.push(`Sabor: ${selectedFlavor}`);
+      }
+      if (config.waffleIceCreamFlavor) {
+        opciones.push(`Helado: ${selectedIceCreamFlavor}`);
       }
     }
     
@@ -887,12 +909,17 @@ export default function App() {
                       whileHover={{ y: -6, boxShadow: "0 12px 20px -8px rgba(255, 77, 109, 0.15)" }}
                       className="bg-white/90 backdrop-blur-sm rounded-[2rem] overflow-hidden flex flex-col shadow-sm border border-gray-100/80 hover:border-primary/20 transition-all duration-300 relative group"
                     >
-                      {isPopular && (
+                      {dish.proximamente && (
+                        <span className="absolute top-2.5 left-2.5 z-10 bg-gray-400 text-white text-[8px] font-black uppercase px-2 py-0.5 rounded-full shadow-sm select-none">
+                          ⏳ PRÓXIMAMENTE
+                        </span>
+                      )}
+                      {isPopular && !dish.proximamente && (
                         <span className="absolute top-2.5 left-2.5 z-10 bg-secondary text-white text-[8px] font-black uppercase px-2 py-0.5 rounded-full shadow-sm select-none">
                           ⭐ TOP
                         </span>
                       )}
-                      {isNew && (
+                      {isNew && !dish.proximamente && (
                         <span className="absolute top-2.5 left-2.5 z-10 bg-primary text-white text-[8px] font-black uppercase px-2 py-0.5 rounded-full shadow-sm select-none">
                           🍦 NUEVO
                         </span>
@@ -933,14 +960,18 @@ export default function App() {
                           <span className="font-title text-primary text-[15px] font-black">
                             {formatPrice(dish.precio)}
                           </span>
-                          <motion.button
-                            whileTap={{ scale: 0.8 }}
-                            whileHover={{ scale: 1.1 }}
-                            onClick={() => addToCart(dish, cat.nombre)}
-                            className="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-200 shrink-0 cursor-pointer"
-                          >
-                            <Plus size={16} strokeWidth={3} />
-                          </motion.button>
+                          {dish.proximamente ? (
+                            <span className="text-[10px] text-gray-400 font-bold bg-gray-100 px-2.5 py-1 rounded-xl">Próximamente</span>
+                          ) : (
+                            <motion.button
+                              whileTap={{ scale: 0.8 }}
+                              whileHover={{ scale: 1.1 }}
+                              onClick={() => addToCart(dish, cat.nombre)}
+                              className="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-200 shrink-0 cursor-pointer"
+                            >
+                              <Plus size={16} strokeWidth={3} />
+                            </motion.button>
+                          )}
                         </div>
                       </div>
                     </motion.div>
@@ -1578,7 +1609,7 @@ export default function App() {
                   <div>
                     <h4 className="font-title text-xs font-bold text-gray-500 uppercase mb-3 tracking-wider">Añadir Complemento (+ S/. 3.00)</h4>
                     <div className="grid grid-cols-2 gap-2">
-                      {["Ninguno", "Topping boba de fresa", "Topping boba de arándanos", "Topping boba de manzana verde", "Topping boba de mango", "Topping boba de maracuyá", "Topping boba de frambuesa", "Tapioca"].map((comp) => (
+                      {["Ninguno", "Popping boba de fresa", "Popping boba de arándanos", "Popping boba de manzana verde", "Popping boba de mango", "Popping boba de maracuyá", "Popping boba de frambuesa", "Tapioca"].map((comp) => (
                         <button
                           key={comp}
                           type="button"
@@ -1601,7 +1632,7 @@ export default function App() {
                   <div>
                     <h4 className="font-title text-xs font-bold text-gray-500 uppercase mb-3 tracking-wider">Complemento gratis (Elige 1)</h4>
                     <div className="grid grid-cols-2 gap-2">
-                      {["Topping boba de fresa", "Topping boba de arándanos", "Topping boba de manzana verde", "Topping boba de mango", "Topping boba de maracuyá", "Topping boba de frambuesa", "Tapioca"].map((comp) => (
+                      {["Popping boba de fresa", "Popping boba de arándanos", "Popping boba de manzana verde", "Popping boba de mango", "Popping boba de maracuyá", "Popping boba de frambuesa", "Tapioca"].map((comp) => (
                         <button
                           key={comp}
                           type="button"
@@ -1650,6 +1681,96 @@ export default function App() {
                           </button>
                         );
                       })}
+                    </div>
+                  </div>
+                )}
+
+                {/* 11. Queque Flavors */}
+                {getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre)?.quequeFlavors && (
+                  <div>
+                    <h4 className="font-title text-xs font-bold text-gray-500 uppercase mb-3 tracking-wider">Elige el Sabor</h4>
+                    <div className="grid grid-cols-2 gap-2">
+                      {["Zanahoria", "Chocolate", "Naranja", "Plátano"].map((flavor) => (
+                        <button
+                          key={flavor}
+                          type="button"
+                          onClick={() => setSelectedFlavor(flavor)}
+                          className={`py-2 px-2 rounded-xl text-[10px] font-semibold border text-center transition-all cursor-pointer ${
+                            selectedFlavor === flavor
+                              ? "bg-primary text-white border-primary shadow-sm"
+                              : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
+                          }`}
+                        >
+                          {flavor}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 12. Waffle Ice Cream Flavor Selection */}
+                {getDishOptionConfig(activeOptionDish.category, activeOptionDish.dish.nombre)?.waffleIceCreamFlavor && (
+                  <div className="space-y-4">
+                    <h4 className="font-title text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Sabor de Helado Frito (Elige 1)</h4>
+                    
+                    <div>
+                      <div className="text-[10px] font-bold text-primary bg-primary/5 px-2.5 py-1 rounded-lg w-max select-none">Frutas</div>
+                      <div className="grid grid-cols-3 gap-1.5 mt-2">
+                        {["Fresa", "Arándanos", "Mango", "Lúcuma", "Maracuyá", "Aguaymanto", "Kiwi", "Plátano", "Limón"].map((flavor) => (
+                          <button
+                            key={flavor}
+                            type="button"
+                            onClick={() => setSelectedIceCreamFlavor(flavor)}
+                            className={`py-1.5 px-1 rounded-xl text-[9px] font-semibold border text-center transition-all cursor-pointer ${
+                              selectedIceCreamFlavor === flavor
+                                ? "bg-primary text-white border-primary shadow-sm font-bold"
+                                : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
+                            }`}
+                          >
+                            {flavor}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="text-[10px] font-bold text-primary bg-primary/5 px-2.5 py-1 rounded-lg w-max select-none">Galletas</div>
+                      <div className="grid grid-cols-2 gap-1.5 mt-2">
+                        {["Oreo", "Casino Menta", "Casino Vainilla", "Morochas"].map((flavor) => (
+                          <button
+                            key={flavor}
+                            type="button"
+                            onClick={() => setSelectedIceCreamFlavor(flavor)}
+                            className={`py-1.5 px-1 rounded-xl text-[9px] font-semibold border text-center transition-all cursor-pointer ${
+                              selectedIceCreamFlavor === flavor
+                                ? "bg-primary text-white border-primary shadow-sm font-bold"
+                                : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
+                            }`}
+                          >
+                            {flavor}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="text-[10px] font-bold text-primary bg-primary/5 px-2.5 py-1 rounded-lg w-max select-none">Chocolate</div>
+                      <div className="grid grid-cols-3 gap-1.5 mt-2">
+                        {["Nutella", "Chocman", "Beso de Moza"].map((flavor) => (
+                          <button
+                            key={flavor}
+                            type="button"
+                            onClick={() => setSelectedIceCreamFlavor(flavor)}
+                            className={`py-1.5 px-1 rounded-xl text-[9px] font-semibold border text-center transition-all cursor-pointer ${
+                              selectedIceCreamFlavor === flavor
+                                ? "bg-primary text-white border-primary shadow-sm font-bold"
+                                : "bg-gray-50/50 text-gray-600 border-gray-150 hover:bg-gray-50"
+                            }`}
+                          >
+                            {flavor}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 )}
