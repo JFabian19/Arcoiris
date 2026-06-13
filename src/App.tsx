@@ -926,6 +926,12 @@ export default function App() {
                     {cat.nombre}
                   </h3>
                 </div>
+                {cat.nombre.toLowerCase() === "combos desayunos" && (
+                  <div className="mt-2 inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/10 via-primary/5 to-amber-500/10 border border-amber-200/50 px-3.5 py-1.5 rounded-2xl shadow-sm text-amber-800 text-[10px] font-bold tracking-wide animate-pulse">
+                    <span>⏰</span>
+                    <span>Disponible de lunes a sábado | 8:00 a.m. - 12:00 p.m</span>
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-2 gap-4">
