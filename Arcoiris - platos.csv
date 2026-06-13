@@ -1,146 +1,142 @@
 nombres,nombre del plato,descripción,precio,URL de imagen,próximamente
-Combos Desayunos,Combo 1,Cafe americano + Keke,S/ 10.00,,off
-Combos Desayunos,Combo 2,Cafe americano + Croissant Mixto,S/ 13.00,,off
-Combos Desayunos,Combo 3,Cafe americano + Ciabatta de Pollo,S/ 13.00,,off
-Combos Desayunos,Combo 4,Capuccino + Ciabatta de Pollo,S/ 15.00,,off
-Combos Desayunos,Combo 5,Capuccino + Croissant de Pollo,S/ 16.00,,off
-Combos Desayunos,Combo 6,Jugo Clásico + Triple,S/ 17.00,,off
-Combos Desayunos,Combo 7,Jugo Clásico + Croissant Mixto,S/ 16.00,,off
-Bebidas Calientes,Americano,,s/7.00,,off
-Bebidas Calientes,Capuccino,,s/10.00,,off
-Bebidas Calientes,Caramel Latte,,s/12.00,,off
-Bebidas Calientes,Chai Latte,,s/12.00,,off
-Bebidas Calientes,Chocolate Arcoiris,,s/15.00,,off
-Bebidas Calientes,Expresso,,s/7.00,,off
-Bebidas Calientes,Latte,,s/10.00,,off
-Bebidas Calientes,Mocaccino,,s/12.00,,off
-Bebidas Frías,Iced Avellana Latte,Espresso helado con leche y jarabe de avellana,s/12.00,,off
-Bebidas Frías,Iced Caramel Macchiato,,s/12.00,,off
-Bebidas Frías,Iced Coffe,,s/8.00,,off
-Bebidas Frías,Iced Latte,,s/12.00,,off
-Bebidas Frías,Iced Mocaccino,Espresso helado con chocolate y leche,s/13.00,,off
-Bebidas Frías,Iced Strawberry Latte,Café latte helado con jarabe de fresa natural,s/12.00,,off
-Bebidas Frías,Iced Vainilla Latte,,s/12.00,,off
-Bebidas Frías,Orange Coffee,,s/12.00,,off
-Jugos,Fresa,,s/9.00,,off
-Jugos,Fresa + papaya + piña,,s/10.00,,off
-Jugos,Fresa + plátano + naranja,,s/10.00,,off
-Jugos,Mango,,s/9.00,,off
-Jugos,Naranja,,s/9.00,,off
-Jugos,Papaya,,s/9.00,,off
-Jugos,Papaya + naranja,,s/10.00,,off
-Jugos,Papaya + piña,,s/10.00,,off
-Jugos,Papaya + piña + naranja,,s/10.00,,off
-Jugos,Piña,,s/9.00,,off
-Jugos,Surtido,,s/10.00,,off
-Batidos,Fresa + leche,,s/12.00,,off
-Batidos,Fresa + plátano + leche,,s/12.00,,off
-Batidos,Lúcuma + leche,,s/12.00,,off
-Batidos,Mango + fresa + leche,,s/12.00,,off
-Batidos,Mango + leche,,s/12.00,,off
-Batidos,Papaya + leche,,s/12.00,,off
-Wafles,Ensalada de frutas,La mejor selección de frutas de estación + yogurt + cereales,S/17.00,,off
-Wafles,W. Clásico,"Incluye fosh o miel de maple, fresa, plátano y arándanos",S/20.00,,off
-Wafles,W. Frutero,"Incluye Nutella, fresa, plátano, durazno, arándanos, kiwi, mango",S/22.00,,off
-Wafles,W. Perzonalizado,"Personaliza a tu gusto: puedes agregarle nutella, miel de maple, fosh o manjar blanco + 3 frutas de estación + 3 topping",S/22.00,,off
-Wafles,W. con Helado,Incluye Nutella + fresa + plátano + durazno + 1 topping y helado frito sabor a elección,S/27.00,,off
-Frozen,Durazno,Fruta natural,s/12.00,,off
-Frozen,Fresa,Fruta natural,s/12.00,,off
-Frozen,Limonada,Fruta natural,s/12.00,,off
-Frozen,Limonada Clásica,Fruta natural,s/12.00,,off
-Frozen,Limonada de Fresa,Fruta natural,s/12.00,,off
-Frozen,Mango,Fruta natural,s/12.00,,off
-Frozen,Maracumango,Fruta natural,s/12.00,,off
-Frozen,Maracuyá,Fruta natural,s/12.00,,off
-Frozen,Piña,Fruta natural,s/12.00,,off
-Frozen,Sandia,Fruta natural,s/12.00,,off
-Bubble Juice,Fresa,Bebidas a base de frutas naturales,s/12.00,,off
-Bubble Juice,Fresa + papaya + piña,Bebidas a base de frutas naturales,s/12.00,,off
-Bubble Juice,Granadilla + naranja + ...,Bebidas a base de frutas naturales,s/12.00,,off
-Bubble Juice,Papaya + piña + naranja,Bebidas a base de frutas naturales,s/12.00,,off
-Bubble Juice,Piña,Bebidas a base de frutas naturales,s/12.00,,off
-Bubble Teas,Bubble Tea de Fresa,Jazmine green tea,s/12.00,,off
-Bubble Teas,Bubble Tea de Fresa + maracuyá,Jazmine green tea,s/12.00,,off
-Bubble Teas,Bubble Tea de Mango,Jazmine green tea,s/12.00,,off
-Bubble Teas,Bubble Tea de Mango + maracuyá,Jazmine green tea,s/12.00,,off
-Bubble Teas,Bubble Tea de Maracuyá,Jazmine green tea,s/12.00,,off
-Bubble Teas,Bubble Tea de Maracuyá + Sandia,Jazmine green tea,s/12.00,,off
-Bubble Teas,Bubble Tea de Piña,Jazmine green tea,s/12.00,,off
-Bubble Teas,Bubble Tea de Uva,Jazmine green tea,s/12.00,,off
-Bubble Lattes,Brown sugar,Latte con leche. Incluye tapioca,s/13.00,,off
-Bubble Lattes,Fresa matcha,Latte con leche. Incluye tapioca,s/13.00,,off
-Bubble Lattes,Mango matcha,Latte con leche. Incluye tapioca,s/13.00,,off
-Bubble Lattes,Taro,Latte con leche. Incluye tapioca,s/13.00,,off
-Bubble Lattes,Taro oreo,Latte con leche. Incluye tapioca,s/13.00,,off
-Smoothies,Coconut,Bebida Tropical,s/17.00,,off
-Smoothies,Fresa,Smoothie refrescante de fresa natural,s/17.00,,off
-Smoothies,Fresa + Arándanos,Smoothie de fresas y arándanos frescos,s/17.00,,off
-Smoothies,Lucuma,Smoothie cremoso de lúcuma,s/17.00,,off
-Smoothies,Matcha,Smoothie de matcha con leche,s/17.00,,off
-Smoothies,Piña Colada,Bebida Tropical,s/17.00,,off
-Smoothies,Strawberry matcha,Especialidad. Incluye complemento tapioca,s/17.00,,off
-Smoothies,Taro,Smoothie de taro clásico,s/17.00,,off
-Smoothies,Taro oreo,Smoothie de taro con galletas oreo trituradas,s/17.00,,off
-Frappé,Frappe de Choco Menta,"No Incluye café, incluye crema batida y topping",s/16.00,,off
-Frappé,Frappe de Cookies and Cream,"No Incluye café, incluye crema batida y topping",s/16.00,,off
-Frappé,Frappe de Matcha,"No Incluye café, incluye crema batida y topping",s/16.00,,off
-Frappé,Frappe de Pistacho,"No Incluye café, incluye crema batida y topping",s/20.00,,on
-Frappé,Frappe de maracuyá,"No Incluye café, incluye crema batida y topping",s/15.00,,off
-Frappé,Frappé de Algarrobina,"Incluye café, crema batida y topping",s/15.00,,off
-Frappé,Frappé de Baileys,"Incluye café, crema batida y topping",s/15.00,,off
-Frappé,Frappé de Choco lúcuma,"No Incluye café, incluye crema batida y topping",s/15.00,,off
-Frappé,Frappé de Fresa,"No Incluye café, incluye crema batida y topping",s/15.00,,off
-Frappé,Frappé de Mocha Blanco,"Incluye café, crema batida y topping",s/15.00,,off
-Frappé,Frappé de Nutella,"Incluye café, crema batida y topping",s/15.00,,off
-Frappé,Frappé de Pie de limón,"No Incluye café, incluye crema batida y topping",s/15.00,,off
-Frappé,Frappé de café,"Incluye café, crema batida y topping",s/15.00,,off
-Frappé,Frappé de caramelo,"Incluye café, crema batida y topping",s/15.00,,off
-Frappé,Frappé de manjar blanco,"Incluye café, crema batida y topping",s/15.00,,off
-Frappé,Frappé de moka,"Incluye café, crema batida y topping",s/15.00,,off
-Frappé,Frappé de oreo,"Incluye café, crema batida y topping",s/15.00,,off
-Helados Frito,Helado de Aguaymanto,Base Frutas,,,off
-Helados Frito,Helado de Algarrobina,Otros sabores,s/12.00,,off
-Helados Frito,Helado de Arándanos,Base Frutas,,,off
-Helados Frito,Helado de Baileys,Base Licores,s/14.00,,off
-Helados Frito,Helado de Beso de moza,Base Chocolates,s/10.00,,off
-Helados Frito,Helado de Café,Otros sabores,s/12.00,,off
-Helados Frito,Helado de Casino menta,Base Galletas,s/10.00,,off
-Helados Frito,Helado de Chocman,Base Chocolates,s/10.00,,off
-Helados Frito,Helado de Coco,Base Frutas,,,off
-Helados Frito,Helado de Fresa,Base Frutas,,,off
-Helados Frito,Helado de Kiwi,Base Frutas,,,off
-Helados Frito,Helado de Limón,Base Frutas,,,off
-Helados Frito,Helado de Lúcuma,Base Frutas,,,off
-Helados Frito,Helado de Mango,Base Frutas,,,off
-Helados Frito,Helado de Maracuyá,Base Frutas,,,off
-Helados Frito,Helado de Morochas,Base Galletas,s/10.00,,off
-Helados Frito,Helado de Nutella,Base Chocolates,s/10.00,,off
-Helados Frito,Helado de Oreo,Base Galletas,s/10.00,,off
-Helados Frito,Helado de Piña Colada,Base Licores,s/14.00,,off
-Helados Frito,Helado de Plátano,Base Frutas,,,off
-Helados Frito,Helado de Pícaras,Base Galletas,s/10.00,,off
-Helados Frito,Helado de Ron c/n pasas,Base Licores,s/14.00,,off
-Helados Frito,Helado de Vainilla,Base Galletas,s/10.00,,off
-Complementos,Arándanos,Complemento extra,+S/3.00,,off
-Complementos,Barquillos,Topping para helado frito,,,off
-Complementos,Chin-chin,Topping para helado frito,,,off
-Complementos,Chispas de chocolate,Topping para helado frito,,,off
-Complementos,Fresa,Complemento extra,+S/3.00,,off
-Complementos,Gomitas,Topping para helado frito,,,off
-Complementos,Malvaviscos,Topping para helado frito,,,off
-Complementos,Mango,Complemento extra,+S/3.00,,off
-Complementos,Manzana Verde,Complemento extra,+S/3.00,,off
-Complementos,Maracuyá,Complemento extra,+S/3.00,,off
-Complementos,Oreo,Topping para helado frito,,,off
-Complementos,Pecanas,Topping para helado frito,,,off
-Complementos,Popping Boba,Topping para helados o bebidas,,,off
-Complementos,Tapioca,Complemento extra,+S/3.00,,off
-Sandwich,Ciabatta de Pollo,Apio y Mayonesa,s/7.00,,off
-Sandwich,Croisant Clásico,Jamón+ Queso Edam,s/6.00,,off
-Sandwich,Croisant de Pollo,Apio y Mayonesa,s/7.00,,off
-Sandwich,Empanada mixta,Jamón y queso,s/8.00,,off
-Sandwich,Triangulo Doble de Pollo,Apio y Mayonesa,s/6.00,,off
-Sandwich,Triple,"Pollo, Jamón y Queso",s/7.00,,off
-Postres,Cheesecake de Maracuya,,s/10.00,,off
-Postres,Queques,"Sabores: Zanahoria, Chocolate, Naranja, Plátano",s/4.00,,off
-Postres,Torta de Chocolate,,s/8.00,,off
+Combos Desayunos,Combo 1,Cafe americano + Keke,10.00,,
+Combos Desayunos,Combo 2,Cafe americano + Croissant Mixto,13.00,,
+Combos Desayunos,Combo 3,Cafe americano + Ciabatta de Pollo,13.00,,
+Combos Desayunos,Combo 4,Capuccino + Ciabatta de Pollo,15.00,,
+Combos Desayunos,Combo 5,Capuccino + Croissant de Pollo,16.00,,
+Combos Desayunos,Combo 6,Jugo Clásico + Triple,17.00,,
+Combos Desayunos,Combo 7,Jugo Clásico + Croissant Mixto,16.00,,
+Bebidas Calientes,Americano,"café espresso mezclado con agua caliente ,de sabor intenso y aroma equilibrado",7.00,,
+Bebidas Calientes,Capuccino,espresso con leche vaporisada y una suave capa de espuma cremosa ,10.00,,
+Bebidas Calientes,Caramel Latte,espresso con leche cremosa y un delicioso toque de caramelo ,12.00,,
+Bebidas Calientes,Chai Latte,,12.00,,proximamente
+Bebidas Calientes,Chocolate Arcoiris,Bebida caliente de chocolate ,15.00,,
+Bebidas Calientes,Espresso,esencia del café concentrado de sabor intenso ,7.00,,
+Bebidas Calientes,Latte,espresso con leche vaporisada y una suave capa de espuma cremosa ,10.00,,
+Bebidas Calientes,Mocaccino,"deliciosa mezcla de espresso, chocolate y leche cremosa .",12.00,,
+Bebidas Frías,Iced Avellana Latte,Espresso helado con leche y jarabe de avellana,12.00,,
+Bebidas Frías,Iced Caramel Macchiato,Refrescante cafe helado con leche y dulce toque de caramelo,12.00,,
+Bebidas Frías,Iced Coffe,,8.00,,
+Bebidas Frías,Iced Latte,"café helado con leche, suave ,refrescante y lleno de sabor ",12.00,,
+Bebidas Frías,Iced Mocaccino,Espresso helado con chocolate y leche,13.00,,
+Bebidas Frías,Iced Strawberry Latte,Café latte helado con jarabe de fresa natural,12.00,,
+Bebidas Frías,Iced Vainilla Latte,"espresso , leche,hielo y un delicado aroma a vainilla",12.00,,
+Bebidas Frías,Orange Coffee,"una sorprendente combinación de cafe espresso y naranja ,refrescante y citrica .",12.00,,
+Jugos,Fresa,,9.00,,
+Jugos,Fresa + papaya + piña,,10.00,,
+Jugos,Fresa + plátano + naranja,,10.00,,
+Jugos,Mango,,9.00,,
+Jugos,Naranja,,9.00,,
+Jugos,Papaya,,9.00,,
+Jugos,Papaya + naranja,,10.00,,
+Jugos,Papaya + piña,,10.00,,
+Jugos,Papaya + piña + naranja,,10.00,,
+Jugos,Piña,,9.00,,
+Jugos,Surtido,,10.00,,
+Batidos,Fresa + leche,,12.00,,
+Batidos,Fresa + plátano + leche,,12.00,,
+Batidos,Lúcuma + leche,,12.00,,
+Batidos,Mango + fresa + leche,,12.00,,
+Batidos,Mango + leche,,12.00,,
+Batidos,Papaya + leche,,12.00,,
+Wafles,Ensalada de frutas,La mejor selección de frutas de estación + yogurt + cereales,17.00,,
+Wafles,W. Clásico,"Incluye fosh o miel de maple, fresa, plátano y arándanos",20.00,,
+Wafles,W. Frutero,"Incluye Nutella, fresa, plátano, durazno, arándanos, kiwi, mango",22.00,,
+Wafles,W. Perzonalizado,"Personaliza a tu gusto: puedes agregarle nutella, miel de maple, fosh o manjar blanco + 3 frutas de estación + 3 topping",22.00,,
+Wafles,W. con Helado,Incluye Nutella + fresa + plátano + durazno + 1 topping y helado frito sabor a elección,27.00,,
+Frozen,Durazno,Fruta natural,12.00,,
+Frozen,Fresa,Fruta natural,12.00,,
+Frozen,Limonada Clásica,Fruta natural,12.00,,
+Frozen,Limonada de Fresa,Fruta natural,12.00,,
+Frozen,Mango,Fruta natural,12.00,,
+Frozen,Maracumango,Fruta natural,12.00,,
+Frozen,Maracuyá,Fruta natural,12.00,,
+Frozen,Piña,Fruta natural,12.00,,
+Frozen,Sandia,Fruta natural,12.00,,
+Bubble Juice,Fresa,Bebidas a base de frutas naturales,12.00,,
+Bubble Juice,Fresa + papaya + piña,Bebidas a base de frutas naturales,12.00,,
+Bubble Juice,Granadilla + naranja + ...,Bebidas a base de frutas naturales,12.00,,
+Bubble Juice,Papaya + piña + naranja,Bebidas a base de frutas naturales,12.00,,
+Bubble Juice,Mango + Maracuya,Bebidas a base de frutas naturales,12.00,,
+Bubble Juice,Piña,Bebidas a base de frutas naturales,12.00,,
+Bubble Teas,Bubble Tea de Fresa,Jazmine green tea,12.00,,
+Bubble Teas,Bubble Tea de Fresa + maracuyá,Jazmine green tea,12.00,,
+Bubble Teas,Bubble Tea de Mango,Jazmine green tea,12.00,,
+Bubble Teas,Bubble Tea de Mango + maracuyá,Jazmine green tea,12.00,,
+Bubble Teas,Bubble Tea de Maracuyá,Jazmine green tea,12.00,,
+Bubble Teas,Bubble Tea de Maracuyá + Sandia,Jazmine green tea,12.00,,
+Bubble Teas,Bubble Tea de Piña,Jazmine green tea,12.00,,
+Bubble Teas,Bubble Tea de Uva,Jazmine green tea,12.00,,
+Bubble Lattes,Brown sugar,Latte con leche. Incluye tapioca,13.00,,
+Bubble Lattes,Fresa matcha,Latte con leche. Incluye tapioca,13.00,,
+Bubble Lattes,Mango matcha,Latte con leche. Incluye tapioca,13.00,,
+Bubble Lattes,Taro,Latte con leche. Incluye tapioca,13.00,,
+Bubble Lattes,Taro oreo,Latte con leche. Incluye tapioca,13.00,,
+Smoothies,Coconut,Bebida Tropical,17.00,,
+Smoothies,Fresa,Smoothie refrescante de fresa natural,17.00,,
+Smoothies,Fresa + Arándanos,Smoothie de fresas y arándanos frescos,17.00,,
+Smoothies,Lucuma,Smoothie cremoso de lúcuma,17.00,,
+Smoothies,Matcha,Smoothie de matcha con leche,17.00,,
+Smoothies,Piña Colada,Bebida Tropical,17.00,,
+Smoothies,Strawberry matcha,Especialidad. Incluye complemento tapioca,17.00,,
+Smoothies,Taro,Smoothie de taro clásico,17.00,,
+Smoothies,Taro oreo,Smoothie de taro con galletas oreo trituradas,17.00,,
+Frappé,Frappe de Choco Menta,"No Incluye café, incluye crema batida y topping",16.00,,
+Frappé,Frappe de Cookies and Cream,"No Incluye café, incluye crema batida y topping",16.00,,
+Frappé,Frappe de Matcha,"No Incluye café, incluye crema batida y topping",16.00,,
+Frappé,Frappe de Pistacho,"No Incluye café, incluye crema batida y topping",20.00,,on
+Frappé,Frappe de maracuyá,"No Incluye café, incluye crema batida y topping",15.00,,
+Frappé,Frappé de Algarrobina,"Incluye café, crema batida y topping",16.00,,
+Frappé,Frappé de Baileys,"Incluye café, crema batida y topping",18.00,,
+Frappé,Frappé de Choco lúcuma,"No Incluye café, incluye crema batida y topping",16.00,,
+Frappé,Frappé de Fresa,"No Incluye café, incluye crema batida y topping",16.00,,
+Frappé,Frappé de Mocha Blanco,"Incluye café, crema batida y topping",16.00,,
+Frappé,Frappé de Nutella,"Incluye café, crema batida y topping",16.00,,
+Frappé,Frappé de Pie de limón,"No Incluye café, incluye crema batida y topping",16.00,,
+Frappé,Frappé de café,"Incluye café, crema batida y topping",15.00,,
+Frappé,Frappé de caramelo,"Incluye café, crema batida y topping",16.00,,
+Frappé,Frappé de manjar blanco,"Incluye café, crema batida y topping",15.00,,
+Frappé,Frappé de moka,"Incluye café, crema batida y topping",16.00,,
+Frappé,Frappé de oreo,"Incluye café, crema batida y topping",15.00,,
+Helados Frito,Helado de Aguaymanto,Base Frutas,10.00,,
+Helados Frito,Helado de Algarrobina,Otros sabores,12.00,,
+Helados Frito,Helado de Arándanos,Base Frutas,10.00,,
+Helados Frito,Helado de Baileys,Base Licores,14.00,,
+Helados Frito,Helado de Beso de moza,Base Chocolates,10.00,,
+Helados Frito,Helado de Café,Otros sabores,12.00,,
+Helados Frito,Helado de Casino menta,Base Galletas,10.00,,
+Helados Frito,Helado de Chocman,Base Chocolates,10.00,,
+Helados Frito,Helado de Coco,Base Frutas,10.00,,
+Helados Frito,Helado de Fresa,Base Frutas,10.00,,
+Helados Frito,Helado de Kiwi,Base Frutas,10.00,,
+Helados Frito,Helado de Limón,Base Frutas,10.00,,
+Helados Frito,Helado de Lúcuma,Base Frutas,10.00,,
+Helados Frito,Helado de Mango,Base Frutas,10.00,,
+Helados Frito,Helado de Maracuyá,Base Frutas,10.00,,
+Helados Frito,Helado de Morochas,Base Galletas,10.00,,
+Helados Frito,Helado de Nutella,Base Chocolates,10.00,,
+Helados Frito,Helado de Oreo,Base Galletas,10.00,,
+Helados Frito,Helado de Piña Colada,Base Licores,14.00,,
+Helados Frito,Helado de Plátano,Base Frutas,10.00,,
+Helados Frito,Helado de Pícaras,Base Galletas,10.00,,
+Helados Frito,Helado de Ron c/n pasas,Base Licores,14.00,,
+Helados Frito,Helado de Vainilla,Base Galletas,10.00,,
+Complementos,Barquillos,Topping para helado frito,,,
+Complementos,Chin-chin,Topping para helado frito,,,
+Complementos,Chispas de chocolate,Topping para helado frito,,,
+Complementos,Gomitas,Topping para helado frito,,,
+Complementos,Malvaviscos,Topping para helado frito,,,
+Complementos,Oreo,Topping para helado frito,,,
+Complementos,Pecanas,Topping para helado frito,,,
+Complementos,Popping Boba,Topping para helados o bebidas,,,
+Complementos,Tapioca,Complemento extra,,,
+Sandwich,Ciabatta de Pollo,Apio y Mayonesa,7.00,,
+Sandwich,Croisant Clásico,Jamón+ Queso Edam,8.00,,
+Sandwich,Croisant de Pollo,Apio y Mayonesa,8.00,,
+Sandwich,Empanada mixta,Jamón y queso,8.00,,
+Sandwich,Triangulo Doble de Pollo,Apio y Mayonesa,7.00,,
+Sandwich,Triple,"Pollo, Jamón y Queso",9.00,,
+Postres,Cheesecake de Maracuya,,10.00,,
+Postres,Queques,"Sabores: Zanahoria, Chocolate, Naranja, Plátano",4.00,,
+Postres,Torta de Chocolate,,10.00,,
+Postres,Carrot Cake,,10.00,,
